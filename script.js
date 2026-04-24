@@ -200,11 +200,11 @@
         let mobOpen = false;
         function toggleMob() {
             mobOpen = !mobOpen;
-            const ul = document.getElementById('nav-ul');
+            const nav = document.getElementById('nav');
             if (mobOpen) {
-                ul.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:3.8rem;left:0;right:0;background:rgba(255,255,255,1);padding:1.8rem 2rem;gap:1rem;z-index:490;box-shadow:0 10px 40px rgba(0,0,0,.15);';
+                nav.classList.add('mob-open');
             } else {
-                ul.style.cssText = '';
+                nav.classList.remove('mob-open');
             }
         }
 

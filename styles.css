@@ -3903,6 +3903,7 @@
         }
 
 
+
 /* ══════════════════════════════════════
    RESPONSIVE DESIGN (TABLETS & MOBILE)
 ══════════════════════════════════════ */
@@ -3917,8 +3918,25 @@
 
 @media (max-width: 768px) {
     nav .hmb { display: flex !important; }
-    nav #nav-ul:not([style*='display:flex']) { display: none !important; }
-    nav { padding: 0.7rem 1.5rem !important; }
+    nav #nav-ul { 
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(15, 76, 219, 0.95); /* Deep blue with glass */
+        backdrop-filter: blur(10px);
+        padding: 1.8rem 2rem;
+        gap: 1.5rem;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    nav.mob-open #nav-ul { display: flex !important; }
+    nav.mob-open { background: var(--bl3) !important; }
+    
+    /* Make navbar clear initially on mobile */
+    nav { padding: 0.7rem 1.5rem !important; background: transparent !important; box-shadow: none !important; border: none !important;}
+    nav.scrolled { background: var(--bl3) !important; box-shadow: 0 4px 40px rgba(0, 0, 0, .3) !important; }
     
     .hero h1 { font-size: 3.5rem !important; }
     .h1-em { font-size: 2.8rem !important; }
