@@ -61,11 +61,12 @@
 
         .intro-skater-depth {
             position: absolute;
-            width: 45vw;
-            max-width: 450px;
+            width: 35vw;
+            max-width: 350px;
             opacity: 0;
-            filter: drop-shadow(0 0 30px rgba(15, 76, 219, 0.5));
-            animation: skateBackToFront 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards 0.1s;
+            filter: drop-shadow(0 0 20px rgba(15, 76, 219, 0.4));
+            animation: skateLeftToRight 4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            z-index: 3;
         }
 
         .intro-skater-depth img {
@@ -74,38 +75,24 @@
             object-fit: contain;
         }
 
-        @keyframes skateBackToFront {
+        @keyframes skateLeftToRight {
             0% {
-                left: -30%;
-                top: 30%;
-                transform: scale(0.1) rotate(-10deg);
-                opacity: 0;
-                z-index: 1;
-            }
-            20% {
-                opacity: 1;
-                filter: blur(4px);
-            }
-            50% {
-                left: 30%;
-                top: 70%;
-                transform: scale(0.7) rotate(5deg);
-                filter: blur(2px);
-                z-index: 1; /* Still behind at midpoint */
-            }
-            65% {
-                left: 50%;
+                left: -40%;
                 top: 50%;
-                transform: scale(1.1) rotate(0deg);
-                filter: blur(0px);
-                z-index: 3; /* Passes logo to front */
+                transform: translateY(-50%) scale(0.8);
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            85% {
+                opacity: 1;
             }
             100% {
-                left: 50%;
+                left: 120%;
                 top: 50%;
-                transform: scale(2.2);
+                transform: translateY(-50%) scale(1.1);
                 opacity: 0;
-                z-index: 3;
             }
         }
 

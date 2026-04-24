@@ -360,7 +360,7 @@
                 
                 // Image
                 const img = document.createElement('img');
-                img.src = 'skating images/ice-ice-skating-quad-skates-roller-skating-roller-rink-shoe-music-logo-png-clipart-removebg-preview.png';
+                img.src = 'images/ice-ice-skating-quad-skates-roller-skating-roller-rink-shoe-music-logo-png-clipart-removebg-preview.png';
                 skate.appendChild(img);
                 document.body.appendChild(skate);
                 
