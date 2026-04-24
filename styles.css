@@ -40,11 +40,14 @@
         }
 
         /* ── INTRO ANIMATION ── */
+        
+        #intro-overlay.hidden { opacity: 0; visibility: hidden; }
+
         #intro-overlay {
             position: fixed;
             inset: 0;
             z-index: 10000;
-            background: #001a4d; /* Navy Blue */
+            background: #001a4d;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -53,11 +56,30 @@
             perspective: 1200px;
         }
 
-        #intro-overlay.hidden {
+        .intro-logo {
+            position: relative;
+            z-index: 2;
+            width: 95%;
+            max-width: 850px;
+            
             opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+            transform: scale(0.9);
+            animation: introLogoReveal 4s forwards ease-out 0.1s;
         }
+
+        .intro-logo img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        @keyframes introLogoReveal {
+            0% { opacity: 0; transform: scale(0.8); }
+            25% { opacity: 1; transform: scale(1); }
+            85% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 0; transform: scale(1.05); }
+        }
+
 
         .intro-skater-depth {
             position: absolute;
@@ -96,54 +118,9 @@
             }
         }
 
-        .intro-logo {
-            position: relative;
-            z-index: 2; /* Between back and front skater states */
-            width: 95%;
-            max-width: 850px;
-            filter: blur(10px);
-            opacity: 0;
-            transform: scale(0.9);
-            animation: introLogoReveal 4s forwards ease-out 0.1s;
-        }
+        
 
-        .intro-logo img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-
-        @keyframes introLogoReveal {
-            0% {
-                filter: blur(15px);
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            30% {
-                filter: blur(0px);
-                opacity: 0.8;
-                transform: scale(1);
-            }
-            70% {
-                filter: blur(0px);
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% {
-                filter: blur(20px);
-                opacity: 0;
-                transform: scale(1.1);
-            }
-        }
-
-        /* ── FALLING SKATES EFFECT ── */
-        .falling-skate {
-            position: fixed;
-            top: -150px;
-            z-index: 9000;
-            pointer-events: none;
-            will-change: transform, opacity;
-        }
+        
 
         .falling-skate img {
             width: 100%;
@@ -2295,10 +2272,28 @@
             border: 1px solid rgba(15, 76, 219, .1);
             padding: 2.6rem 2.4rem;
             position: relative;
-            overflow: hidden;
+            border-radius: 16px;
             transition: all .5s;
-            cursor: none;
-            box-shadow: 0 3px 22px rgba(15, 76, 219, .06);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, .05);
+            display: flex;
+            flex-direction: column;
+        }
+        .lc-img {
+            height: 200px;
+            width: calc(100% + 4.8rem);
+            margin: -2.6rem -2.4rem 1.8rem -2.4rem;
+            border-radius: 16px 16px 0 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .lc-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .lc:hover .lc-img img {
+            transform: scale(1.08);
         }
 
         .lc::before {
@@ -2962,19 +2957,21 @@
         }
 
         .chat-btn {
-            width: 60px;
-            height: 60px;
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
-            border: none;
-            background: linear-gradient(135deg, var(--bl), var(--bl2));
+            border: 3px solid transparent;
+            background: transparent;
             cursor: none;
             z-index: 500;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 0 0 rgba(15, 76, 219, .5);
+            box-shadow: 0 10px 25px rgba(15, 76, 219, 0.2), 0 0 15px rgba(244, 98, 10, 0.1);
             animation: chatGlow 2.8s ease-in-out infinite;
             transition: all .3s;
+            overflow: visible; /* Changed to visible to avoid clipping if centered differently */
+            padding: 0;
         }
 
         @keyframes chatGlow {
@@ -2994,10 +2991,12 @@
             background: linear-gradient(135deg, var(--or), var(--or2));
         }
 
-        .chat-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: #fff;
+        .chat-btn img.ico-chat {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            margin: auto;
         }
 
         .chat-btn.open .ico-chat {
@@ -3074,16 +3073,26 @@
         }
 
         .ch-logo {
-            width: 36px;
-            height: 36px;
-            background: var(--or);
+            width: 44px;
+            height: 44px;
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             position: relative;
             z-index: 1;
-            clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+            border-radius: 50%;
+            overflow: visible;
+            border: none;
+        }
+
+        .ch-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            margin: auto;
         }
 
         .ch-logo svg {
@@ -3692,232 +3701,9 @@
                 }
             
 
-        @keyframes chatGlow {
-            0% {
-                box-shadow: 0 0 0 0 rgba(244, 98, 10, 0.9), 0 10px 25px rgba(0, 0, 0, 0.3);
-            }
+/* ══ CHATBOT VISUALS ══ */
 
-            70% {
-                box-shadow: 0 0 0 25px rgba(244, 98, 10, 0), 0 10px 25px rgba(0, 0, 0, 0.3);
-            }
 
-            100% {
-                box-shadow: 0 0 0 0 rgba(244, 98, 10, 0), 0 10px 25px rgba(0, 0, 0, 0.3);
-            }
-        }
-
-        .chat-btn {
-            animation: chatGlow 1.8s infinite cubic-bezier(0.15, 0.85, 0.35, 1) !important;
-            transform-origin: center;
-        }
-
-        .chat-btn:hover {
-            animation: none !important;
-            transform: scale(1.05);
-        }
-
-        @keyframes jinniEmerge {
-            0% {
-                transform: scale(0.2) translateY(40px) translateX(20px);
-                opacity: 0;
-            }
-
-            60% {
-                transform: scale(1.05) translateY(-5px) translateX(0);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(1) translateY(0) translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes jinniFloat {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-8px);
-            }
-        }
-
-        .jinni-bot {
-            position: absolute;
-            bottom: 75px;
-            right: -15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            z-index: 999;
-            transform-origin: bottom right;
-            animation: jinniEmerge 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards, jinniFloat 4s ease-in-out infinite 1.2s;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-
-        .jinni-bot.hidden {
-            opacity: 0 !important;
-            transform: scale(0.5) translateY(50px) !important;
-            pointer-events: none;
-        }
-
-        .jinni-avatar {
-            font-size: 5.8rem;
-            filter: drop-shadow(0 15px 25px rgba(15, 76, 219, 0.4)) drop-shadow(0 0 20px rgba(244, 98, 10, 0.6));
-            margin-top: 5px;
-            z-index: 2;
-            animation: robotHover 3s infinite ease-in-out, avatarPulse 2s infinite alternate;
-        }
-
-        @keyframes avatarPulse {
-            0% {
-                filter: drop-shadow(0 15px 25px rgba(15, 76, 219, 0.4)) drop-shadow(0 0 15px rgba(244, 98, 10, 0.4));
-            }
-
-            100% {
-                filter: drop-shadow(0 15px 25px rgba(15, 76, 219, 0.6)) drop-shadow(0 0 35px rgba(244, 98, 10, 0.9));
-            }
-        }
-
-        @keyframes robotHover {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(-2deg);
-            }
-
-            50% {
-                transform: translateY(-10px) rotate(2deg);
-            }
-        }
-
-        .jinni-bubble {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            color: var(--tx);
-            padding: 0.9rem 1.4rem;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 800;
-            letter-spacing: 0.4px;
-            line-height: 1.4;
-            white-space: nowrap;
-            text-align: center;
-            position: relative;
-            margin-bottom: 15px;
-            box-shadow: 0 15px 35px rgba(15, 76, 219, 0.25), 0 0 25px rgba(244, 98, 10, 0.2), inset 0 0 0 2px rgba(255, 255, 255, 0.6);
-            animation: bubbleFloat 4s infinite ease-in-out;
-        }
-
-        @keyframes bubbleFloat {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-6px);
-            }
-        }
-
-        /* Dream thinking effect circles */
-        .jinni-bubble::before {
-            content: '';
-            position: absolute;
-            bottom: -16px;
-            right: 35px;
-            width: 14px;
-            height: 14px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .jinni-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -32px;
-            right: 25px;
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            border-radius: 50%;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .smoke-fx {
-            position: absolute;
-            bottom: -30px;
-            right: 5px;
-            width: 90px;
-            height: 90px;
-            background: radial-gradient(circle, rgba(244, 98, 10, 0.5) 0%, rgba(15, 76, 219, 0) 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            filter: blur(8px);
-            animation: magicGlow 3s infinite alternate ease-in-out, jinniEmerge 1.2s forwards;
-            mix-blend-mode: multiply;
-        }
-
-        .smoke-fx::before,
-        .smoke-fx::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(10px);
-            animation: magicOrbit 4s infinite linear;
-        }
-
-        .smoke-fx::before {
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, rgba(15, 76, 219, 0.6) 0%, transparent 60%);
-            top: -15px;
-            left: -25px;
-        }
-
-        .smoke-fx::after {
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, rgba(244, 180, 10, 0.5) 0%, transparent 60%);
-            bottom: -10px;
-            right: -15px;
-            animation-duration: 3s;
-            animation-direction: reverse;
-        }
-
-        @keyframes magicGlow {
-            0% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-
-            100% {
-                transform: scale(1.4);
-                opacity: 1;
-            }
-        }
-
-        @keyframes magicOrbit {
-            0% {
-                transform: rotate(0deg) translateX(10px) rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg) translateX(10px) rotate(-360deg);
-            }
-        }
 
 
 
@@ -3943,7 +3729,7 @@
         left: 0;
         right: 0;
         background: rgba(15, 76, 219, 0.95); /* Deep blue with glass */
-        backdrop-filter: blur(10px);
+        backdrop-
         padding: 1.8rem 2rem;
         gap: 1.5rem;
         box-shadow: 0 10px 40px rgba(0,0,0,0.3);
@@ -3970,7 +3756,7 @@
     .hero-ctas { flex-direction: column; width: 100%; align-items: stretch; }
     .hero-ctas a { text-align: center; justify-content: center; }
     
-    /* Make the chatbot bot robo little small on mobile */
+    /* Scale chatbot launcher on mobile */
     .chat-launcher {
         transform: scale(0.7) !important;
         transform-origin: bottom right !important;
@@ -4029,3 +3815,82 @@
             body { cursor: auto !important; }
             .hero- مركز-box { max-width: 100% !important; }
         }
+
+
+/* ══════════════════════════════════════════════
+   FLOATING WHATSAPP
+══════════════════════════════════════════════ */
+.float-wa {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 60px;
+    height: 60px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    z-index: 1000;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+.float-wa:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+}
+
+@media (max-width: 768px) {
+    .float-wa {
+        bottom: 1.5rem;
+        left: 1.5rem;
+        width: 50px;
+        height: 50px;
+    }
+    .float-wa svg {
+        width: 24px !important;
+        height: 24px !important;
+    }
+}
+
+/* Chat Tooltip */
+.chat-tooltip {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    background: #fff;
+    color: var(--dk);
+    padding: 10px 18px;
+    border-radius: 20px 20px 0 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    pointer-events: none;
+    animation: floatTooltip 3s infinite ease-in-out;
+    opacity: 1;
+    transition: opacity 0.3s;
+    border: 1px solid rgba(15,76,219,0.1);
+}
+.chat-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    right: 15px;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    transform: rotate(45deg);
+    border-bottom: 1px solid rgba(15,76,219,0.1);
+    border-right: 1px solid rgba(15,76,219,0.1);
+}
+@keyframes floatTooltip {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+}
+.chat-btn.open .chat-tooltip {
+    opacity: 0;
+    display: none;
+}

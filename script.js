@@ -1,47 +1,4 @@
 
-            let rScore = 0;
-            function boopRobot(e) {
-                e.stopPropagation();
-                rScore++;
-                const bot = document.getElementById('jinniAvatar');
-                const scoreLbl = document.getElementById('robotScore');
-                const bubble = document.getElementById('jinniBubble');
-
-                bot.style.transform = 'scale(1.4) rotate(' + (Math.random() * 40 - 20) + 'deg)';
-                setTimeout(() => { bot.style.transform = ''; }, 150);
-
-                scoreLbl.style.display = 'block';
-                scoreLbl.innerText = "⭐ " + rScore;
-
-                const bubbleSpan = document.getElementById('bubbleSpan');
-
-                if (rScore === 1) bubbleSpan.innerText = "Hey! That tickles! 😂";
-                else if (rScore === 5) bubbleSpan.innerText = "Keep going! 🔥";
-                else if (rScore === 10) { bubbleSpan.innerText = "Level Up! 🏆"; bot.innerText = "😎"; }
-                else if (rScore === 20) { bubbleSpan.innerText = "Godlike! 👑"; bot.innerText = "🤩"; }
-                else bubbleSpan.innerText = "Combo: x" + rScore;
-
-                let plus = document.createElement('div');
-                plus.innerText = "+1";
-                plus.style.position = 'fixed';
-                plus.style.color = 'var(--or)';
-                plus.style.fontWeight = '900';
-                plus.style.fontSize = '24px';
-                plus.style.textShadow = '0 2px 10px rgba(0,0,0,0.2)';
-                plus.style.left = (e.clientX - 10) + 'px';
-                plus.style.top = (e.clientY - 20) + 'px';
-                plus.style.pointerEvents = 'none';
-                plus.style.transition = 'all 0.6s cubic-bezier(0.2, 1, 0.3, 1)';
-                plus.style.zIndex = '99999';
-                document.body.appendChild(plus);
-
-                setTimeout(() => {
-                    plus.style.transform = 'translateY(-60px) scale(1.5)';
-                    plus.style.opacity = '0';
-                }, 30);
-                setTimeout(() => { plus.remove(); }, 650);
-            }
-        
 
         /* ══════════════════════════════════════════════
            INTRO COOL ANIMATION (FAST SKATE)
@@ -57,7 +14,7 @@
                 overlay.style.transition = 'opacity 0.4s, visibility 0.4s';
                 overlay.classList.add('hidden');
                 document.body.style.overflow = ''; // unlock scroll
-            }, 4000);
+            }, 3600);
         })();
 
         /* ══════════════════════════════════════════════
@@ -223,7 +180,12 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const pg = document.getElementById('pg-' + id);
             if (pg) pg.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Scroll to top instantly
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+
             // nav highlight
             document.querySelectorAll('nav .nl').forEach(a => {
                 a.classList.remove('active');
@@ -233,8 +195,11 @@
             // close mobile nav
             mobOpen = false;
             document.getElementById('nav-ul').style.cssText = '';
-            // kick reveal
-            setTimeout(initReveal, 80);
+            
+            // Reset GSAP and refresh
+            if (window.ScrollTrigger) {
+                ScrollTrigger.refresh(true);
+            }
         }
 
         /* ══════════════════════════════════════════════
@@ -426,7 +391,6 @@
 
         function fSubmit(prefix) {
             const n = document.getElementById(prefix + '_n')?.value.trim();
-            const p = document.getElementById(prefix + '_p')?.value.trim();
             const l = document.getElementById(prefix + '_l')?.value.trim();
             const em = document.getElementById(prefix + '_e')?.value.trim();
             const ph = document.getElementById(prefix + '_ph')?.value.trim();
@@ -434,20 +398,20 @@
             let lv = '';
             if (prefix === 'm') lv = document.getElementById('m_lv')?.value;
 
-            if (!n || !p || !l || !em || !ph) { alert('Please fill in all required fields.'); return; }
+            if (!n || !l || !em || !ph) { alert('Please fill in all required fields.'); return; }
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { alert('Please enter a valid email address.'); return; }
             const btn = document.getElementById(prefix + '_btn');
             const ok = document.getElementById(prefix + '_ok');
-            btn.disabled = true; btn.textContent = '⛸ Submitting…';
+            btn.disabled = true; btn.textContent = 'Submitting…';
 
-            sendEmail({ _subject: "New Enquiry: " + n, name: n, email: em, phone: ph, participants: p, location: l, level: lv, message: m }, () => {
+            sendEmail({ _subject: "New Enquiry: " + n, name: n, email: em, phone: ph, location: l, level: lv, message: m }, () => {
                 btn.style.display = 'none';
                 ok.style.display = 'block';
                 if (prefix === 'm') setTimeout(closeModal, 2200);
             }, (e) => {
                 console.log(e);
                 window.location.href = `mailto:aryaman070402@gmail.com?subject=New Enquiry from ${n}&body=Name: ${n}%0APhone: ${ph}%0AEmail: ${em}`;
-                btn.disabled = false; btn.textContent = 'Submit Registration ⛸';
+                btn.disabled = false; btn.textContent = 'Submit Registration ';
             });
         }
         function doSub(id) {
@@ -483,37 +447,26 @@
             document.getElementById('chatWin').classList.toggle('open', CB.open);
             document.getElementById('chatBtn').classList.toggle('open', CB.open);
             document.getElementById('chatBadge').style.display = 'none';
-            var lbl = document.getElementById('chatHelpLabel');
-            if (lbl) {
-                if (CB.open) {
-                    lbl.classList.add('hidden');
-                } else {
-                    lbl.classList.remove('hidden');
-                    lbl.style.animation = 'none';
-                    lbl.offsetHeight;
-                    lbl.style.animation = 'hlabelIn .6s cubic-bezier(.34,1.56,.64,1) .3s both,hlabelFloat 2.4s ease-in-out 1s infinite';
-                }
-            }
             if (CB.open && !CB.started) initChat();
         }
 
         function initChat() {
             CB.started = true;
             const bar = document.getElementById('connBar'), txt = document.getElementById('connTxt');
-            botSay('👋 Welcome to **Skating Hour Experts**! We\'re really glad you\'re here.');
-            botSay('🔄 **5 coaches are online** — please wait while we connect you with someone...');
+            botSay("Welcome to **Skating Hour Experts**! We're really glad you're here.");
+            botSay(" **5 coaches are online** — please wait while we connect you with someone...");
             let d = 0;
             const iv = setInterval(() => { d = (d + 1) % 4; txt.textContent = 'Connecting you with an expert' + '.'.repeat(d + 1); }, 500);
             setTimeout(() => {
                 clearInterval(iv);
                 bar.style.display = 'none';
                 document.getElementById('agentBar').style.display = 'flex';
-                setTimeout(() => botSay('✅ You\'re now connected!'), 300);
+                setTimeout(() => botSay("You're now connected!"), 300);
                 setTimeout(() => {
                     const h = new Date().getHours();
                     const g = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
-                    botSay(`**${g}!** 👋 I\'m **Anurag**, your dedicated Skating Consultant at Skating Hour.\n\nI'm here to help you find the perfect skating program and get registered today. Our classes fill up extremely fast, so let's get you set up!\n\nWhat are you looking to enroll in today: **Roller Skates** or **Ice Skating**?`);
-                    showQR(['🛼 Roller Skates', '⛸️ Ice Skating', '📍 Locations', '💰 Pricing', '❓ General info']);
+                    botSay(`**${g}!**  I'm **Anurag**, your dedicated Skating Consultant at Skating Hour.\n\nI'm here to help you find the perfect skating program and get registered today. Our classes fill up extremely fast, so let's get you set up!\n\nWhat are you looking to enroll in today: **Roller Skates** or **Ice Skating**?`);
+                    showQR(['Roller Skates', 'Ice Skating', 'Locations', 'Pricing', 'General info']);
                 }, 1500);
             }, 3800);
         }
@@ -529,7 +482,7 @@
             handleMsg(txt);
         }
 
-        const AI_API_KEY = "YOUR_GEMINI_API_KEY"; // ⚠️ IMPORTANT: Get your free API key from https://aistudio.google.com/
+        const AI_API_KEY = "YOUR_GEMINI_API_KEY"; // ⚠ IMPORTANT: Get your free API key from https://aistudio.google.com/
         let aiHistory = [];
 
         async function handleMsg(text) {
@@ -537,13 +490,13 @@
                 if (window.__adminConn && window.__adminConn.open) {
                     window.__adminConn.send(text);
                 } else {
-                    botSay("⚠️ Still connecting... please wait for the connection to complete.");
+                    botSay("⚠ Still connecting... please wait for the connection to complete.");
                 }
                 return;
             }
             const t = text.trim(), lo = t.toLowerCase();
 
-            // 🤖 REAL AI CHATBOT LOGIC
+            //  REAL AI CHATBOT LOGIC
             if (AI_API_KEY !== "YOUR_GEMINI_API_KEY") {
                 showTyping();
                 aiHistory.push({ role: "user", parts: [{ text: text }] });
@@ -576,161 +529,166 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
                 }
             }
 
+            /* ─ Go Back to Main Menu ─ */
+            if (lo.match(/go back to main menu|main menu|previous menu/)) {
+                return typeThen(500, `Here is the main menu:`, () => showQR(['Roller Skates', 'Ice Skating', 'Locations', 'Pricing', 'General info']));
+            }
+
             /* ─ Roller vs Ice ─ */
             if (lo.match(/roller skate|roller|quad/)) {
-                return typeThen(500, `🛼 **Roller Skating Sessions**\n\nOur Roller Skating classes are incredibly popular right now! They are perfect for all ages and skill levels, from Roller Derby Basics to Family Sessions.\n\nSpots are strictly limited, so I highly recommend securing yours now before they sell out.\n\n👉 **[Secure Your Spot - Register Now](${REG_URL})**`, () => showQR(['📍 Locations', '💰 Pricing', '⛸️ Ice Skating instead']));
+                return typeThen(500, ` **Roller Skating Sessions**\n\nOur Roller Skating classes are incredibly popular right now! They are perfect for all ages and skill levels, from Roller Derby Basics to Family Sessions.\n\nSpots are strictly limited, so I highly recommend securing yours now before they sell out.\n\n **[Secure Your Spot - Register Now](${REG_URL})**`, () => showQR(['Locations', 'Pricing', 'Ice Skating instead', 'Go back to main menu']));
             }
             if (lo.match(/ice skate|ice skating/)) {
-                return typeThen(500, `⛸️ **Ice Skating Lessons**\n\nWe offer Canada's top-rated ice skating programs across 3 premier locations for all skill levels (Beginner to Advanced).\n\nLet's get you registered — which city works best for you?`, () => showQR(['🏙️ Hamilton', '🏘️ Milton', '🏡 Oakville']));
+                return typeThen(500, ` **Ice Skating Lessons**\n\nWe offer Canada's top-rated ice skating programs across 3 premier locations for all skill levels (Beginner to Advanced).\n\nLet's get you registered — which city works best for you?`, () => showQR(['Hamilton', 'Milton', 'Oakville', 'Go back to main menu']));
             }
 
             /* ─ Location detection ─ */
             if (lo.match(/hamilton|dave andre|ancaster|dundas|stoney creek/)) {
-                return typeThen(600, `📍 **Hamilton — Dave Andre Arena**\n\n` +
-                    `**Saturday Classes**\n🕐 6:30 PM – 7:30 PM\n📅 Mar 21, 28 · Apr 4, 11, 18, 25, 2026\n💰 Try: $30 · Drop-in: **$30** · 6-class package: **$180**\n\n` +
-                    `**Sunday Classes — 3 Time Slots**\n🕐 1:00 PM | 2:00 PM | 3:00 PM\n📅 Mar 22, 29 · Apr 5, 12, 19, 26, 2026\n💰 Try: $30 · Drop-in: **$30** · 6-class package: **$180**\n\n` +
-                    `👤 All ages welcome · ⏱ 60 min sessions\n✅ Skates & gear provided FREE for first class!\n\n` +
+                return typeThen(600, ` **Hamilton — Dave Andre Arena**\n\n` +
+                    `**Saturday Classes**\n 6:30 PM – 7:30 PM\n Mar 21, 28 · Apr 4, 11, 18, 25, 2026\n Try: $30 · Drop-in: **$30** · 6-class package: **$180**\n\n` +
+                    `**Sunday Classes — 3 Time Slots**\n 1:00 PM | 2:00 PM | 3:00 PM\n Mar 22, 29 · Apr 5, 12, 19, 26, 2026\n Try: $30 · Drop-in: **$30** · 6-class package: **$180**\n\n` +
+                    ` All ages welcome · ⏱ 60 min sessions\n Skates & gear provided FREE for first class!\n\n` +
                     `Would you like to enroll in the **full program** or try a **drop-in class** first?\n\n` +
-                    `👉 **[Register / Book Now](${REG_URL})**\n💬 **[WhatsApp us](${WA_URL})**`,
-                    () => showQR(['🏒 Enroll full program', '🎟️ Try drop-in first', '💰 Pricing', '📅 Full schedule']));
+                    ` **[Register / Book Now](${REG_URL})**\n **[WhatsApp us](${WA_URL})**`,
+                    () => showQR(['Enroll full program', 'Try drop-in first', 'Pricing', 'Full schedule', 'Go back to main menu']));
             }
 
             if (lo.match(/\bmilton\b/)) {
-                return typeThen(600, `📍 **Milton — Milton Skating Rink**\n\n` +
-                    `**Winter Program — Friday Classes**\n🕐 3:45 AM – 4:35 AM · Every Friday\n📅 Jan 10 – Apr 25, 2026\n💰 Try: **CAD $30** · Drop-in: **$40** · 6-class package: **$240**\n\n` +
-                    `👤 All ages welcome · ⏱ 50 min sessions\n✅ Skates & gear provided FREE for first class!\n\n` +
+                return typeThen(600, ` **Milton — Milton Skating Rink**\n\n` +
+                    `**Winter Program — Friday Classes**\n 3:45 AM – 4:35 AM · Every Friday\n Jan 10 – Apr 25, 2026\n Try: **CAD $30** · Drop-in: **$40** · 6-class package: **$240**\n\n` +
+                    ` All ages welcome · ⏱ 50 min sessions\n Skates & gear provided FREE for first class!\n\n` +
                     `Would you like to register?\n\n` +
-                    `👉 **[Register / Book Now](${REG_URL})**\n💬 **[WhatsApp us](${WA_URL})**`,
-                    () => showQR(['🏒 Register now', '🎟️ Try drop-in', '💰 Pricing', '📅 All locations']));
+                    ` **[Register / Book Now](${REG_URL})**\n **[WhatsApp us](${WA_URL})**`,
+                    () => showQR(['Register now', 'Try drop-in', 'Pricing', 'All locations', 'Go back to main menu']));
             }
 
             if (lo.match(/oakville|cutting edge/)) {
-                return typeThen(600, `📍 **Oakville — Cutting Edge Ice Arena**\n\n` +
-                    `**❄️ Winter Program** (Jan 12 – Mar 16, 2026) · Ages 3–55\n🕐 12:30 AM | 1:30 AM | 2:30 AM · Sundays\n💰 Try: $30 · Drop-in: **$40** · Package: **$240**\n\n` +
-                    `**🏆 Winter Advanced** (Jan 12 – Mar 16) · Ages 6–40\n🕐 3:30 AM · Sundays · *Coach approval required*\n💰 Try: $40 · Drop-in: **$50** · Package: **$320**\n\n` +
-                    `**🌸 Spring Program** (Mar 23 – May 4, 2026)\n🕐 12:30 AM | 1:30 AM | 2:30 AM · Sundays\n💰 Try: $30 · Drop-in: **$40** · Package: **$180**\n\n` +
-                    `**🏆 Spring Advanced** (Mar 23 – May 4) · Ages 5–17\n🕐 3:30 AM · Sundays · *Coach approval required*\n💰 Try: $40 · Drop-in: **$50** · Package: **$240**\n\n` +
-                    `✅ Skates & gear FREE for first class!\n\n` +
-                    `👉 **[Register / Book Now](${REG_URL})**\n💬 **[WhatsApp us](${WA_URL})**`,
-                    () => showQR(['🏒 Register now', '🏆 Advanced program', '💰 All pricing', '📅 All locations']));
+                return typeThen(600, ` **Oakville — Cutting Edge Ice Arena**\n\n` +
+                    `** Winter Program** (Jan 12 – Mar 16, 2026) · Ages 3–55\n 12:30 AM | 1:30 AM | 2:30 AM · Sundays\n Try: $30 · Drop-in: **$40** · Package: **$240**\n\n` +
+                    `** Winter Advanced** (Jan 12 – Mar 16) · Ages 6–40\n 3:30 AM · Sundays · *Coach approval required*\n Try: $40 · Drop-in: **$50** · Package: **$320**\n\n` +
+                    `** Spring Program** (Mar 23 – May 4, 2026)\n 12:30 AM | 1:30 AM | 2:30 AM · Sundays\n Try: $30 · Drop-in: **$40** · Package: **$180**\n\n` +
+                    `** Spring Advanced** (Mar 23 – May 4) · Ages 5–17\n 3:30 AM · Sundays · *Coach approval required*\n Try: $40 · Drop-in: **$50** · Package: **$240**\n\n` +
+                    ` Skates & gear FREE for first class!\n\n` +
+                    ` **[Register / Book Now](${REG_URL})**\n **[WhatsApp us](${WA_URL})**`,
+                    () => showQR(['Register now', 'Advanced program', 'All pricing', 'All locations', 'Go back to main menu']));
             }
 
             /* ─ Register / Enroll / Book ─ */
             if (lo.match(/register|enroll|book|sign up|join|how do i register|where.*register|where.*enroll|where.*book/)) {
-                return typeThen(500, `Ready to skate? 🎉 Here's how to register:\n\n` +
+                return typeThen(500, `Ready to skate?  Here's how to register:\n\n` +
                     `First — **which location are you interested in?**\n\n` +
-                    `🏙️ **Hamilton** — Dave Andre Arena\n🏘️ **Milton** — Milton Skating Rink\n🏡 **Oakville** — Cutting Edge Arena\n\n` +
+                    ` **Hamilton** — Dave Andre Arena\n **Milton** — Milton Skating Rink\n **Oakville** — Cutting Edge Arena\n\n` +
                     `Once you pick your location, you can register directly here:\n\n` +
-                    `👉 **[Register on ClassCard — skatinghour.classcard.app](${REG_URL})**\n\n` +
-                    `Or contact us directly:\n💬 **[WhatsApp: +1 (548) 331-2200](${WA_URL})**\n\nSpots fill up fast — don't wait! ⛸`,
-                    () => showQR(['🏙️ Hamilton', '🏘️ Milton', '🏡 Oakville']));
+                    ` **[Register on ClassCard — skatinghour.classcard.app](${REG_URL})**\n\n` +
+                    `Or contact us directly:\n **[WhatsApp: +1 (548) 331-2200](${WA_URL})**\n\nSpots fill up fast — don't wait! `,
+                    () => showQR(['Hamilton', 'Milton', 'Oakville', 'Go back to main menu']));
             }
 
             /* ─ Pricing ─ */
             if (lo.match(/price|cost|fee|how much|pricing|cad|\$|charge|expensive|cheap|money/)) {
-                return typeThen(600, `Here's a **complete pricing overview** 💰\n\n` +
-                    `🏙️ **Hamilton** — Dave Andre Arena\n• Try (1st class): CAD **$30** · Drop-in: **$30** · 6-class pkg: **$180**\n\n` +
-                    `🏘️ **Milton**\n• Try: CAD **$30** · Drop-in: **$40** · 6-class pkg: **$240**\n\n` +
-                    `🏡 **Oakville** — Regular Programs\n• Try: CAD **$30** · Drop-in: **$40** · Package: from **$180**\n\n` +
-                    `🏆 **Oakville Advanced Programs**\n• Try: CAD **$40** · Drop-in: **$50** · Package: from **$240**\n\n` +
-                    `---\n✅ **Drop-in Flexibility:** Try a class first — no commitment! Skates & gear are FREE for your first class. Love it? Enroll in the full program anytime.`,
-                    () => showQR(['🏙️ Hamilton details', '🏘️ Milton details', '🏡 Oakville details', '⛸ Register now']));
+                return typeThen(600, `Here's a **complete pricing overview** \n\n` +
+                    ` **Hamilton** — Dave Andre Arena\n• Try (1st class): CAD **$30** · Drop-in: **$30** · 6-class pkg: **$180**\n\n` +
+                    ` **Milton**\n• Try: CAD **$30** · Drop-in: **$40** · 6-class pkg: **$240**\n\n` +
+                    ` **Oakville** — Regular Programs\n• Try: CAD **$30** · Drop-in: **$40** · Package: from **$180**\n\n` +
+                    ` **Oakville Advanced Programs**\n• Try: CAD **$40** · Drop-in: **$50** · Package: from **$240**\n\n` +
+                    `---\n **Drop-in Flexibility:** Try a class first — no commitment! Skates & gear are FREE for your first class. Love it? Enroll in the full program anytime.`,
+                    () => showQR(['Hamilton details', 'Milton details', 'Oakville details', 'Register now', 'Go back to main menu']));
             }
 
             /* ─ Schedule ─ */
             if (lo.match(/schedule|when|dates|saturday|sunday|friday|time slot|upcoming|calendar/)) {
-                return typeThen(600, `📅 **Class Schedules — All Locations**\n\n` +
-                    `🏙️ **Hamilton** (Dave Andre Arena)\n• Sat 6:30–7:30 PM · Mar 21–Apr 25, 2026\n• Sun 1:00 | 2:00 | 3:00 PM · Mar 22–Apr 26, 2026\n\n` +
-                    `🏘️ **Milton**\n• Fri 3:45–4:35 AM · Jan 10–Apr 25, 2026\n\n` +
-                    `🏡 **Oakville** (Cutting Edge)\n• Winter: Sun 12:30|1:30|2:30|3:30 AM · Jan 12–Mar 16\n• Spring: Sun 12:30|1:30|2:30|3:30 AM · Mar 23–May 4\n\nWant details for a specific location?`,
-                    () => showQR(['🏙️ Hamilton', '🏘️ Milton', '🏡 Oakville']));
+                return typeThen(600, ` **Class Schedules — All Locations**\n\n` +
+                    ` **Hamilton** (Dave Andre Arena)\n• Sat 6:30–7:30 PM · Mar 21–Apr 25, 2026\n• Sun 1:00 | 2:00 | 3:00 PM · Mar 22–Apr 26, 2026\n\n` +
+                    ` **Milton**\n• Fri 3:45–4:35 AM · Jan 10–Apr 25, 2026\n\n` +
+                    ` **Oakville** (Cutting Edge)\n• Winter: Sun 12:30|1:30|2:30|3:30 AM · Jan 12–Mar 16\n• Spring: Sun 12:30|1:30|2:30|3:30 AM · Mar 23–May 4\n\nWant details for a specific location?`,
+                    () => showQR(['Hamilton', 'Milton', 'Oakville', 'Go back to main menu']));
             }
 
             /* ─ What to bring / gear ─ */
             if (lo.match(/bring|wear|gear|equipment|skate|helmet|glove|what.*need|what.*wear|prepare/)) {
-                return typeThen(550, `Here's exactly what to bring ⛸\n\n` +
-                    `**For your first class:**\n✅ Nothing! We provide skates & gear free — just show up!\n\n` +
-                    `**For ongoing classes:**\n• 🪖 **CSA approved caged helmet** — mandatory for safety\n• 🧤 **Woolen gloves** — for warmth & safety\n• 👕 Comfortable, warm, flexible clothing\n• 🥛 Water bottle\n\n` +
-                    `**Pro tips:**\n• Arrive 15–20 minutes early (skate lacing takes time!)\n• Eat a light meal 1–2 hours before\n• Knee pads & elbow pads are optional but recommended for beginners\n\nCheck our full **Skating Guide** on the website for buying recommendations! 😊`);
+                return typeThen(550, `Here's exactly what to bring \n\n` +
+                    `**For your first class:**\n Nothing! We provide skates & gear free — just show up!\n\n` +
+                    `**For ongoing classes:**\n•  **CSA approved caged helmet** — mandatory for safety\n•  **Woolen gloves** — for warmth & safety\n•  Comfortable, warm, flexible clothing\n•  Water bottle\n\n` +
+                    `**Pro tips:**\n• Arrive 15–20 minutes early (skate lacing takes time!)\n• Eat a light meal 1–2 hours before\n• Knee pads & elbow pads are optional but recommended for beginners\n\nCheck our full **Skating Guide** on the website for buying recommendations! `);
             }
 
             /* ─ Age ─ */
             if (lo.match(/age|how old|too old|kids|children|adult|toddler|year old/)) {
-                return typeThen(500, `Any age from **3 to 55+ years** is welcome at Skating Hour! 🏒\n\n` +
-                    `• **Ages 3+** — Tots classes, patient coaches, fun environment\n• **Ages 6–17** — Kids & youth programs across all locations\n• **Adults** — Welcome at all programs, it\'s never too late!\n• **Ages 40–55** — Many adults start with us and absolutely love it!\n\n` +
-                    `Our coaches assess every skater and place them in the right group — Beginner, Intermediate, or Advanced. No experience needed to start! 😊`);
+                return typeThen(500, `Any age from **3 to 55+ years** is welcome at Skating Hour! \n\n` +
+                    `• **Ages 3+** — Tots classes, patient coaches, fun environment\n• **Ages 6–17** — Kids & youth programs across all locations\n• **Adults** — Welcome at all programs, it's never too late!\n• **Ages 40–55** — Many adults start with us and absolutely love it!\n\n` +
+                    `Our coaches assess every skater and place them in the right group — Beginner, Intermediate, or Advanced. No experience needed to start! `);
             }
 
             /* ─ Advanced program ─ */
             if (lo.match(/advanced|advance|elite|competitive|figure|hockey|power skate|edge control/)) {
-                return typeThen(600, `🏆 **Advanced Skater Programs** — Oakville (Cutting Edge)\n\n` +
+                return typeThen(600, ` **Advanced Skater Programs** — Oakville (Cutting Edge)\n\n` +
                     `**Who it's for:**\nSkaters with prior experience and a solid foundation — those ready to push to the next level.\n\n` +
                     `**Focus areas:**\n• Advanced balance & edge control\n• Power skating — strength & endurance drills\n• Speed, turns & transitions\n• Performance readiness & confidence building\n\n` +
                     `**Ideal for:** Figure skating clubs, hockey tryouts, competitive skating goals.\n\n` +
-                    `⚠️ *Coach approval required — you\'ll be assessed before joining*\n💰 Try: $40 · Drop-in: $50 · Package from $240\n👤 Ages: 5–40 depending on program\n\n` +
-                    `👉 **[Apply / Register](${REG_URL})**`);
+                    `⚠ *Coach approval required — you'll be assessed before joining*\n Try: $40 · Drop-in: $50 · Package from $240\n Ages: 5–40 depending on program\n\n` +
+                    ` **[Apply / Register](${REG_URL})**`);
             }
 
             /* ─ Drop-in / trial ─ */
             if (lo.match(/drop.?in|trial|try|first class|one class|single session|no commitment/)) {
-                return typeThen(500, `🎟️ **Drop-in / Trial Classes** — perfect way to start!\n\n` +
-                    `We give drop-in flexibility so you know exactly what you\'re getting into before committing to a full program.\n\n` +
-                    `**How it works:**\n• Try your first class for just **CAD $30**\n• ✅ Skates & gear provided FREE for first class\n• If you love it — enroll in the full 6-class program\n• No pressure, no commitment to start!\n\n` +
+                return typeThen(500, ` **Drop-in / Trial Classes** — perfect way to start!\n\n` +
+                    `We give drop-in flexibility so you know exactly what you're getting into before committing to a full program.\n\n` +
+                    `**How it works:**\n• Try your first class for just **CAD $30**\n•  Skates & gear provided FREE for first class\n• If you love it — enroll in the full 6-class program\n• No pressure, no commitment to start!\n\n` +
                     `**Pricing:**\n• Hamilton: Try $30 · Drop-in $30\n• Milton: Try $30 · Drop-in $40\n• Oakville: Try $30–$40 · Drop-in $40–$50\n\n` +
-                    `👉 **[Book a trial class](${REG_URL})**`);
+                    ` **[Book a trial class](${REG_URL})**`);
             }
 
             /* ─ Full enroll ─ */
             if (lo.match(/full.*program|full.*session|full.*package|enroll.*full|6 class/)) {
-                return typeThen(500, `🏒 **Full Program Enrollment**\n\n` +
+                return typeThen(500, ` **Full Program Enrollment**\n\n` +
                     `Our full programs run for 6 classes and offer the best value:\n\n` +
-                    `• 🏙️ Hamilton: **$180** / 6 classes\n• 🏘️ Milton: **$240** / 6 classes\n• 🏡 Oakville Regular: from **$180**\n• 🏆 Oakville Advanced: from **$240**\n\n` +
+                    `•  Hamilton: **$180** / 6 classes\n•  Milton: **$240** / 6 classes\n•  Oakville Regular: from **$180**\n•  Oakville Advanced: from **$240**\n\n` +
                     `You can start with a drop-in or trial class first, then enroll anytime!\n\n` +
-                    `👉 **[Register for Full Program](${REG_URL})**\n💬 **[WhatsApp for help](${WA_URL})**`);
+                    ` **[Register for Full Program](${REG_URL})**\n **[WhatsApp for help](${WA_URL})**`);
             }
 
             /* ─ Contact ─ */
             if (lo.match(/contact|phone|call|email|reach|whatsapp|number|get in touch/)) {
                 return typeThen(400, `You can reach Skating Hour anytime:\n\n` +
-                    `📞 **Phone:** +1 (548) 331-2200\n✉️ **Email:** contact@skatinghour.com\n💬 **WhatsApp:** [Chat with us →](${WA_URL})\n🌐 **Website:** [skatinghour.com](https://skatinghour.com)\n\nWe typically respond within a few hours! 😊`);
+                    ` **Phone:** +1 (548) 331-2200\n **Email:** contact@skatinghour.com\n **WhatsApp:** [Chat with us →](${WA_URL})\n **Website:** [skatinghour.com](https://skatinghour.com)\n\nWe typically respond within a few hours! `);
             }
 
             /* ─ Locations overview ─ */
             if (lo.match(/location|locations|where.*class|which.*city|cities|all.*location/)) {
                 return typeThen(500, `We have classes at **3 locations** across Ontario:\n\n` +
-                    `🏙️ **Hamilton** — Dave Andre Arena\n🏘️ **Milton** — Milton Skating Rink\n🏡 **Oakville** — Cutting Edge Ice Arena\n\nWhich one would you like to explore?`,
-                    () => showQR(['🏙️ Hamilton', '🏘️ Milton', '🏡 Oakville']));
+                    ` **Hamilton** — Dave Andre Arena\n **Milton** — Milton Skating Rink\n **Oakville** — Cutting Edge Ice Arena\n\nWhich one would you like to explore?`,
+                    () => showQR(['Hamilton', 'Milton', 'Oakville', 'Go back to main menu']));
             }
 
             /* ─ Coaches / staff ─ */
             if (lo.match(/coach|instructor|teacher|trainer|staff|who teach|expertise/)) {
-                return typeThen(500, `Our coaches are the heart of Skating Hour! 🏒\n\n` +
+                return typeThen(500, `Our coaches are the heart of Skating Hour! \n\n` +
                     `**What makes them special:**\n• Experienced, certified, and passionate about skating\n• Trained to work with all ages — from 3-year-olds to adults\n• Each skater is assessed and placed in the *right* level group\n• Small groups = more individual attention per skater\n• Patient, encouraging, and results-focused\n\n` +
-                    `Parents consistently say our coaches are what makes Skating Hour truly special. ⭐\n\nMany kids are gliding confidently by the end of their very first class!`);
+                    `Parents consistently say our coaches are what makes Skating Hour truly special. \n\nMany kids are gliding confidently by the end of their very first class!`);
             }
 
             /* ─ About Skating Hour ─ */
             if (lo.match(/who.*you|what.*skating hour|about skating|tell.*about|what.*do you|skatinghour/)) {
-                return typeThen(500, `**Skating Hour** — *Unlock Your Potential* 🏒\n\n` +
+                return typeThen(500, `**Skating Hour** — *Unlock Your Potential* \n\n` +
                     `*"You Book the Time. We Handle the Skating."*\n\n` +
                     `Founded in **2022**, we're Canada's premier ice skating school — offering expert lessons for all skill levels across Ontario.\n\n` +
                     `**What makes us different:**\n• Small, level-based groups (max attention for each skater)\n• Expert coaches who assess & place every skater perfectly\n• Family, beginner, and advanced programs\n• Drop-in flexibility — try before you commit!\n• Gear provided FREE for your first class\n\n` +
-                    `📍 3 locations: Hamilton · Milton · Oakville\n🌐 [skatinghour.com](https://skatinghour.com)`);
+                    ` 3 locations: Hamilton · Milton · Oakville\n [skatinghour.com](https://skatinghour.com)`);
             }
 
             /* ─ Casual Chat / Human ─ */
             if (lo.match(/are you human|are you a bot|are you real|who are you|ai/)) {
-                return typeThen(500, `Haha, yes I'm a real person! I'm Anurag, one of the coaching team here. 🏒\n\nI handle a lot of the online questions when I'm not on the rink teaching. What can I help you with today? Want to look at a class schedule near you?`,
-                    () => showQR(['📍 Locations', '💰 Pricing']));
+                return typeThen(500, `Haha, yes I'm a real person! I'm Anurag, one of the coaching team here. \n\nI handle a lot of the online questions when I'm not on the rink teaching. What can I help you with today? Want to look at a class schedule near you?`,
+                    () => showQR(['Locations', 'Pricing', 'Go back to main menu']));
             }
 
             if (lo.match(/how are you|how do you do|how r you|how's it going|what's up|whats up|how is it/)) {
                 const replies = [
-                    `I'm doing awesome, thanks for asking! Just finished up a great coaching session on the ice. ⛸️ How can I help you today?`,
-                    `Doing great! It's been a busy day at the rink but I love it here. 🏒 What can I help you find today?`,
-                    `I'm doing wonderful, thanks! 😊 Just catching up on messages between classes. How can I help you get started with us?`
+                    `I'm doing awesome, thanks for asking! Just finished up a great coaching session on the ice.  How can I help you today?`,
+                    `Doing great! It's been a busy day at the rink but I love it here.  What can I help you find today?`,
+                    `I'm doing wonderful, thanks!  Just catching up on messages between classes. How can I help you get started with us?`
                 ];
-                return typeThen(600, replies[Math.floor(Math.random() * replies.length)], () => showQR(['📍 Locations', '⛸ Register', '💰 Pricing']));
+                return typeThen(600, replies[Math.floor(Math.random() * replies.length)], () => showQR(['Locations', 'Register', 'Pricing', 'Go back to main menu']));
             }
 
             /* ─ Greetings ─ */
@@ -739,30 +697,30 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
                 const g = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
 
                 const greetings = [
-                    `${g}! 👋 Great to hear from you. I'm Anurag, one of the head coaches here.\n\nWhat can I help you with today? Want to check out some classes? 😊`,
-                    `Hey there! 👋 I'm coach Anurag. Thanks for reaching out to us at Skating Hour! \n\nAre you looking to join a class, or just looking for some info?`,
-                    `Hi! 👋 Anurag here from the coaching team. \n\nI can help you find the right class, check schedules, or sort out pricing. What's on your mind?`
+                    `${g}!  Great to hear from you. I'm Anurag, one of the head coaches here.\n\nWhat can I help you with today? Want to check out some classes? `,
+                    `Hey there!  I'm coach Anurag. Thanks for reaching out to us at Skating Hour! \n\nAre you looking to join a class, or just looking for some info?`,
+                    `Hi!  Anurag here from the coaching team. \n\nI can help you find the right class, check schedules, or sort out pricing. What's on your mind?`
                 ];
                 return typeThen(350, greetings[Math.floor(Math.random() * greetings.length)],
-                    () => showQR(['📍 Locations', '💰 Pricing', '⛸ Register', '❓ More info']));
+                    () => showQR(['Locations', 'Pricing', 'Register', 'More info', 'Go back to main menu']));
             }
 
             /* ─ Weather / Small Talk ─ */
             if (lo.match(/weather|cold|outside|indoor|outdoor/)) {
-                return typeThen(500, `Don't worry about the weather, all of our classes are held in high-quality **indoor arenas**! ❄️\n\nIt can still feel a little chilly on the ice though, so we always recommend bringing a sweater and some woolen gloves.\n\nReady to see our locations?`, () => showQR(['📍 See Locations']));
+                return typeThen(500, `Don't worry about the weather, all of our classes are held in high-quality **indoor arenas**! \n\nIt can still feel a little chilly on the ice though, so we always recommend bringing a sweater and some woolen gloves.\n\nReady to see our locations?`, () => showQR(['See Locations', 'Go back to main menu']));
             }
 
             /* ─ Thank you ─ */
             if (lo.match(/thank|thanks|thx|appreciate|helpful|great help/)) {
-                return typeThen(300, `You\'re so welcome! 😊 Happy to help anytime.\n\nIf anything else comes up — questions about classes, scheduling, or anything at all — just drop a message here. See you on the ice soon! ⛸`);
+                return typeThen(300, `You're so welcome!  Happy to help anytime.\n\nIf anything else comes up — questions about classes, scheduling, or anything at all — just drop a message here. See you on the ice soon! `);
             }
 
             /* ─ Full enroll / drop-in quick replies ─ */
             if (lo.match(/full.*session|enroll full|full program/)) {
-                return typeThen(500, `Excellent choice! 🎉 Here\'s the direct registration link:\n\n👉 **[Register for the Full Program](${REG_URL})**\n\nNeed help choosing the right class or schedule?\n💬 **[WhatsApp us](${WA_URL})**\n\nWe\'re excited to see you on the ice! ⛸`);
+                return typeThen(500, `Excellent choice!  Here's the direct registration link:\n\n **[Register for the Full Program](${REG_URL})**\n\nNeed help choosing the right class or schedule?\n **[WhatsApp us](${WA_URL})**\n\nWe're excited to see you on the ice! `);
             }
             if (lo.match(/drop.?in|trial first|try.*first/)) {
-                return typeThen(500, `Great call! 😊 Trying a class first is always a smart move.\n\n✅ **Skates & gear provided FREE for your first class!**\n\nBook your trial here:\n👉 **[Book a Trial Class](${REG_URL})**\n💬 **[WhatsApp us](${WA_URL})**\n\nAfter trying, you can easily enroll in the full program — no pressure! 🏒`);
+                return typeThen(500, `Great call!  Trying a class first is always a smart move.\n\n **Skates & gear provided FREE for your first class!**\n\nBook your trial here:\n **[Book a Trial Class](${REG_URL})**\n **[WhatsApp us](${WA_URL})**\n\nAfter trying, you can easily enroll in the full program — no pressure! `);
             }
 
             /* ─ Fallback to Live Human ─ */
@@ -778,7 +736,7 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
                     window.__adminConn = conn;
                     
                     conn.on('open', () => {
-                        botSay("✅ Connected to Live Expert. You can type your message now!");
+                        botSay(" Connected to Live Expert. You can type your message now!");
                     });
                     
                     conn.on('data', (data) => {
@@ -793,7 +751,7 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
                 });
                 
                 window.__clientPeer.on('error', (err) => {
-                    botSay("⚠️ Sorry, no experts are online right now. Please leave a message or contact us on WhatsApp!");
+                    botSay("⚠ Sorry, no experts are online right now. Please leave a message or contact us on WhatsApp!");
                     window.__liveChatMode = false;
                 });
                 
@@ -903,89 +861,73 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
         });
     
 
-        gsap.registerPlugin(ScrollTrigger);
+                                gsap.registerPlugin(ScrollTrigger);
+
+        // Ensure all triggers are calculated correctly after load
+        window.addEventListener('load', () => ScrollTrigger.refresh());
 
         let mm = gsap.matchMedia();
 
         mm.add({
             isDesktop: "(min-width: 1024px)",
             isTablet: "(min-width: 768px) and (max-width: 1023px)",
-            isMobile: "(max-width: 767px)",
-            reduceMotion: "(prefers-reduced-motion: reduce)"
+            isMobile: "(max-width: 767px)"
         }, (context) => {
-            let { isDesktop, isTablet, isMobile, reduceMotion } = context.conditions;
+            let { isMobile } = context.conditions;
 
-            if (reduceMotion) return; // Respect accessibility settings
+            // 1. Hero Content Reveal
+            gsap.from(".hero-center-box > *", {
+                y: 30,
+                opacity: 0,
+                duration: 1.2,
+                stagger: 0.2,
+                ease: "power3.out",
+                delay: 0.5
+            });
 
-            // Device-specific scaling factors for maximum performance
-            let scrubHero = isMobile ? 1 : 1.5;
-            let scrubRv = isMobile ? 1 : (isTablet ? 1.5 : 2.2);
-            let yMult = isDesktop ? 1 : (isTablet ? 0.7 : 0.35);
-            let allow3D = isDesktop; // 3D transforms only on powerful desktop GPUs
-
-            // 1. Hero Parallax
-            gsap.to(".hero-frame img", {
-                yPercent: isMobile ? 10 : 20,
-                scale: isMobile ? 1.02 : 1.05,
+            // 2. Background Parallax
+            gsap.to(".hero-bg video, .hero-bg img, .pg-hero", {
+                yPercent: isMobile ? 5 : 12,
                 ease: "none",
                 scrollTrigger: {
-                    trigger: ".pg-hero",
+                    trigger: ".hero, .pg-hero",
                     start: "top top",
                     end: "bottom top",
-                    scrub: scrubHero
+                    scrub: true
                 }
             });
 
-            // 2. Responsive Immersive Reveal
-            document.querySelectorAll('.rv').forEach(el => {
-                let startY = 80 * yMult, startX = 0, startRotX = 0, startRotY = 0, startScale = 1, startZ = 0;
-
-                if (el.classList.contains('up')) { startY = 120 * yMult; startScale = isMobile ? 1 : 0.95; startRotX = allow3D ? 10 : 0; }
-                else if (el.classList.contains('left')) { startX = -80 * yMult; startRotY = allow3D ? -15 : 0; startY = 0; }
-                else if (el.classList.contains('right')) { startX = 80 * yMult; startRotY = allow3D ? 15 : 0; startY = 0; }
-                else if (el.classList.contains('scale')) { startScale = isMobile ? 0.9 : 0.8; startY = 60 * yMult; }
-                else if (el.classList.contains('flip')) { startZ = allow3D ? -100 : 0; startRotX = allow3D ? -30 : 0; startRotY = allow3D ? 10 : 0; startY = 50 * yMult; }
-
-                gsap.set(el, {
-                    y: startY, x: startX, z: startZ,
-                    rotationX: startRotX, rotationY: startRotY,
-                    scale: startScale, opacity: 0,
-                    transformPerspective: allow3D ? 1500 : 0
-                });
-
-                gsap.to(el, {
-                    y: 0, x: 0, z: 0,
-                    rotationX: 0, rotationY: 0,
-                    scale: 1, opacity: 1,
-                    ease: isMobile ? "power2.out" : "power3.out",
+            // 3. Robust Section Reveal Engine
+            // We use a broader selector and trigger on the elements themselves for 100% reliability
+            const items = document.querySelectorAll('.rv, .cc, .lc, .rc, .fbox, .ic-col, .sec-title, .sec-eyebrow');
+            
+            items.forEach((el, i) => {
+                gsap.from(el, {
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
                     scrollTrigger: {
                         trigger: el,
-                        start: isMobile ? "top 95%" : "top 100%", // Less aggressive start on mobile
-                        end: isMobile ? "top 60%" : "top 35%",    // Shorter travel distance on mobile
-                        scrub: isMobile ? false : scrubRv,       // Disable scrub on mobile for buttery smoothness
-                        toggleActions: isMobile ? "play none none none" : undefined,
-                        once: isMobile                           // Only play once on mobile
+                        start: "top 95%", // More generous trigger point
+                        toggleActions: "play none none reverse"
                     }
                 });
             });
 
-            // 3. Floating depth card parallax (Disabled on mobile to save battery & prevent weird overlapping)
+            // 4. Subtle Parallax for Floating Orbs
             if (!isMobile) {
-                document.querySelectorAll('.hc, .cc, .lc, .mi').forEach(card => {
-                    gsap.to(card, {
-                        y: -45 * yMult,
-                        rotationZ: allow3D ? 1 : 0,
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: card,
-                            start: "top 100%",
-                            end: "bottom 0%",
-                            scrub: scrubRv
-                        }
-                    });
-                });
+                gsap.to(".orb1", { y: -120, x: 50, scrollTrigger: { trigger: "body", scrub: 1.5 } });
+                gsap.to(".orb2", { y: 120, x: -50, scrollTrigger: { trigger: "body", scrub: 1.5 } });
+                gsap.to(".orb3", { y: 60, scrollTrigger: { trigger: "body", scrub: 2 } });
             }
         });
+
+
+
+
+
+
 
         /* ══════════════════════════════════════════════
            DYNAMIC SCHEDULE RENDERING
@@ -993,7 +935,7 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
         const defaultSchedules = {
             hamilton: `<div class="ls"><strong>Saturday · 6:30 PM – 7:30 PM</strong>Mar 21, 28 · Apr 4, 11, 18, 25 · 2026</div>\n<div class="ls"><strong>Sunday · 1:00 PM | 2:00 PM | 3:00 PM</strong>Mar 22, 29 · Apr 5, 12, 19, 26 · 2026</div>`,
             milton: `<div class="ls"><strong>Friday · 3:45 AM – 4:35 AM</strong>Jan 10 – Apr 25, 2026 (every Friday)</div>`,
-            oakville: `<div class="ls"><strong>❄️ Winter · Sun 12:30 | 1:30 | 2:30 AM</strong>Jan 12 – Mar 16, 2026 · Ages 3–55</div>\n<div class="ls"><strong>🏆 Advanced · Sun 3:30 AM</strong>Jan 12 – Mar 16 · Ages 6–40 · Approval req.</div>\n<div class="ls"><strong>🌸 Spring · Sun 12:30 | 1:30 | 2:30 AM</strong>Mar 23 – May 4, 2026</div>\n<div class="ls"><strong>🏆 Spring Adv · Sun 3:30 AM</strong>Mar 23 – May 4 · Ages 5–17</div>`
+            oakville: `<div class="ls"><strong> Winter · Sun 12:30 | 1:30 | 2:30 AM</strong>Jan 12 – Mar 16, 2026 · Ages 3–55</div>\n<div class="ls"><strong> Advanced · Sun 3:30 AM</strong>Jan 12 – Mar 16 · Ages 6–40 · Approval req.</div>\n<div class="ls"><strong> Spring · Sun 12:30 | 1:30 | 2:30 AM</strong>Mar 23 – May 4, 2026</div>\n<div class="ls"><strong> Spring Adv · Sun 3:30 AM</strong>Mar 23 – May 4 · Ages 5–17</div>`
         };
 
         async function renderSchedules() {
