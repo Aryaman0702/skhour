@@ -517,11 +517,8 @@
         let aiHistory = [];
 
         async function handleMsg(text) {
-            if (window.__liveChatMode) {
-                let log = JSON.parse(localStorage.getItem('skating_live_chat_log')) || [];
-                log.push({sender: 'user', text: text});
-                localStorage.setItem('skating_live_chat_log', JSON.stringify(log));
-                window.__liveChatLen = log.length;
+            if (window.__liveChatMode && window.__adminConn && window.__adminConn.open) {
+                window.__adminConn.send(text);
                 return;
             }
             const t = text.trim(), lo = t.toLowerCase();
@@ -751,34 +748,36 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
             /* ─ Fallback to Live Human ─ */
             if (!window.__liveChatMode) {
                 window.__liveChatMode = true;
-                localStorage.setItem('skating_live_chat_status', 'requested');
-                let log = [];
-                log.push({sender: 'system', text: 'Live chat connected. Waiting for agent...'});
-                localStorage.setItem('skating_live_chat_log', JSON.stringify(log));
-                window.__liveChatLen = log.length;
                 
-                setInterval(() => {
-                    if(!window.__liveChatMode) return;
+                typeThen(600, `Connecting you with a live expert... Please wait a moment.`);
+                
+                window.__clientPeer = new Peer();
+                
+                window.__clientPeer.on('open', (id) => {
+                    const conn = window.__clientPeer.connect('skating-hour-admin-v1');
+                    window.__adminConn = conn;
                     
-                    let currStatus = localStorage.getItem('skating_live_chat_status');
-                    if (currStatus === 'ended') {
+                    conn.on('open', () => {
+                        botSay("✅ Connected to Live Expert. You can type your message now!");
+                    });
+                    
+                    conn.on('data', (data) => {
+                        botSay(data);
+                    });
+                    
+                    conn.on('close', () => {
+                        botSay("❌ The live expert has disconnected. Returning to automated bot.");
                         window.__liveChatMode = false;
-                        botSay("The agent has ended the session. Chatbot is back inline!");
-                        return;
-                    }
-                    
-                    let cLog = JSON.parse(localStorage.getItem('skating_live_chat_log')) || [];
-                    if (cLog.length > window.__liveChatLen) {
-                        for (let i = window.__liveChatLen; i < cLog.length; i++) {
-                            if (cLog[i].sender === 'admin') {
-                                botSay(cLog[i].text);
-                            }
-                        }
-                        window.__liveChatLen = cLog.length;
-                    }
-                }, 1000);
+                        window.__adminConn = null;
+                    });
+                });
                 
-                return typeThen(600, `I am diverting you to an expert to help you out... Please wait a moment.`);
+                window.__clientPeer.on('error', (err) => {
+                    botSay("⚠️ Sorry, no experts are online right now. Please leave a message or contact us on WhatsApp!");
+                    window.__liveChatMode = false;
+                });
+                
+                return;
             }
         }
 

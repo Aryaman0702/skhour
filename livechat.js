@@ -2,52 +2,69 @@ if (localStorage.getItem('skating_admin_auth') !== 'true') {
     window.location.href = 'login.html';
 }
 
-let lastLogLen = 0;
+const ind = document.getElementById('chat-indicator');
+const statTxt = document.getElementById('chat-stat-txt');
+const box = document.getElementById('live-chat-box');
+
+let peer = null;
+let activeConnections = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    setInterval(pollChat, 1000);
-    pollChat();
+    initPeer();
 });
 
-function pollChat() {
-    let status = localStorage.getItem('skating_live_chat_status');
-    const ind = document.getElementById('chat-indicator');
-    const statTxt = document.getElementById('chat-stat-txt');
-    
-    if (status === 'requested') {
+function initPeer() {
+    // Fixed ID for the admin node
+    peer = new Peer('skating-hour-admin-v1');
+
+    peer.on('open', (id) => {
         ind.className = 'chat-status active';
-        ind.innerText = 'Live';
-        statTxt.innerText = '- Customer is connected and waiting!';
-    } else {
-        ind.className = 'chat-status';
-        ind.innerText = 'Offline';
-        statTxt.innerText = '(Waiting for customer requests...)';
-        lastLogLen = 0;
-        return;
-    }
-    
-    let log = JSON.parse(localStorage.getItem('skating_live_chat_log')) || [];
-    if (log.length > lastLogLen) {
-        renderChat(log);
-        lastLogLen = log.length;
-    }
+        ind.innerText = 'Online';
+        statTxt.innerText = '- Waiting for customers...';
+    });
+
+    peer.on('connection', (conn) => {
+        activeConnections.push(conn);
+        statTxt.innerText = `- ${activeConnections.length} Customer(s) connected!`;
+        
+        // Announce
+        appendMsg('sys', `User connected (${conn.peer})`);
+        
+        conn.on('data', (data) => {
+            appendMsg('user', data);
+        });
+
+        conn.on('close', () => {
+            activeConnections = activeConnections.filter(c => c !== conn);
+            statTxt.innerText = activeConnections.length > 0 
+                ? `- ${activeConnections.length} Customer(s) connected!`
+                : '- Waiting for customers...';
+            appendMsg('sys', `User disconnected (${conn.peer})`);
+        });
+    });
+
+    peer.on('error', (err) => {
+        console.error(err);
+        if(err.type === 'unavailable-id') {
+            statTxt.innerText = '- Admin tab already open elsewhere!';
+            ind.className = 'chat-status';
+            ind.style.background = '#ff4757';
+        } else {
+            statTxt.innerText = '- Connection error. Retrying...';
+            setTimeout(initPeer, 5000);
+        }
+    });
 }
 
-function renderChat(log) {
-    const box = document.getElementById('live-chat-box');
-    box.innerHTML = '';
+function appendMsg(sender, text) {
+    let div = document.createElement('div');
+    div.className = 'cmsg';
+    if (sender === 'user') div.classList.add('msg-user');
+    else if (sender === 'admin') div.classList.add('msg-admin');
+    else div.classList.add('msg-sys');
     
-    log.forEach(msg => {
-        let div = document.createElement('div');
-        div.className = 'cmsg';
-        if (msg.sender === 'user') div.classList.add('msg-user');
-        else if (msg.sender === 'admin') div.classList.add('msg-admin');
-        else div.classList.add('msg-sys');
-        
-        div.innerText = msg.text;
-        box.appendChild(div);
-    });
-    
+    div.innerText = text;
+    box.appendChild(div);
     box.scrollTop = box.scrollHeight;
 }
 
@@ -56,23 +73,23 @@ function sendAdminMsg() {
     const txt = inp.value.trim();
     if (!txt) return;
     
-    let status = localStorage.getItem('skating_live_chat_status');
-    if (status !== 'requested') {
-        alert("No active session to reply to!");
+    if (activeConnections.length === 0) {
+        alert("No customers connected to reply to!");
         return;
     }
     
-    let log = JSON.parse(localStorage.getItem('skating_live_chat_log')) || [];
-    log.push({sender: 'admin', text: txt});
-    localStorage.setItem('skating_live_chat_log', JSON.stringify(log));
+    // Broadcast to all active connections
+    activeConnections.forEach(conn => {
+        conn.send(txt);
+    });
+    
+    appendMsg('admin', txt);
     inp.value = '';
-    pollChat();
 }
 
 function endSession() {
-    localStorage.setItem('skating_live_chat_status', 'ended');
-    localStorage.setItem('skating_live_chat_log', '[]');
-    let box = document.getElementById('live-chat-box');
-    box.innerHTML = '<div class="cmsg msg-sys">Session ended by admin.</div>';
-    lastLogLen = 0;
+    activeConnections.forEach(conn => conn.close());
+    activeConnections = [];
+    appendMsg('sys', 'You disconnected all users.');
+    statTxt.innerText = '- Waiting for customers...';
 }
