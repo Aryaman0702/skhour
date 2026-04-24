@@ -304,6 +304,7 @@
         }, { passive: true }); // passive true drastically improves scroll performance
 
         function doParallax() {
+            if (window.innerWidth < 768) { ticking = false; return; } // Disable heavy parallax on mobile
             const sy = window.scrollY;
 
             // Hero orbs drift
@@ -339,7 +340,7 @@
         ══════════════════════════════════════════════ */
         let skatesFell = false;
         function triggerRainingSkates() {
-            if (skatesFell) return;
+            if (skatesFell || window.innerWidth < 768) return;
             skatesFell = true; // only trigger once
             
             const numSkates = 15;
@@ -961,7 +962,9 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
                         trigger: el,
                         start: isMobile ? "top 95%" : "top 100%", // Less aggressive start on mobile
                         end: isMobile ? "top 60%" : "top 35%",    // Shorter travel distance on mobile
-                        scrub: scrubRv
+                        scrub: isMobile ? false : scrubRv,       // Disable scrub on mobile for buttery smoothness
+                        toggleActions: isMobile ? "play none none none" : undefined,
+                        once: isMobile                           // Only play once on mobile
                     }
                 });
             });

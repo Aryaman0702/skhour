@@ -1753,6 +1753,22 @@
             border: none;
         }
 
+        .vw-shorts {
+            position: relative;
+            padding-bottom: 177.78%; /* 9:16 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .vw-shorts iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         .v-lbl {
             padding: .85rem 1.2rem;
             font-size: .65rem;
@@ -4008,3 +4024,8 @@
         width: 100%;
     }
 }
+        @media (max-width: 767px) {
+            #cur, #cur-ring { display: none !important; }
+            body { cursor: auto !important; }
+            .hero- مركز-box { max-width: 100% !important; }
+        }
