@@ -502,7 +502,7 @@
         .bg-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(150deg, rgba(238,243,255,0.15) 0%, rgba(255,255,255,0.4) 40%, rgba(238,243,255,0.4) 70%, rgba(255,255,255,0.15) 100%);
+            background: linear-gradient(150deg, rgba(15,20,35,0.6) 0%, rgba(15,20,35,0.85) 40%, rgba(15,20,35,0.85) 70%, rgba(15,20,35,0.6) 100%);
             /* backdrop-filter removed because blurring a dynamic video murders GPU performance, causing freezing/lag */
             z-index: 1;
         }
@@ -521,6 +521,7 @@
             position: absolute;
             border-radius: 50%;
             pointer-events: none;
+            will-change: transform;
         }
 
         .orb1 {

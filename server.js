@@ -22,7 +22,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname), { extensions: ['html'] }));
 
 // Explicit fallback for root URL
 app.get('/', (req, res) => {

@@ -4,11 +4,11 @@ const bcrypt = require('bcryptjs');
 const DB_FILE = './database.json';
 
 const salt = bcrypt.genSaltSync(10);
-const hash = bcrypt.hashSync('123', salt);
+const hash = bcrypt.hashSync('12345678', salt);
 
 const initialDB = {
     admins: {
-        "admin": hash
+        "skatinghour": hash
     },
     enquiries: [],
     settings: {}
