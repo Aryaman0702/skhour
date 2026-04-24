@@ -3977,3 +3977,33 @@
     .h1-em { font-size: 2.2rem !important; }
     .stats-in { grid-template-columns: 1fr 1fr !important; gap: 2rem !important; }
 }
+
+/* ══════════════════════════════════════
+   ADMIN PAGES RESPONSIVE DESIGN
+══════════════════════════════════════ */
+@media (max-width: 768px) {
+    .admin-wrap {
+        margin: 100px 15px 40px !important;
+        padding: 1.5rem !important;
+    }
+    .admin-title {
+        font-size: 2.5rem !important;
+    }
+    .chat-container {
+        height: 70vh !important;
+    }
+    .chat-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    .chat-input-area {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem !important;
+    }
+    .chat-input-area button {
+        padding: 0.8rem !important;
+        width: 100%;
+    }
+}
