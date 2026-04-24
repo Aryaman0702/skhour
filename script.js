@@ -3,17 +3,14 @@
         /* ══════════════════════════════════════════════
            INTRO COOL ANIMATION (FAST SKATE)
         ══════════════════════════════════════════════ */
-        (function() {
+                (function() {
             const overlay = document.getElementById('intro-overlay');
             if (!overlay) return;
-            // lock scroll temporarily
             document.body.style.overflow = 'hidden';
-            
-            // Hide after animation finishes
             setTimeout(() => {
-                overlay.style.transition = 'opacity 0.4s, visibility 0.4s';
+                overlay.style.transition = 'opacity 0.6s ease, visibility 0.6s';
                 overlay.classList.add('hidden');
-                document.body.style.overflow = ''; // unlock scroll
+                document.body.style.overflow = '';
             }, 3600);
         })();
 
@@ -433,7 +430,7 @@
             });
         }
 
-        /* ══════════════════════════════════════════════
+                /* ══════════════════════════════════════════════
            CHATBOT — AI-style, answers freely
            Greets → asks location once → shows all details
            Answers questions like ChatGPT / Gemini
@@ -453,22 +450,22 @@
         function initChat() {
             CB.started = true;
             const bar = document.getElementById('connBar'), txt = document.getElementById('connTxt');
-            botSay("Welcome to **Skating Hour Experts**! We're really glad you're here.");
-            botSay(" **5 coaches are online** — please wait while we connect you with someone...");
+            botSay("Welcome to **Skating Hour Experts**!");
+            botSay(" **5 coaches are online** — please wait while we connect you...");
             let d = 0;
-            const iv = setInterval(() => { d = (d + 1) % 4; txt.textContent = 'Connecting you with an expert' + '.'.repeat(d + 1); }, 500);
+            const iv = setInterval(() => { d = (d + 1) % 4; txt.textContent = 'Connecting' + '.'.repeat(d + 1); }, 500);
             setTimeout(() => {
                 clearInterval(iv);
                 bar.style.display = 'none';
                 document.getElementById('agentBar').style.display = 'flex';
                 setTimeout(() => botSay("You're now connected!"), 300);
                 setTimeout(() => {
-                    const h = new Date().getHours();
-                    const g = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
-                    botSay(`**${g}!**  I'm **Anurag**, your dedicated Skating Consultant at Skating Hour.\n\nI'm here to help you find the perfect skating program and get registered today. Our classes fill up extremely fast, so let's get you set up!\n\nWhat are you looking to enroll in today: **Roller Skates** or **Ice Skating**?`);
-                    showQR(['Roller Skates', 'Ice Skating', 'Locations', 'Pricing', 'General info']);
-                }, 1500);
-            }, 3800);
+                    botSay(`I'm **Anurag**, your Skating Consultant.
+
+What city are you looking to enroll in today for our **Summer Roller Skating** sessions?`);
+                    showQR(['Milton', 'Mississauga', 'Oakville', 'Brampton', 'Pricing']);
+                }, 1000);
+            }, 3000);
         }
 
         function sendMsg() {
@@ -482,34 +479,30 @@
             handleMsg(txt);
         }
 
-        const AI_API_KEY = "YOUR_GEMINI_API_KEY"; // ⚠ IMPORTANT: Get your free API key from https://aistudio.google.com/
+        const AI_API_KEY = "YOUR_GEMINI_API_KEY";
         let aiHistory = [];
 
-        async function handleMsg(text) {
+                async function handleMsg(text) {
             if (window.__liveChatMode) {
-                if (window.__adminConn && window.__adminConn.open) {
-                    window.__adminConn.send(text);
-                } else {
-                    botSay("⚠ Still connecting... please wait for the connection to complete.");
-                }
+                if (window.__adminConn && window.__adminConn.open) { window.__adminConn.send(text); }
+                else { botSay("⚠ Still connecting..."); }
                 return;
             }
             const t = text.trim(), lo = t.toLowerCase();
 
-            //  REAL AI CHATBOT LOGIC
             if (AI_API_KEY !== "YOUR_GEMINI_API_KEY") {
                 showTyping();
                 aiHistory.push({ role: "user", parts: [{ text: text }] });
                 try {
-                    const sysPrompt = `You are Coach Anurag, a highly professional Skating Consultant and proactive sales expert at Skating Hour. 
-Your ultimate goal is to convert the user and convince them to click the registration link TODAY.
-Details to know:
-- We offer Roller Skating (Derby, Disco, Family) and Ice Skating.
-- Locations: Hamilton, Milton, Oakville.
-- Pricing: Trial is $30 CAD. Drop-in is $40 CAD. 6-class packages range between $180-$240 CAD.
-- All ages welcome (3-55+). Skates and safety gear are provided completely FREE for the first class.
-Be extremely polite, consultative, but highly persuasive. Listen to their needs and recommend the best fit. Always include a strong call-to-action to register using [this link](${REG_URL}) or message us on WhatsApp [here](${WA_URL}). Use Markdown for formatting but keep conversations natural and concise.`;
-
+                    const sysPrompt = `You are Coach Anurag. Goal: Roller Skating (June-August 2026).
+- Milton (Sports Centre): Tue 6-7 PM. Spring: Jun 2-30. Summer: Jul 7-Aug 25.
+- Mississauga: Burnhamthorpe (Tue 6-7 PM), Valley CC (Thu 6-7 PM).
+- Oakville (Glen Abbey): Wed 6-7 PM, Fri 6-7 PM.
+- Brampton (TallPine): Wed 5:30/6:30 PM.
+- Scarborough (Agincourt): Wed 5:30/6:30 PM.
+- Kitchener (Don McLaurin): Thu 6-7 PM.
+- Burlington (Appleby/Mountainside): Fri 6-7 PM.
+Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
                     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${AI_API_KEY}`, {
                         method: "POST", headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ systemInstruction: { role: "system", parts: [{ text: sysPrompt }] }, contents: aiHistory })
@@ -518,255 +511,103 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
                     if (data.candidates && data.candidates[0].content) {
                         const reply = data.candidates[0].content.parts[0].text;
                         aiHistory.push({ role: "model", parts: [{ text: reply }] });
-                        removeTyping();
-                        botSay(reply);
-                        return;
+                        removeTyping(); botSay(reply); return;
                     }
-                } catch (e) {
-                    console.error("AI Chatbot Error: ", e);
-                    removeTyping();
-                    // Fallback to hardcoded script if AI fails
-                }
+                } catch (e) { removeTyping(); }
             }
 
-            /* ─ Go Back to Main Menu ─ */
-            if (lo.match(/go back to main menu|main menu|previous menu/)) {
-                return typeThen(500, `Here is the main menu:`, () => showQR(['Roller Skates', 'Ice Skating', 'Locations', 'Pricing', 'General info']));
+            if (lo.match(/go back to main menu|main menu/)) {
+                return typeThen(300, `Main menu:`, () => showQR(['Milton', 'Mississauga', 'Oakville', 'Brampton', 'Scarborough', 'More Cities', 'Pricing']));
+            }
+            
+            if (lo.match(/mississauga/)) {
+                return typeThen(400, `**Mississauga Sessions**
+
+**Venue 1:** Burnhamthorpe CC
+**Time:** Tue 6:00 PM – 7:00 PM
+**Dates:** Spring (Jun 2-30) · Summer (Jul 7-Aug 25)
+
+**Venue 2:** Mississauga Valley CC
+**Time:** Thu 6:00 PM – 7:00 PM
+**Dates:** Spring (Jun 4-Jul 2) · Summer (Jul 9-Aug 27)
+
+**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/milton/)) {
+                return typeThen(400, `**Milton — Milton Sports Centre**
+
+**Time:** Tuesday 6:00 PM – 7:00 PM
+**Dates:** Spring (Jun 2-30) · Summer (Jul 7-Aug 25)
+
+**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/oakville/)) {
+                return typeThen(400, `**Oakville — Glen Abbey Community Centre**
+
+**Session 1:** Wed 6:00 PM – 7:00 PM
+**Dates:** Jun 10 - Aug 26
+
+**Session 2:** Fri 6:00 PM – 7:00 PM
+**Dates:** Jun 5 - Aug 21
+
+**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/brampton/)) {
+                return typeThen(400, `**Brampton — TallPine School**
+
+**Time:** Wednesday 5:30 PM & 6:30 PM slots
+**Dates:** Spring (Jun 10-24) · Summer (Jul 8-Aug 26)
+
+**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/scarborough/)) {
+                return typeThen(400, `**Scarborough — Agincourt Recreation Centre**
+
+**Time:** Wednesday 5:30 PM & 6:30 PM slots
+**Dates:** Spring (Jun 3-24) · Summer (Jul 8-Aug 26)
+
+**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/kitchener/)) {
+                return typeThen(400, `**Kitchener — Don McLaurin Arena**
+
+**Time:** Thursday 6:00 PM – 7:00 PM
+**Dates:** Spring (Jun 11-Jul 2) · Summer (Jul 9-Aug 20)
+
+**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/burlington/)) {
+                return typeThen(400, `**Burlington — Appleby/Mountainside**
+
+**Time:** Friday 6:00 PM – 7:00 PM
+**Dates:** Spring (Jun 12-Jul 3) · Summer (Jul 10-Aug 28)
+
+**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/price|pricing|cost/)) {
+                return typeThen(400, `**Pricing Overview**
+
+• **Trial Class**: CAD $30 (1st class only)
+• **Drop-in**: CAD $40
+• **Full Program**: $180 - $240 (6 classes)
+
+**Gear is FREE** for your very first class!`, () => showQR(['Locations', 'Register', 'Main Menu']));
             }
 
-            /* ─ Roller vs Ice ─ */
-            if (lo.match(/roller skate|roller|quad/)) {
-                return typeThen(500, ` **Roller Skating Sessions**\n\nOur Roller Skating classes are incredibly popular right now! They are perfect for all ages and skill levels, from Roller Derby Basics to Family Sessions.\n\nSpots are strictly limited, so I highly recommend securing yours now before they sell out.\n\n **[Secure Your Spot - Register Now](${REG_URL})**`, () => showQR(['Locations', 'Pricing', 'Ice Skating instead', 'Go back to main menu']));
-            }
-            if (lo.match(/ice skate|ice skating/)) {
-                return typeThen(500, ` **Ice Skating Lessons**\n\nWe offer Canada's top-rated ice skating programs across 3 premier locations for all skill levels (Beginner to Advanced).\n\nLet's get you registered — which city works best for you?`, () => showQR(['Hamilton', 'Milton', 'Oakville', 'Go back to main menu']));
-            }
-
-            /* ─ Location detection ─ */
-            if (lo.match(/hamilton|dave andre|ancaster|dundas|stoney creek/)) {
-                return typeThen(600, ` **Hamilton — Dave Andre Arena**\n\n` +
-                    `**Saturday Classes**\n 6:30 PM – 7:30 PM\n Mar 21, 28 · Apr 4, 11, 18, 25, 2026\n Try: $30 · Drop-in: **$30** · 6-class package: **$180**\n\n` +
-                    `**Sunday Classes — 3 Time Slots**\n 1:00 PM | 2:00 PM | 3:00 PM\n Mar 22, 29 · Apr 5, 12, 19, 26, 2026\n Try: $30 · Drop-in: **$30** · 6-class package: **$180**\n\n` +
-                    ` All ages welcome · ⏱ 60 min sessions\n Skates & gear provided FREE for first class!\n\n` +
-                    `Would you like to enroll in the **full program** or try a **drop-in class** first?\n\n` +
-                    ` **[Register / Book Now](${REG_URL})**\n **[WhatsApp us](${WA_URL})**`,
-                    () => showQR(['Enroll full program', 'Try drop-in first', 'Pricing', 'Full schedule', 'Go back to main menu']));
-            }
-
-            if (lo.match(/\bmilton\b/)) {
-                return typeThen(600, ` **Milton — Milton Skating Rink**\n\n` +
-                    `**Winter Program — Friday Classes**\n 3:45 AM – 4:35 AM · Every Friday\n Jan 10 – Apr 25, 2026\n Try: **CAD $30** · Drop-in: **$40** · 6-class package: **$240**\n\n` +
-                    ` All ages welcome · ⏱ 50 min sessions\n Skates & gear provided FREE for first class!\n\n` +
-                    `Would you like to register?\n\n` +
-                    ` **[Register / Book Now](${REG_URL})**\n **[WhatsApp us](${WA_URL})**`,
-                    () => showQR(['Register now', 'Try drop-in', 'Pricing', 'All locations', 'Go back to main menu']));
-            }
-
-            if (lo.match(/oakville|cutting edge/)) {
-                return typeThen(600, ` **Oakville — Cutting Edge Ice Arena**\n\n` +
-                    `** Winter Program** (Jan 12 – Mar 16, 2026) · Ages 3–55\n 12:30 AM | 1:30 AM | 2:30 AM · Sundays\n Try: $30 · Drop-in: **$40** · Package: **$240**\n\n` +
-                    `** Winter Advanced** (Jan 12 – Mar 16) · Ages 6–40\n 3:30 AM · Sundays · *Coach approval required*\n Try: $40 · Drop-in: **$50** · Package: **$320**\n\n` +
-                    `** Spring Program** (Mar 23 – May 4, 2026)\n 12:30 AM | 1:30 AM | 2:30 AM · Sundays\n Try: $30 · Drop-in: **$40** · Package: **$180**\n\n` +
-                    `** Spring Advanced** (Mar 23 – May 4) · Ages 5–17\n 3:30 AM · Sundays · *Coach approval required*\n Try: $40 · Drop-in: **$50** · Package: **$240**\n\n` +
-                    ` Skates & gear FREE for first class!\n\n` +
-                    ` **[Register / Book Now](${REG_URL})**\n **[WhatsApp us](${WA_URL})**`,
-                    () => showQR(['Register now', 'Advanced program', 'All pricing', 'All locations', 'Go back to main menu']));
-            }
-
-            /* ─ Register / Enroll / Book ─ */
-            if (lo.match(/register|enroll|book|sign up|join|how do i register|where.*register|where.*enroll|where.*book/)) {
-                return typeThen(500, `Ready to skate?  Here's how to register:\n\n` +
-                    `First — **which location are you interested in?**\n\n` +
-                    ` **Hamilton** — Dave Andre Arena\n **Milton** — Milton Skating Rink\n **Oakville** — Cutting Edge Arena\n\n` +
-                    `Once you pick your location, you can register directly here:\n\n` +
-                    ` **[Register on ClassCard — skatinghour.classcard.app](${REG_URL})**\n\n` +
-                    `Or contact us directly:\n **[WhatsApp: +1 (548) 331-2200](${WA_URL})**\n\nSpots fill up fast — don't wait! `,
-                    () => showQR(['Hamilton', 'Milton', 'Oakville', 'Go back to main menu']));
-            }
-
-            /* ─ Pricing ─ */
-            if (lo.match(/price|cost|fee|how much|pricing|cad|\$|charge|expensive|cheap|money/)) {
-                return typeThen(600, `Here's a **complete pricing overview** \n\n` +
-                    ` **Hamilton** — Dave Andre Arena\n• Try (1st class): CAD **$30** · Drop-in: **$30** · 6-class pkg: **$180**\n\n` +
-                    ` **Milton**\n• Try: CAD **$30** · Drop-in: **$40** · 6-class pkg: **$240**\n\n` +
-                    ` **Oakville** — Regular Programs\n• Try: CAD **$30** · Drop-in: **$40** · Package: from **$180**\n\n` +
-                    ` **Oakville Advanced Programs**\n• Try: CAD **$40** · Drop-in: **$50** · Package: from **$240**\n\n` +
-                    `---\n **Drop-in Flexibility:** Try a class first — no commitment! Skates & gear are FREE for your first class. Love it? Enroll in the full program anytime.`,
-                    () => showQR(['Hamilton details', 'Milton details', 'Oakville details', 'Register now', 'Go back to main menu']));
-            }
-
-            /* ─ Schedule ─ */
-            if (lo.match(/schedule|when|dates|saturday|sunday|friday|time slot|upcoming|calendar/)) {
-                return typeThen(600, ` **Class Schedules — All Locations**\n\n` +
-                    ` **Hamilton** (Dave Andre Arena)\n• Sat 6:30–7:30 PM · Mar 21–Apr 25, 2026\n• Sun 1:00 | 2:00 | 3:00 PM · Mar 22–Apr 26, 2026\n\n` +
-                    ` **Milton**\n• Fri 3:45–4:35 AM · Jan 10–Apr 25, 2026\n\n` +
-                    ` **Oakville** (Cutting Edge)\n• Winter: Sun 12:30|1:30|2:30|3:30 AM · Jan 12–Mar 16\n• Spring: Sun 12:30|1:30|2:30|3:30 AM · Mar 23–May 4\n\nWant details for a specific location?`,
-                    () => showQR(['Hamilton', 'Milton', 'Oakville', 'Go back to main menu']));
-            }
-
-            /* ─ What to bring / gear ─ */
-            if (lo.match(/bring|wear|gear|equipment|skate|helmet|glove|what.*need|what.*wear|prepare/)) {
-                return typeThen(550, `Here's exactly what to bring \n\n` +
-                    `**For your first class:**\n Nothing! We provide skates & gear free — just show up!\n\n` +
-                    `**For ongoing classes:**\n•  **CSA approved caged helmet** — mandatory for safety\n•  **Woolen gloves** — for warmth & safety\n•  Comfortable, warm, flexible clothing\n•  Water bottle\n\n` +
-                    `**Pro tips:**\n• Arrive 15–20 minutes early (skate lacing takes time!)\n• Eat a light meal 1–2 hours before\n• Knee pads & elbow pads are optional but recommended for beginners\n\nCheck our full **Skating Guide** on the website for buying recommendations! `);
-            }
-
-            /* ─ Age ─ */
-            if (lo.match(/age|how old|too old|kids|children|adult|toddler|year old/)) {
-                return typeThen(500, `Any age from **3 to 55+ years** is welcome at Skating Hour! \n\n` +
-                    `• **Ages 3+** — Tots classes, patient coaches, fun environment\n• **Ages 6–17** — Kids & youth programs across all locations\n• **Adults** — Welcome at all programs, it's never too late!\n• **Ages 40–55** — Many adults start with us and absolutely love it!\n\n` +
-                    `Our coaches assess every skater and place them in the right group — Beginner, Intermediate, or Advanced. No experience needed to start! `);
-            }
-
-            /* ─ Advanced program ─ */
-            if (lo.match(/advanced|advance|elite|competitive|figure|hockey|power skate|edge control/)) {
-                return typeThen(600, ` **Advanced Skater Programs** — Oakville (Cutting Edge)\n\n` +
-                    `**Who it's for:**\nSkaters with prior experience and a solid foundation — those ready to push to the next level.\n\n` +
-                    `**Focus areas:**\n• Advanced balance & edge control\n• Power skating — strength & endurance drills\n• Speed, turns & transitions\n• Performance readiness & confidence building\n\n` +
-                    `**Ideal for:** Figure skating clubs, hockey tryouts, competitive skating goals.\n\n` +
-                    `⚠ *Coach approval required — you'll be assessed before joining*\n Try: $40 · Drop-in: $50 · Package from $240\n Ages: 5–40 depending on program\n\n` +
-                    ` **[Apply / Register](${REG_URL})**`);
-            }
-
-            /* ─ Drop-in / trial ─ */
-            if (lo.match(/drop.?in|trial|try|first class|one class|single session|no commitment/)) {
-                return typeThen(500, ` **Drop-in / Trial Classes** — perfect way to start!\n\n` +
-                    `We give drop-in flexibility so you know exactly what you're getting into before committing to a full program.\n\n` +
-                    `**How it works:**\n• Try your first class for just **CAD $30**\n•  Skates & gear provided FREE for first class\n• If you love it — enroll in the full 6-class program\n• No pressure, no commitment to start!\n\n` +
-                    `**Pricing:**\n• Hamilton: Try $30 · Drop-in $30\n• Milton: Try $30 · Drop-in $40\n• Oakville: Try $30–$40 · Drop-in $40–$50\n\n` +
-                    ` **[Book a trial class](${REG_URL})**`);
-            }
-
-            /* ─ Full enroll ─ */
-            if (lo.match(/full.*program|full.*session|full.*package|enroll.*full|6 class/)) {
-                return typeThen(500, ` **Full Program Enrollment**\n\n` +
-                    `Our full programs run for 6 classes and offer the best value:\n\n` +
-                    `•  Hamilton: **$180** / 6 classes\n•  Milton: **$240** / 6 classes\n•  Oakville Regular: from **$180**\n•  Oakville Advanced: from **$240**\n\n` +
-                    `You can start with a drop-in or trial class first, then enroll anytime!\n\n` +
-                    ` **[Register for Full Program](${REG_URL})**\n **[WhatsApp for help](${WA_URL})**`);
-            }
-
-            /* ─ Contact ─ */
-            if (lo.match(/contact|phone|call|email|reach|whatsapp|number|get in touch/)) {
-                return typeThen(400, `You can reach Skating Hour anytime:\n\n` +
-                    ` **Phone:** +1 (548) 331-2200\n **Email:** contact@skatinghour.com\n **WhatsApp:** [Chat with us →](${WA_URL})\n **Website:** [skatinghour.com](https://skatinghour.com)\n\nWe typically respond within a few hours! `);
-            }
-
-            /* ─ Locations overview ─ */
-            if (lo.match(/location|locations|where.*class|which.*city|cities|all.*location/)) {
-                return typeThen(500, `We have classes at **3 locations** across Ontario:\n\n` +
-                    ` **Hamilton** — Dave Andre Arena\n **Milton** — Milton Skating Rink\n **Oakville** — Cutting Edge Ice Arena\n\nWhich one would you like to explore?`,
-                    () => showQR(['Hamilton', 'Milton', 'Oakville', 'Go back to main menu']));
-            }
-
-            /* ─ Coaches / staff ─ */
-            if (lo.match(/coach|instructor|teacher|trainer|staff|who teach|expertise/)) {
-                return typeThen(500, `Our coaches are the heart of Skating Hour! \n\n` +
-                    `**What makes them special:**\n• Experienced, certified, and passionate about skating\n• Trained to work with all ages — from 3-year-olds to adults\n• Each skater is assessed and placed in the *right* level group\n• Small groups = more individual attention per skater\n• Patient, encouraging, and results-focused\n\n` +
-                    `Parents consistently say our coaches are what makes Skating Hour truly special. \n\nMany kids are gliding confidently by the end of their very first class!`);
-            }
-
-            /* ─ About Skating Hour ─ */
-            if (lo.match(/who.*you|what.*skating hour|about skating|tell.*about|what.*do you|skatinghour/)) {
-                return typeThen(500, `**Skating Hour** — *Unlock Your Potential* \n\n` +
-                    `*"You Book the Time. We Handle the Skating."*\n\n` +
-                    `Founded in **2022**, we're Canada's premier ice skating school — offering expert lessons for all skill levels across Ontario.\n\n` +
-                    `**What makes us different:**\n• Small, level-based groups (max attention for each skater)\n• Expert coaches who assess & place every skater perfectly\n• Family, beginner, and advanced programs\n• Drop-in flexibility — try before you commit!\n• Gear provided FREE for your first class\n\n` +
-                    ` 3 locations: Hamilton · Milton · Oakville\n [skatinghour.com](https://skatinghour.com)`);
-            }
-
-            /* ─ Casual Chat / Human ─ */
-            if (lo.match(/are you human|are you a bot|are you real|who are you|ai/)) {
-                return typeThen(500, `Haha, yes I'm a real person! I'm Anurag, one of the coaching team here. \n\nI handle a lot of the online questions when I'm not on the rink teaching. What can I help you with today? Want to look at a class schedule near you?`,
-                    () => showQR(['Locations', 'Pricing', 'Go back to main menu']));
-            }
-
-            if (lo.match(/how are you|how do you do|how r you|how's it going|what's up|whats up|how is it/)) {
-                const replies = [
-                    `I'm doing awesome, thanks for asking! Just finished up a great coaching session on the ice.  How can I help you today?`,
-                    `Doing great! It's been a busy day at the rink but I love it here.  What can I help you find today?`,
-                    `I'm doing wonderful, thanks!  Just catching up on messages between classes. How can I help you get started with us?`
-                ];
-                return typeThen(600, replies[Math.floor(Math.random() * replies.length)], () => showQR(['Locations', 'Register', 'Pricing', 'Go back to main menu']));
-            }
-
-            /* ─ Greetings ─ */
-            if (/^(hi+|hello|hey|howdy|hii+|sup|yo|good morning|good afternoon|good evening|greetings)[\s!?.]*$/i.test(lo)) {
-                const h = new Date().getHours();
-                const g = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
-
-                const greetings = [
-                    `${g}!  Great to hear from you. I'm Anurag, one of the head coaches here.\n\nWhat can I help you with today? Want to check out some classes? `,
-                    `Hey there!  I'm coach Anurag. Thanks for reaching out to us at Skating Hour! \n\nAre you looking to join a class, or just looking for some info?`,
-                    `Hi!  Anurag here from the coaching team. \n\nI can help you find the right class, check schedules, or sort out pricing. What's on your mind?`
-                ];
-                return typeThen(350, greetings[Math.floor(Math.random() * greetings.length)],
-                    () => showQR(['Locations', 'Pricing', 'Register', 'More info', 'Go back to main menu']));
-            }
-
-            /* ─ Weather / Small Talk ─ */
-            if (lo.match(/weather|cold|outside|indoor|outdoor/)) {
-                return typeThen(500, `Don't worry about the weather, all of our classes are held in high-quality **indoor arenas**! \n\nIt can still feel a little chilly on the ice though, so we always recommend bringing a sweater and some woolen gloves.\n\nReady to see our locations?`, () => showQR(['See Locations', 'Go back to main menu']));
-            }
-
-            /* ─ Thank you ─ */
-            if (lo.match(/thank|thanks|thx|appreciate|helpful|great help/)) {
-                return typeThen(300, `You're so welcome!  Happy to help anytime.\n\nIf anything else comes up — questions about classes, scheduling, or anything at all — just drop a message here. See you on the ice soon! `);
-            }
-
-            /* ─ Full enroll / drop-in quick replies ─ */
-            if (lo.match(/full.*session|enroll full|full program/)) {
-                return typeThen(500, `Excellent choice!  Here's the direct registration link:\n\n **[Register for the Full Program](${REG_URL})**\n\nNeed help choosing the right class or schedule?\n **[WhatsApp us](${WA_URL})**\n\nWe're excited to see you on the ice! `);
-            }
-            if (lo.match(/drop.?in|trial first|try.*first/)) {
-                return typeThen(500, `Great call!  Trying a class first is always a smart move.\n\n **Skates & gear provided FREE for your first class!**\n\nBook your trial here:\n **[Book a Trial Class](${REG_URL})**\n **[WhatsApp us](${WA_URL})**\n\nAfter trying, you can easily enroll in the full program — no pressure! `);
-            }
-
-            /* ─ Fallback to Live Human ─ */
             if (!window.__liveChatMode) {
                 window.__liveChatMode = true;
-                
-                typeThen(600, `Connecting you with a live expert... Please wait a moment.`);
-                
-                window.__clientPeer = new Peer();
-                
-                window.__clientPeer.on('open', (id) => {
-                    const conn = window.__clientPeer.connect('sh-admin-livechat-aryaman-702', { reliable: true });
-                    window.__adminConn = conn;
-                    
-                    conn.on('open', () => {
-                        botSay(" Connected to Live Expert. You can type your message now!");
-                    });
-                    
-                    conn.on('data', (data) => {
-                        botSay(data);
-                    });
-                    
-                    conn.on('close', () => {
-                        botSay("❌ The live expert has disconnected. Returning to automated bot.");
-                        window.__liveChatMode = false;
-                        window.__adminConn = null;
-                    });
-                });
-                
-                window.__clientPeer.on('error', (err) => {
-                    botSay("⚠ Sorry, no experts are online right now. Please leave a message or contact us on WhatsApp!");
-                    window.__liveChatMode = false;
-                });
-                
-                return;
+                return typeThen(500, `Connecting you with a live expert...`, () => botSay("Please wait a moment."));
             }
         }
 
-        /* ── Chat UI Helpers ── */
         function typeThen(delay, text, cb) {
             setTimeout(() => {
                 showTyping();
-                const t = Math.min(1500 + text.length * 20, 3800);
-                setTimeout(() => { removeTyping(); botSay(text); if (cb) cb(); }, t);
+                setTimeout(() => { removeTyping(); botSay(text); if (cb) cb(); }, 1000);
             }, delay);
         }
+
+        
 
         function botSay(text) {
             const m = document.getElementById('chMsgs');
@@ -932,10 +773,16 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
         /* ══════════════════════════════════════════════
            DYNAMIC SCHEDULE RENDERING
         ══════════════════════════════════════════════ */
-        const defaultSchedules = {
-            hamilton: `<div class="ls"><strong>Saturday · 6:30 PM – 7:30 PM</strong>Mar 21, 28 · Apr 4, 11, 18, 25 · 2026</div>\n<div class="ls"><strong>Sunday · 1:00 PM | 2:00 PM | 3:00 PM</strong>Mar 22, 29 · Apr 5, 12, 19, 26 · 2026</div>`,
-            milton: `<div class="ls"><strong>Friday · 3:45 AM – 4:35 AM</strong>Jan 10 – Apr 25, 2026 (every Friday)</div>`,
-            oakville: `<div class="ls"><strong> Winter · Sun 12:30 | 1:30 | 2:30 AM</strong>Jan 12 – Mar 16, 2026 · Ages 3–55</div>\n<div class="ls"><strong> Advanced · Sun 3:30 AM</strong>Jan 12 – Mar 16 · Ages 6–40 · Approval req.</div>\n<div class="ls"><strong> Spring · Sun 12:30 | 1:30 | 2:30 AM</strong>Mar 23 – May 4, 2026</div>\n<div class="ls"><strong> Spring Adv · Sun 3:30 AM</strong>Mar 23 – May 4 · Ages 5–17</div>`
+                const defaultSchedules = {
+            milton: `<div class="ls"><strong>Tue 6-7 PM</strong>Spring: Jun 2-30 · Summer: Jul 7-Aug 25</div>`,
+            mississauga: `<div class="ls"><strong>Tue 6-7 PM (Burnhamthorpe)</strong>Jun 2-Aug 25</div>
+<div class="ls"><strong>Thu 6-7 PM (Valley CC)</strong>Jun 4-Aug 27</div>`,
+            oakville: `<div class="ls"><strong>Wed 6-7 PM</strong>Jun 10-Aug 26</div>
+<div class="ls"><strong>Fri 6-7 PM</strong>Jun 5-Aug 21</div>`,
+            brampton: `<div class="ls"><strong>Wed 5:30 & 6:30 PM</strong>Jun 10-Aug 26</div>`,
+            scarborough: `<div class="ls"><strong>Wed 5:30 & 6:30 PM</strong>Jun 3-Aug 26</div>`,
+            kitchener: `<div class="ls"><strong>Thu 6-7 PM</strong>Jun 11-Aug 20</div>`,
+            burlington: `<div class="ls"><strong>Fri 6-7 PM</strong>Jun 12-Aug 28</div>`
         };
 
         async function renderSchedules() {
