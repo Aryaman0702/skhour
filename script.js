@@ -207,6 +207,14 @@
                 nav.classList.remove('mob-open');
             }
         }
+        
+        // Close mobile nav when clicking a link
+        document.querySelectorAll('#nav-ul .nl').forEach(link => {
+            link.addEventListener('click', () => {
+                mobOpen = false;
+                document.getElementById('nav').classList.remove('mob-open');
+            });
+        });
 
         /* ══════════════════════════════════════════════
            PAGE ROUTING
@@ -402,7 +410,19 @@
             enquiries.push(data);
             localStorage.setItem('skating_enquiries', JSON.stringify(enquiries));
             
-            // Simulate network delay to keep the UI feedback realistic
+            // Route the form data to WhatsApp since there is no backend server
+            let text = `New Enquiry from Website:\n`;
+            if (data._subject) text += `Subject: ${data._subject}\n`;
+            if (data.name) text += `Name: ${data.name}\n`;
+            if (data.phone) text += `Phone: ${data.phone}\n`;
+            if (data.email) text += `Email: ${data.email}\n`;
+            if (data.location) text += `Location: ${data.location}\n`;
+            if (data.participants) text += `Participants: ${data.participants}\n`;
+            if (data.message) text += `Message: ${data.message}\n`;
+            
+            const waUrl = `https://wa.me/15483312200?text=${encodeURIComponent(text)}`;
+            window.open(waUrl, '_blank');
+            
             setTimeout(() => {
                 if (onSuccess) onSuccess({ success: "true" });
             }, 600);
