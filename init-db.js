@@ -1,44 +1,22 @@
-const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 const bcrypt = require('bcryptjs');
 
-const db = new sqlite3.Database('./database.sqlite');
+const DB_FILE = './database.json';
 
-db.serialize(() => {
-    // Create Admins Table
-    db.run(`CREATE TABLE IF NOT EXISTS admins (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE,
-        password TEXT
-    )`);
+const salt = bcrypt.genSaltSync(10);
+const hash = bcrypt.hashSync('123', salt);
 
-    // Create Admin User (Default Password: "123")
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync('123', salt);
-    
-    db.get("SELECT id FROM admins WHERE username = 'admin'", (err, row) => {
-        if (!row) {
-            db.run("INSERT INTO admins (username, password) VALUES (?, ?)", ['admin', hash]);
-        }
-    });
+const initialDB = {
+    admins: {
+        "admin": hash
+    },
+    enquiries: [],
+    settings: {}
+};
 
-    // Create Enquiries Table
-    db.run(`CREATE TABLE IF NOT EXISTS enquiries (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        subject TEXT,
-        name TEXT,
-        phone TEXT,
-        email TEXT,
-        location TEXT,
-        participants TEXT,
-        message TEXT,
-        date TEXT
-    )`);
-
-    // Create Settings Table for Schedules
-    db.run(`CREATE TABLE IF NOT EXISTS settings (
-        key TEXT PRIMARY KEY,
-        value TEXT
-    )`);
-
-    console.log("Database initialized successfully!");
-});
+if (!fs.existsSync(DB_FILE)) {
+    fs.writeFileSync(DB_FILE, JSON.stringify(initialDB, null, 2), 'utf8');
+    console.log("JSON Database initialized successfully!");
+} else {
+    console.log("JSON Database already exists.");
+}
