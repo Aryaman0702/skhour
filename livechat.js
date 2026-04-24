@@ -1,8 +1,7 @@
-if (localStorage.getItem('skating_admin_auth') !== 'true') {
+const token = localStorage.getItem('skating_admin_auth_token');
+if (!token) {
     window.location.href = 'login.html';
-}
-
-const ind = document.getElementById('chat-indicator');
+}const ind = document.getElementById('chat-indicator');
 const statTxt = document.getElementById('chat-stat-txt');
 const box = document.getElementById('live-chat-box');
 
