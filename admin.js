@@ -1,8 +1,8 @@
-if (localStorage.getItem('skating_admin_auth') !== 'true') {
+const token = localStorage.getItem('skating_admin_auth_token');
+if (!token) {
     window.location.href = 'login.html';
 }
 
-// Initial Data Seed
 const initialClasses = [
     { id: '1', location: 'Hamilton', venue: 'Dave Andre Arena, Hamilton', sessions: 'Saturday', timing: '6:30 PM – 7:30 PM', date: 'Mar 21, 28 · Apr 4, 11, 18, 25 · 2026' },
     { id: '2', location: 'Hamilton', venue: 'Dave Andre Arena, Hamilton', sessions: 'Sunday', timing: '1:00 PM | 2:00 PM | 3:00 PM', date: 'Mar 22, 29 · Apr 5, 12, 19, 26 · 2026' },
@@ -13,20 +13,33 @@ const initialClasses = [
     { id: '7', location: 'Oakville', venue: 'Cutting Edge Ice Arena, Oakville', sessions: '🏆 Spring Adv · Sun', timing: '3:30 AM', date: 'Mar 23 – May 4 · Ages 5–17' }
 ];
 
-let classes;
-try {
-    classes = JSON.parse(localStorage.getItem('skating_classes')) || initialClasses;
-} catch (e) {
-    console.error("Error parsing classes:", e);
-    classes = initialClasses;
-}
+let classes = [];
 
-// DOM Elements
 const classListContainer = document.getElementById('class-list-container');
 const modalOverlay = document.getElementById('modal-overlay');
 const classForm = document.getElementById('class-form');
 const modalTitle = document.getElementById('modal-title');
 const adminMsg = document.getElementById('admin-msg');
+
+async function loadClasses() {
+    try {
+        const res = await fetch('/api/schedules', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) throw new Error('Unauthorized');
+        const data = await res.json();
+        classes = data || initialClasses;
+        renderClasses();
+    } catch(e) {
+        console.error("Error loading classes:", e);
+        classes = initialClasses;
+        renderClasses();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadClasses();
+});
 
 function renderClasses() {
     classListContainer.innerHTML = '';
@@ -36,7 +49,6 @@ function renderClasses() {
         return;
     }
 
-    // Sort classes by location then by date/day
     const sortedClasses = [...classes].sort((a, b) => a.location.localeCompare(b.location));
 
     sortedClasses.forEach(c => {
@@ -92,7 +104,7 @@ modalOverlay.onclick = (e) => {
     if (e.target === modalOverlay) closeModal();
 };
 
-classForm.onsubmit = (e) => {
+classForm.onsubmit = async (e) => {
     e.preventDefault();
     
     const id = document.getElementById('form-id').value;
@@ -106,15 +118,13 @@ classForm.onsubmit = (e) => {
     };
 
     if (id) {
-        // Update
         const index = classes.findIndex(c => c.id === id);
         if (index !== -1) classes[index] = classData;
     } else {
-        // Add
         classes.push(classData);
     }
 
-    save();
+    await save();
     closeModal();
     renderClasses();
     showMsg('Class saved successfully!');
@@ -133,28 +143,21 @@ function editClass(id) {
     openModal(id);
 }
 
-function save() {
-    localStorage.setItem('skating_classes', JSON.stringify(classes));
-    // Also build the legacy HTML strings for the frontend for backward compatibility
-    syncToLegacyFormat();
-}
-
-function syncToLegacyFormat() {
-    const legacySchedules = {
-        hamilton: '',
-        milton: '',
-        oakville: ''
-    };
-
-    classes.forEach(c => {
-        const html = `<div class="ls"><strong>${c.sessions} · ${c.timing}</strong>${c.date}</div>\n`;
-        const key = c.location.toLowerCase();
-        if (legacySchedules.hasOwnProperty(key)) {
-            legacySchedules[key] += html;
-        }
-    });
-
-    localStorage.setItem('skating_schedules', JSON.stringify(legacySchedules));
+async function save() {
+    try {
+        const res = await fetch('/api/schedules', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(classes)
+        });
+        if (!res.ok) throw new Error('Failed to save');
+    } catch(e) {
+        console.error(e);
+        alert('Failed to save to database!');
+    }
 }
 
 function showMsg(text) {
@@ -165,12 +168,6 @@ function showMsg(text) {
     }, 3000);
 }
 
-// Initial render
-document.addEventListener('DOMContentLoaded', () => {
-    renderClasses();
-});
-
-// Expose functions to global scope for onclick handlers
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.editClass = editClass;

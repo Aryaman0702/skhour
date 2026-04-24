@@ -1,13 +1,25 @@
-if (localStorage.getItem('skating_admin_auth') !== 'true') {
-    window.location.href = 'login.html';
-}
+const token = localStorage.getItem('skating_admin_auth_token');
+if (!token) window.location.href = 'login.html';
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderEnquiries();
+    fetchEnquiries();
 });
 
-function renderEnquiries() {
-    let enquiries = JSON.parse(localStorage.getItem('skating_enquiries')) || [];
+async function fetchEnquiries() {
+    try {
+        const res = await fetch('/api/enquiries', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) throw new Error('Unauthorized');
+        const enquiries = await res.json();
+        renderEnquiries(enquiries);
+    } catch(e) {
+        console.error(e);
+        window.location.href = 'login.html';
+    }
+}
+
+function renderEnquiries(enquiries) {
     const tbody = document.getElementById('enquiries-body');
     if (!tbody) return;
     
@@ -19,19 +31,22 @@ function renderEnquiries() {
     tbody.innerHTML = enquiries.map(e => `
         <tr style="border-bottom: 1px solid #dce4f5;">
             <td style="padding: 0.8rem 0.5rem; font-size:0.75rem; color:#3d5280; white-space:nowrap;">${e.date || '-'}</td>
-            <td style="padding: 0.8rem 0.5rem; font-weight:600; font-size:0.85rem;">${e._subject || e.name || '-'}</td>
+            <td style="padding: 0.8rem 0.5rem; font-weight:600; font-size:0.85rem;">${e.subject || e.name || '-'}</td>
             <td style="padding: 0.8rem 0.5rem; font-size:0.85rem;">${e.phone || '-'}</td>
             <td style="padding: 0.8rem 0.5rem; font-size:0.85rem;"><a style="color:#0f4cdb; text-decoration:none;" href="mailto:${e.email}">${e.email || '-'}</a></td>
             <td style="padding: 0.8rem 0.5rem; font-size:0.85rem;">${e.location || '-'}</td>
             <td style="padding: 0.8rem 0.5rem; font-size:0.85rem;">${e.participants || '-'}</td>
             <td style="padding: 0.8rem 0.5rem; font-size:0.8rem; color:#666;">${e.message || '-'}</td>
         </tr>
-    `).reverse().join('');
+    `).join('');
 }
 
-function clearEnquiries() {
+async function clearEnquiries() {
     if (confirm('Are you sure you want to clear all database entries?')) {
-        localStorage.removeItem('skating_enquiries');
-        renderEnquiries();
+        await fetch('/api/enquiries', {
+            method: 'DELETE',
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        fetchEnquiries();
     }
 }

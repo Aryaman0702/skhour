@@ -404,28 +404,23 @@
         /* ══════════════════════════════════════════════
            FORM SUBMIT
         ══════════════════════════════════════════════ */
-        function sendEmail(data, onSuccess, onError) {
-            let enquiries = JSON.parse(localStorage.getItem('skating_enquiries')) || [];
-            data.date = new Date().toLocaleString();
-            enquiries.push(data);
-            localStorage.setItem('skating_enquiries', JSON.stringify(enquiries));
-            
-            // Route the form data to WhatsApp since there is no backend server
-            let text = `New Enquiry from Website:\n`;
-            if (data._subject) text += `Subject: ${data._subject}\n`;
-            if (data.name) text += `Name: ${data.name}\n`;
-            if (data.phone) text += `Phone: ${data.phone}\n`;
-            if (data.email) text += `Email: ${data.email}\n`;
-            if (data.location) text += `Location: ${data.location}\n`;
-            if (data.participants) text += `Participants: ${data.participants}\n`;
-            if (data.message) text += `Message: ${data.message}\n`;
-            
-            const waUrl = `https://wa.me/15483312200?text=${encodeURIComponent(text)}`;
-            window.open(waUrl, '_blank');
-            
-            setTimeout(() => {
-                if (onSuccess) onSuccess({ success: "true" });
-            }, 600);
+        async function sendEmail(data, onSuccess, onError) {
+            try {
+                const res = await fetch('/api/enquiries', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (res.ok) {
+                    if (onSuccess) onSuccess({ success: "true" });
+                } else {
+                    if (onError) onError();
+                }
+            } catch(e) {
+                console.error(e);
+                if (onError) onError();
+            }
         }
 
         function fSubmit(prefix) {
@@ -998,43 +993,46 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
             oakville: `<div class="ls"><strong>❄️ Winter · Sun 12:30 | 1:30 | 2:30 AM</strong>Jan 12 – Mar 16, 2026 · Ages 3–55</div>\n<div class="ls"><strong>🏆 Advanced · Sun 3:30 AM</strong>Jan 12 – Mar 16 · Ages 6–40 · Approval req.</div>\n<div class="ls"><strong>🌸 Spring · Sun 12:30 | 1:30 | 2:30 AM</strong>Mar 23 – May 4, 2026</div>\n<div class="ls"><strong>🏆 Spring Adv · Sun 3:30 AM</strong>Mar 23 – May 4 · Ages 5–17</div>`
         };
 
-        function renderSchedules() {
-            const classes = JSON.parse(localStorage.getItem('skating_classes'));
-            
-            // If new structured data exists, use it
-            if (classes && Array.isArray(classes)) {
-                const cities = ['Hamilton', 'Milton', 'Oakville'];
-                cities.forEach(city => {
-                    const citySess = document.getElementById(`sess-${city.toLowerCase()}`);
-                    const cityVenue = document.getElementById(`venue-${city.toLowerCase()}`);
-                    
-                    const cityClasses = classes.filter(c => c.location === city);
-                    
-                    if (citySess) {
-                        if (cityClasses.length > 0) {
-                            citySess.innerHTML = cityClasses.map(c => 
-                                `<div class="ls"><strong>${c.sessions} · ${c.timing}</strong>${c.date}</div>`
-                            ).join('\n');
+        async function renderSchedules() {
+            try {
+                const res = await fetch('/api/schedules');
+                if (res.ok) {
+                    const classes = await res.json();
+                    if (classes && Array.isArray(classes)) {
+                        const cities = ['Hamilton', 'Milton', 'Oakville'];
+                        cities.forEach(city => {
+                            const citySess = document.getElementById(`sess-${city.toLowerCase()}`);
+                            const cityVenue = document.getElementById(`venue-${city.toLowerCase()}`);
                             
-                            // Update venue from the first class of that city
-                            if (cityVenue && cityClasses[0].venue) {
-                                cityVenue.textContent = cityClasses[0].venue;
+                            const cityClasses = classes.filter(c => c.location === city);
+                            
+                            if (citySess) {
+                                if (cityClasses.length > 0) {
+                                    citySess.innerHTML = cityClasses.map(c => 
+                                        `<div class="ls"><strong>${c.sessions} · ${c.timing}</strong>${c.date}</div>`
+                                    ).join('\n');
+                                    
+                                    if (cityVenue && cityClasses[0].venue) {
+                                        cityVenue.textContent = cityClasses[0].venue;
+                                    }
+                                } else {
+                                    citySess.innerHTML = '<div class="ls">No sessions currently scheduled.</div>';
+                                }
                             }
-                        } else {
-                            citySess.innerHTML = '<div class="ls">No sessions currently scheduled.</div>';
-                        }
+                        });
+                        return;
                     }
-                });
-            } else {
-                // Fallback to legacy format
-                let schedules = JSON.parse(localStorage.getItem('skating_schedules')) || defaultSchedules;
-                const ham = document.getElementById('sess-hamilton');
-                if (ham) ham.innerHTML = schedules.hamilton;
-                const mil = document.getElementById('sess-milton');
-                if (mil) mil.innerHTML = schedules.milton;
-                const oak = document.getElementById('sess-oakville');
-                if (oak) oak.innerHTML = schedules.oakville;
-            }
+                }
+            } catch(e) { console.error(e); }
+
+            // Fallback to defaults
+            let schedules = defaultSchedules;
+            const ham = document.getElementById('sess-hamilton');
+            if (ham) ham.innerHTML = schedules.hamilton;
+            const mil = document.getElementById('sess-milton');
+            if (mil) mil.innerHTML = schedules.milton;
+            const oak = document.getElementById('sess-oakville');
+            if (oak) oak.innerHTML = schedules.oakville;
         }
         document.addEventListener('DOMContentLoaded', renderSchedules);
 
