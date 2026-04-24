@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initPeer() {
     // Fixed ID for the admin node
-    peer = new Peer('skating-hour-admin-v1');
+    peer = new Peer('sh-admin-livechat-aryaman-702');
 
     peer.on('open', (id) => {
         ind.className = 'chat-status active';

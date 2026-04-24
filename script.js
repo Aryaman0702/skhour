@@ -517,8 +517,12 @@
         let aiHistory = [];
 
         async function handleMsg(text) {
-            if (window.__liveChatMode && window.__adminConn && window.__adminConn.open) {
-                window.__adminConn.send(text);
+            if (window.__liveChatMode) {
+                if (window.__adminConn && window.__adminConn.open) {
+                    window.__adminConn.send(text);
+                } else {
+                    botSay("⚠️ Still connecting... please wait for the connection to complete.");
+                }
                 return;
             }
             const t = text.trim(), lo = t.toLowerCase();
@@ -754,7 +758,7 @@ Be extremely polite, consultative, but highly persuasive. Listen to their needs 
                 window.__clientPeer = new Peer();
                 
                 window.__clientPeer.on('open', (id) => {
-                    const conn = window.__clientPeer.connect('skating-hour-admin-v1');
+                    const conn = window.__clientPeer.connect('sh-admin-livechat-aryaman-702', { reliable: true });
                     window.__adminConn = conn;
                     
                     conn.on('open', () => {
