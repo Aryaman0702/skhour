@@ -463,7 +463,7 @@
                     botSay(`I'm **Anurag**, your Skating Consultant.
 
 What city are you looking to enroll in today for our **Summer Roller Skating** sessions?`);
-                    showQR(['Milton', 'Mississauga', 'Oakville', 'Brampton', 'Pricing']);
+                    showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Pricing']);
                 }, 1000);
             }, 3000);
         }
@@ -517,7 +517,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
 
             if (lo.match(/go back to main menu|main menu/)) {
-                return typeThen(300, `Main menu:`, () => showQR(['Milton', 'Mississauga', 'Oakville', 'Brampton', 'Scarborough', 'More Cities', 'Pricing']));
+                return typeThen(300, `Main menu:`, () => showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Scarborough', 'More Cities', 'Pricing']));
             }
             
             if (lo.match(/mississauga/)) {
