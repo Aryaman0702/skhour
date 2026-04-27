@@ -99,56 +99,7 @@
             }
         });
 
-        /* ══════════════════════════════════════════════
-           NAVIGATION SCROLL + SMOOTH SCROLL SKATER
-        ══════════════════════════════════════════════ */
-        let targetSkaterY = -100;
-        let currentSkaterY = -100;
-        let targetSwayX = 0;
-        let currentSwayX = 0;
-        let targetRot = 15;
-        let currentRot = 15;
 
-        const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
-
-        window.addEventListener('scroll', () => {
-            const sy = window.scrollY;
-            // Nav
-            document.getElementById('nav').classList.toggle('scrolled', sy > 60);
-
-            // Calculate Skater target values
-            const skater = document.getElementById('scroll-skater');
-            if (skater) {
-                const winH = window.innerHeight;
-                const docH = document.documentElement.scrollHeight;
-                const maxScroll = Math.max(docH - winH, 1);
-
-                const scrollPct = Math.min(Math.max(sy / maxScroll, 0), 1);
-
-                // Apply an ease-out curve so the skater enters the visible screen much earlier
-                const earlyPct = Math.pow(scrollPct, 0.4);
-
-                // Target position and rotation based on early scroll percent
-                targetSkaterY = -20 + (earlyPct * (winH + 120));
-                targetSwayX = Math.sin(sy * 0.01) * 20;
-                targetRot = Math.sin(sy * 0.02) * 15 + 15;
-            }
-        });
-
-        // Render loop for smooth butter-like animation
-        function renderSkater() {
-            const skater = document.getElementById('scroll-skater');
-            if (skater) {
-                currentSkaterY = lerp(currentSkaterY, targetSkaterY, 0.08);
-                currentSwayX = lerp(currentSwayX, targetSwayX, 0.08);
-                currentRot = lerp(currentRot, targetRot, 0.08);
-
-                skater.style.transform = `translate(${currentSwayX}px, ${currentSkaterY}px)`;
-                skater.querySelector('img').style.transform = `rotate(${currentRot}deg)`;
-            }
-            requestAnimationFrame(renderSkater);
-        }
-        renderSkater();
 
         /* MOBILE NAV */
         let mobOpen = false;
@@ -259,6 +210,9 @@
 
         let ticking = false;
         window.addEventListener('scroll', () => {
+            // Nav
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+
             if (!ticking) {
                 window.requestAnimationFrame(doParallax);
                 ticking = true;
@@ -292,55 +246,12 @@
                 heroDesc.style.opacity = Math.max(0, 1 - sy * .002);
             }
 
-            if (sy > 20) triggerRainingSkates();
+
 
             ticking = false;
         }
 
-        /* ══════════════════════════════════════════════
-           FALLING SKATES ON FIRST SCROLL
-        ══════════════════════════════════════════════ */
-        let skatesFell = false;
-        function triggerRainingSkates() {
-            if (skatesFell || window.innerWidth < 768) return;
-            skatesFell = true; // only trigger once
-            
-            const numSkates = 15;
-            for (let i = 0; i < numSkates; i++) {
-                const skate = document.createElement('div');
-                skate.className = 'falling-skate';
-                
-                // Distributed mostly from left to right
-                const leftPos = (i / numSkates) * 100 + (Math.random() * 5);
-                skate.style.left = leftPos + 'vw';
-                
-                // Randomize sizes
-                const size = 60 + Math.random() * 70;
-                skate.style.width = size + 'px';
-                
-                // Randomize rotations
-                const startRot = (Math.random() - 0.5) * 60;
-                const endRot = startRot + (Math.random() > 0.5 ? 200 : -200);
-                skate.style.setProperty('--r-start', startRot + 'deg');
-                skate.style.setProperty('--r-end', endRot + 'deg');
-                
-                // Randomize delay and duration 
-                const delay = Math.random() * 1.5;
-                const dur = 2.5 + Math.random() * 2.0;
-                skate.style.animation = `fallDownSkates ${dur}s ease-in ${delay}s forwards`;
-                
-                // Image
-                const img = document.createElement('img');
-                img.src = 'images/ice-ice-skating-quad-skates-roller-skating-roller-rink-shoe-music-logo-png-clipart-removebg-preview.png';
-                skate.appendChild(img);
-                document.body.appendChild(skate);
-                
-                // Cleanup after animation finishes
-                setTimeout(() => {
-                    if (document.body.contains(skate)) skate.remove();
-                }, (dur + delay) * 1000 + 500);
-            }
-        }
+
 
         /* ══════════════════════════════════════════════
            FAQ ACCORDION

@@ -34,7 +34,7 @@
         body {
             background: var(--wh);
             color: var(--tx);
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Kanit', sans-serif;
             overflow-x: hidden;
             cursor: none;
         }
@@ -122,29 +122,7 @@
 
         
 
-        .falling-skate img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 15px 25px rgba(15, 76, 219, 0.3));
-        }
-
-        @keyframes fallDownSkates {
-            0% {
-                transform: translateY(0) rotate(var(--r-start));
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(120vh) rotate(var(--r-end));
-                opacity: 0;
-            }
-        }
+        
 
         /* ── CURSOR ── */
         #cur {
@@ -305,7 +283,7 @@
         }
 
         .logo-main {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.55rem;
             letter-spacing: .1em;
             color: var(--dk);
@@ -664,7 +642,7 @@
         }
 
         .hero h1 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: clamp(3.8rem, 6.5vw, 7.2rem);
             line-height: .88;
             letter-spacing: .03em;
@@ -676,7 +654,7 @@
 
         .h1-em {
             display: block;
-            font-family: 'DM Serif Display', serif;
+            font-family: 'Kanit', sans-serif;
             font-style: italic;
             font-size: clamp(3rem, 5.5vw, 6rem);
             color: var(--bl);
@@ -688,6 +666,7 @@
             font-size: 1.05rem;
             line-height: 1.8;
             color: #000;
+            font-family: 'Kanit', sans-serif;
             font-weight: 500;
             max-width: 500px;
             margin: 1.8rem 0;
@@ -729,6 +708,7 @@
         .hs span {
             font-size: 1.05rem;
             color: #000;
+            font-family: 'Kanit', sans-serif;
             font-weight: 600;
             text-shadow: 0 2px 10px rgba(255,255,255,0.95), 0 0 4px #fff;
         }
@@ -750,6 +730,7 @@
             color: #fff;
             text-decoration: none;
             font-size: .76rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 700;
             letter-spacing: .2em;
             text-transform: uppercase;
@@ -793,6 +774,7 @@
             color: var(--bl);
             text-decoration: none;
             font-size: .74rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 700;
             letter-spacing: .16em;
             text-transform: uppercase;
@@ -822,6 +804,7 @@
             align-items: center;
             gap: .5rem;
             font-size: .74rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 500;
             color: var(--tx2);
         }
@@ -933,6 +916,7 @@
             padding: .85rem 1.5rem;
             color: #fff;
             font-size: .62rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 700;
             letter-spacing: .18em;
             text-transform: uppercase;
@@ -965,7 +949,7 @@
         }
 
         .hstat-num {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 2rem;
             line-height: 1;
             letter-spacing: .05em;
@@ -981,6 +965,7 @@
 
         .hstat-lbl {
             font-size: .56rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .14em;
             text-transform: uppercase;
             color: var(--tx3);
@@ -1009,6 +994,7 @@
 
         .scroll-hint p {
             font-size: .52rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .28em;
             text-transform: uppercase;
             color: var(--tx3);
@@ -1107,6 +1093,7 @@
             letter-spacing: .2em;
             text-transform: uppercase;
             color: #fff;
+            font-family: 'Kanit', sans-serif;
             font-weight: 600;
             transform: translateY(100%);
             transition: transform .35s;
@@ -1155,7 +1142,7 @@
         }
 
         .stat-n {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 3.5rem;
             letter-spacing: .06em;
             line-height: 1;
@@ -1167,6 +1154,7 @@
 
         .stat-l {
             font-size: .6rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .24em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, .45);
@@ -1222,6 +1210,7 @@
             align-items: center;
             gap: .7rem;
             font-size: .58rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 700;
             letter-spacing: .3em;
             text-transform: uppercase;
@@ -1262,7 +1251,7 @@
         }
 
         .sec-title {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: clamp(2.4rem, 4.5vw, 4rem);
             color: var(--dk);
             line-height: .92;
@@ -1276,6 +1265,7 @@
         .sec-sub {
             font-size: .92rem;
             color: var(--tx2);
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
             line-height: 1.85;
             margin-top: .8rem;
@@ -1339,7 +1329,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.7rem;
             letter-spacing: .05em;
             margin-bottom: 1.8rem;
@@ -1353,7 +1343,7 @@
         }
 
         .hc h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.45rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -1364,6 +1354,7 @@
             font-size: .86rem;
             color: var(--tx2);
             line-height: 1.82;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
         }
 
@@ -1377,6 +1368,7 @@
         .pill {
             padding: .5rem 1.2rem;
             font-size: .74rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 600;
             border: 1.5px solid;
             transition: all .3s;
@@ -1481,6 +1473,7 @@
             display: inline-block;
             padding: .28rem .8rem;
             font-size: .56rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .2em;
             text-transform: uppercase;
             font-weight: 700;
@@ -1507,7 +1500,7 @@
         }
 
         .cc h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.45rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -1518,6 +1511,7 @@
             font-size: .83rem;
             color: var(--tx2);
             line-height: 1.82;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
             margin-bottom: 1.4rem;
         }
@@ -1530,6 +1524,7 @@
             background: linear-gradient(135deg, var(--bl), var(--bl2));
             color: #fff;
             font-size: .68rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 700;
             letter-spacing: .16em;
             text-transform: uppercase;
@@ -1584,7 +1579,7 @@
         }
 
         .cta-band h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.9rem;
             letter-spacing: .05em;
             color: #fff;
@@ -1596,6 +1591,7 @@
             font-size: .82rem;
             color: rgba(255, 255, 255, .7);
             margin-top: .3rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
             position: relative;
             z-index: 1;
@@ -1606,6 +1602,7 @@
             background: #fff;
             color: var(--bl);
             font-size: .76rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 700;
             letter-spacing: .18em;
             text-transform: uppercase;
@@ -1686,6 +1683,7 @@
 
         .mi-cap span {
             font-size: .6rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .22em;
             text-transform: uppercase;
             color: #fff;
@@ -1749,6 +1747,7 @@
         .v-lbl {
             padding: .85rem 1.2rem;
             font-size: .65rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .16em;
             text-transform: uppercase;
             color: var(--tx3);
@@ -1789,7 +1788,7 @@
             position: absolute;
             top: -1.5rem;
             left: 1.4rem;
-            font-family: 'DM Serif Display', serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 11rem;
             color: rgba(15, 76, 219, .1);
             line-height: 1;
@@ -1827,6 +1826,7 @@
             font-size: .86rem;
             color: rgba(255, 255, 255, .7);
             line-height: 1.92;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
             font-style: italic;
             margin-bottom: 1.5rem;
@@ -1834,6 +1834,7 @@
 
         .rc-auth {
             font-size: .6rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .18em;
             text-transform: uppercase;
         }
@@ -1864,7 +1865,7 @@
         }
 
         .fbox h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.75rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -1875,6 +1876,7 @@
             font-size: .78rem;
             color: var(--tx3);
             margin-bottom: 2rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
             letter-spacing: .06em;
         }
@@ -1899,6 +1901,7 @@
 
         label {
             font-size: .56rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .22em;
             text-transform: uppercase;
             color: var(--tx3);
@@ -1911,7 +1914,7 @@
             background: #f6f8ff;
             border: 1.5px solid rgba(15, 76, 219, .11);
             color: var(--tx);
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: .88rem;
             padding: .85rem 1rem;
             outline: none;
@@ -1941,7 +1944,7 @@
             background: linear-gradient(135deg, var(--or), var(--or2));
             color: #fff;
             border: none;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: .78rem;
             font-weight: 700;
             letter-spacing: .22em;
@@ -1966,6 +1969,7 @@
             font-size: .82rem;
             text-align: center;
             display: none;
+            font-family: 'Kanit', sans-serif;
             font-weight: 600;
         }
 
@@ -2005,6 +2009,7 @@
 
         .ic-lbl {
             font-size: .56rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .24em;
             text-transform: uppercase;
             color: var(--bl);
@@ -2015,6 +2020,7 @@
         .ic-val {
             font-size: .88rem;
             color: var(--tx2);
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
             line-height: 1.6;
         }
@@ -2062,7 +2068,7 @@
         }
 
         .sub-band h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.9rem;
             letter-spacing: .06em;
             color: #fff;
@@ -2072,6 +2078,7 @@
             font-size: .82rem;
             color: rgba(255, 255, 255, .6);
             margin-top: .3rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
         }
 
@@ -2104,7 +2111,7 @@
             background: linear-gradient(135deg, var(--or), var(--or2));
             color: #fff;
             border: none;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: .72rem;
             font-weight: 700;
             letter-spacing: .18em;
@@ -2137,6 +2144,7 @@
 
         footer h4 {
             font-size: .56rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .28em;
             text-transform: uppercase;
             color: var(--bl2);
@@ -2155,6 +2163,7 @@
             text-decoration: none;
             color: rgba(255, 255, 255, .3);
             font-size: .83rem;
+            font-family: 'Kanit', sans-serif;
             transition: color .3s;
             cursor: none;
         }
@@ -2175,6 +2184,7 @@
         .ft-bot p {
             font-size: .62rem;
             color: rgba(255, 255, 255, .16);
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .06em;
         }
 
@@ -2219,6 +2229,7 @@
             align-items: center;
             gap: .5rem;
             font-size: .62rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .18em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, .4);
@@ -2238,7 +2249,7 @@
         }
 
         .pg-hero h1 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: clamp(3rem, 6vw, 5.5rem);
             letter-spacing: .05em;
             color: #fff;
@@ -2253,6 +2264,7 @@
         .pg-hero p {
             color: rgba(255, 255, 255, .6);
             font-size: .95rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
             margin-top: .9rem;
             max-width: 540px;
@@ -2338,7 +2350,7 @@
         }
 
         .lc h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.5rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -2348,6 +2360,7 @@
         .lc .venue {
             font-size: .72rem;
             color: var(--bl);
+            font-family: 'Kanit', sans-serif;
             font-weight: 700;
             letter-spacing: .12em;
             text-transform: uppercase;
@@ -2358,6 +2371,7 @@
             font-size: .83rem;
             color: var(--tx2);
             line-height: 1.8;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
             margin-bottom: 1.3rem;
         }
@@ -2395,6 +2409,7 @@
         .pt {
             padding: .3rem .8rem;
             font-size: .68rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 700;
             border: 1.5px solid;
         }
@@ -2419,6 +2434,7 @@
             background: linear-gradient(135deg, var(--or), var(--or2));
             color: #fff;
             font-size: .7rem;
+            font-family: 'Kanit', sans-serif;
             font-weight: 700;
             letter-spacing: .15em;
             text-transform: uppercase;
@@ -2441,7 +2457,7 @@
         }
 
         .note-box h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.4rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -2452,6 +2468,7 @@
             font-size: .86rem;
             color: var(--tx2);
             line-height: 1.82;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
         }
 
@@ -2524,7 +2541,7 @@
         }
 
         .av h4 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.1rem;
             letter-spacing: .04em;
             color: var(--dk);
@@ -2535,6 +2552,7 @@
             font-size: .8rem;
             color: var(--tx2);
             line-height: 1.78;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
         }
 
@@ -2611,6 +2629,7 @@
             font-size: .86rem;
             color: var(--tx2);
             line-height: 1.88;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
             border-top: 1px solid rgba(15, 76, 219, .07);
             padding-top: 1.1rem;
@@ -2667,7 +2686,7 @@
         }
 
         .gc h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.3rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -2678,6 +2697,7 @@
             font-size: .83rem;
             color: var(--tx2);
             line-height: 1.85;
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
         }
 
@@ -2716,6 +2736,7 @@
             padding: .85rem 1.1rem;
             text-align: left;
             font-size: .64rem;
+            font-family: 'Kanit', sans-serif;
             letter-spacing: .16em;
             text-transform: uppercase;
         }
@@ -2791,7 +2812,7 @@
         }
 
         .modal h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 2rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -2824,6 +2845,7 @@
         .cookie p {
             font-size: .78rem;
             color: var(--tx2);
+            font-family: 'Kanit', sans-serif;
             font-weight: 300;
             flex: 1;
             min-width: 180px;
@@ -2831,7 +2853,7 @@
 
         .ck-btn {
             padding: .5rem 1.4rem;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: .7rem;
             font-weight: 700;
             letter-spacing: .14em;
@@ -2932,7 +2954,7 @@
         }
 
         .chat-help-label span {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: .73rem;
             font-weight: 600;
             color: var(--tx);
@@ -3108,7 +3130,7 @@
         }
 
         .ch-name {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: 1.05rem;
             letter-spacing: .06em;
             color: #fff;
@@ -3200,7 +3222,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: .9rem;
             color: #fff;
             flex-shrink: 0;
@@ -3298,7 +3320,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: .75rem;
             color: #fff;
             flex-shrink: 0;
@@ -3361,7 +3383,7 @@
             background: #fff;
             border: 1.5px solid rgba(15, 76, 219, .18);
             color: var(--bl);
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: .68rem;
             font-weight: 600;
             cursor: none;
@@ -3389,7 +3411,7 @@
             background: #f6f8ff;
             border: 1.5px solid rgba(15, 76, 219, .1);
             color: var(--tx);
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Kanit', sans-serif;
             font-size: .81rem;
             padding: .55rem .85rem;
             outline: none;
@@ -3629,24 +3651,6 @@
             }
         }
 
-        /* ── SCROLL SKATER ── */
-        #scroll-skater {
-            position: fixed;
-            top: -100px;
-            /* Start hidden above the page */
-            left: 3%;
-            width: 75px;
-            height: 75px;
-            z-index: 400;
-            pointer-events: none;
-            /* Let clicks pass through */
-            /* Remove css transition since JS lerp handles the smoothness perfectly */
-            filter: drop-shadow(6px 8px 14px rgba(15, 76, 219, .4));
-            will-change: transform;
-        }
-
-        #scroll-skater img {
-            width: 100%;
             height: 100%;
             object-fit: contain;
             /* Add a slight tilt to signify movement */
