@@ -34,7 +34,7 @@
         body {
             background: var(--wh);
             color: var(--tx);
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             overflow-x: hidden;
             cursor: none;
         }
@@ -283,7 +283,7 @@
         }
 
         .logo-main {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.55rem;
             letter-spacing: .1em;
             color: var(--dk);
@@ -457,9 +457,20 @@
         .bg-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(150deg, rgba(238,243,255,0.15) 0%, rgba(255,255,255,0.4) 40%, rgba(238,243,255,0.4) 70%, rgba(255,255,255,0.15) 100%);
+            background: linear-gradient(150deg, rgba(5, 13, 30, 0.2) 0%, rgba(15, 76, 219, 0.1) 40%, rgba(244, 98, 10, 0.05) 70%, rgba(5, 13, 30, 0.3) 100%);
             /* backdrop-filter removed because blurring a dynamic video murders GPU performance, causing freezing/lag */
             z-index: 1;
+        }
+
+        /* noise texture to hide pixelation */
+        .bg-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 2;
         }
 
         /* ice texture */
@@ -467,7 +478,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%230f4cdb' fill-opacity='.04'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%230f4cdb' fill-opacity='.06'/%3E%3C/svg%3E");
             z-index: 2;
         }
 
@@ -642,7 +653,7 @@
         }
 
         .hero h1 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: clamp(3.8rem, 6.5vw, 7.2rem);
             line-height: .88;
             letter-spacing: .03em;
@@ -654,7 +665,7 @@
 
         .h1-em {
             display: block;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-style: italic;
             font-size: clamp(3rem, 5.5vw, 6rem);
             color: var(--bl);
@@ -666,7 +677,7 @@
             font-size: 1.05rem;
             line-height: 1.8;
             color: #000;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 500;
             max-width: 500px;
             margin: 1.8rem 0;
@@ -708,7 +719,7 @@
         .hs span {
             font-size: 1.05rem;
             color: #000;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 600;
             text-shadow: 0 2px 10px rgba(255,255,255,0.95), 0 0 4px #fff;
         }
@@ -730,7 +741,7 @@
             color: #fff;
             text-decoration: none;
             font-size: .76rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
             letter-spacing: .2em;
             text-transform: uppercase;
@@ -774,7 +785,7 @@
             color: var(--bl);
             text-decoration: none;
             font-size: .74rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
             letter-spacing: .16em;
             text-transform: uppercase;
@@ -804,7 +815,7 @@
             align-items: center;
             gap: .5rem;
             font-size: .74rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 500;
             color: var(--tx2);
         }
@@ -916,7 +927,7 @@
             padding: .85rem 1.5rem;
             color: #fff;
             font-size: .62rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
             letter-spacing: .18em;
             text-transform: uppercase;
@@ -949,7 +960,7 @@
         }
 
         .hstat-num {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 2rem;
             line-height: 1;
             letter-spacing: .05em;
@@ -965,7 +976,7 @@
 
         .hstat-lbl {
             font-size: .56rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .14em;
             text-transform: uppercase;
             color: var(--tx3);
@@ -994,7 +1005,7 @@
 
         .scroll-hint p {
             font-size: .52rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .28em;
             text-transform: uppercase;
             color: var(--tx3);
@@ -1093,7 +1104,7 @@
             letter-spacing: .2em;
             text-transform: uppercase;
             color: #fff;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 600;
             transform: translateY(100%);
             transition: transform .35s;
@@ -1142,7 +1153,7 @@
         }
 
         .stat-n {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 3.5rem;
             letter-spacing: .06em;
             line-height: 1;
@@ -1154,7 +1165,7 @@
 
         .stat-l {
             font-size: .6rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .24em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, .45);
@@ -1210,7 +1221,7 @@
             align-items: center;
             gap: .7rem;
             font-size: .58rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
             letter-spacing: .3em;
             text-transform: uppercase;
@@ -1251,7 +1262,7 @@
         }
 
         .sec-title {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: clamp(2.4rem, 4.5vw, 4rem);
             color: var(--dk);
             line-height: .92;
@@ -1265,7 +1276,7 @@
         .sec-sub {
             font-size: .92rem;
             color: var(--tx2);
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
             line-height: 1.85;
             margin-top: .8rem;
@@ -1329,7 +1340,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.7rem;
             letter-spacing: .05em;
             margin-bottom: 1.8rem;
@@ -1343,7 +1354,7 @@
         }
 
         .hc h3 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.45rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -1354,7 +1365,7 @@
             font-size: .86rem;
             color: var(--tx2);
             line-height: 1.82;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
         }
 
@@ -1368,7 +1379,7 @@
         .pill {
             padding: .5rem 1.2rem;
             font-size: .74rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 600;
             border: 1.5px solid;
             transition: all .3s;
@@ -1473,7 +1484,7 @@
             display: inline-block;
             padding: .28rem .8rem;
             font-size: .56rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .2em;
             text-transform: uppercase;
             font-weight: 700;
@@ -1500,7 +1511,7 @@
         }
 
         .cc h3 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.45rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -1511,7 +1522,7 @@
             font-size: .83rem;
             color: var(--tx2);
             line-height: 1.82;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
             margin-bottom: 1.4rem;
         }
@@ -1524,7 +1535,7 @@
             background: linear-gradient(135deg, var(--bl), var(--bl2));
             color: #fff;
             font-size: .68rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
             letter-spacing: .16em;
             text-transform: uppercase;
@@ -1579,7 +1590,7 @@
         }
 
         .cta-band h3 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.9rem;
             letter-spacing: .05em;
             color: #fff;
@@ -1591,7 +1602,7 @@
             font-size: .82rem;
             color: rgba(255, 255, 255, .7);
             margin-top: .3rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
             position: relative;
             z-index: 1;
@@ -1602,7 +1613,7 @@
             background: #fff;
             color: var(--bl);
             font-size: .76rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
             letter-spacing: .18em;
             text-transform: uppercase;
@@ -1683,7 +1694,7 @@
 
         .mi-cap span {
             font-size: .6rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .22em;
             text-transform: uppercase;
             color: #fff;
@@ -1747,7 +1758,7 @@
         .v-lbl {
             padding: .85rem 1.2rem;
             font-size: .65rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .16em;
             text-transform: uppercase;
             color: var(--tx3);
@@ -1788,7 +1799,7 @@
             position: absolute;
             top: -1.5rem;
             left: 1.4rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 11rem;
             color: rgba(15, 76, 219, .1);
             line-height: 1;
@@ -1826,7 +1837,7 @@
             font-size: .86rem;
             color: rgba(255, 255, 255, .7);
             line-height: 1.92;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
             font-style: italic;
             margin-bottom: 1.5rem;
@@ -1834,7 +1845,7 @@
 
         .rc-auth {
             font-size: .6rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .18em;
             text-transform: uppercase;
         }
@@ -1865,7 +1876,7 @@
         }
 
         .fbox h3 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.75rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -1876,7 +1887,7 @@
             font-size: .78rem;
             color: var(--tx3);
             margin-bottom: 2rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
             letter-spacing: .06em;
         }
@@ -1901,7 +1912,7 @@
 
         label {
             font-size: .56rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .22em;
             text-transform: uppercase;
             color: var(--tx3);
@@ -1914,7 +1925,7 @@
             background: #f6f8ff;
             border: 1.5px solid rgba(15, 76, 219, .11);
             color: var(--tx);
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: .88rem;
             padding: .85rem 1rem;
             outline: none;
@@ -1944,7 +1955,7 @@
             background: linear-gradient(135deg, var(--or), var(--or2));
             color: #fff;
             border: none;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: .78rem;
             font-weight: 700;
             letter-spacing: .22em;
@@ -1969,7 +1980,7 @@
             font-size: .82rem;
             text-align: center;
             display: none;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 600;
         }
 
@@ -2009,7 +2020,7 @@
 
         .ic-lbl {
             font-size: .56rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .24em;
             text-transform: uppercase;
             color: var(--bl);
@@ -2020,7 +2031,7 @@
         .ic-val {
             font-size: .88rem;
             color: var(--tx2);
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
             line-height: 1.6;
         }
@@ -2068,7 +2079,7 @@
         }
 
         .sub-band h3 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.9rem;
             letter-spacing: .06em;
             color: #fff;
@@ -2078,7 +2089,7 @@
             font-size: .82rem;
             color: rgba(255, 255, 255, .6);
             margin-top: .3rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
         }
 
@@ -2111,7 +2122,7 @@
             background: linear-gradient(135deg, var(--or), var(--or2));
             color: #fff;
             border: none;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: .72rem;
             font-weight: 700;
             letter-spacing: .18em;
@@ -2144,7 +2155,7 @@
 
         footer h4 {
             font-size: .56rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .28em;
             text-transform: uppercase;
             color: var(--bl2);
@@ -2163,7 +2174,7 @@
             text-decoration: none;
             color: rgba(255, 255, 255, .3);
             font-size: .83rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             transition: color .3s;
             cursor: none;
         }
@@ -2184,7 +2195,7 @@
         .ft-bot p {
             font-size: .62rem;
             color: rgba(255, 255, 255, .16);
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .06em;
         }
 
@@ -2229,7 +2240,7 @@
             align-items: center;
             gap: .5rem;
             font-size: .62rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .18em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, .4);
@@ -2249,7 +2260,7 @@
         }
 
         .pg-hero h1 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: clamp(3rem, 6vw, 5.5rem);
             letter-spacing: .05em;
             color: #fff;
@@ -2264,7 +2275,7 @@
         .pg-hero p {
             color: rgba(255, 255, 255, .6);
             font-size: .95rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
             margin-top: .9rem;
             max-width: 540px;
@@ -2350,7 +2361,7 @@
         }
 
         .lc h3 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.5rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -2360,7 +2371,7 @@
         .lc .venue {
             font-size: .72rem;
             color: var(--bl);
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
             letter-spacing: .12em;
             text-transform: uppercase;
@@ -2371,7 +2382,7 @@
             font-size: .83rem;
             color: var(--tx2);
             line-height: 1.8;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
             margin-bottom: 1.3rem;
         }
@@ -2409,7 +2420,7 @@
         .pt {
             padding: .3rem .8rem;
             font-size: .68rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
             border: 1.5px solid;
         }
@@ -2434,7 +2445,7 @@
             background: linear-gradient(135deg, var(--or), var(--or2));
             color: #fff;
             font-size: .7rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
             letter-spacing: .15em;
             text-transform: uppercase;
@@ -2457,7 +2468,7 @@
         }
 
         .note-box h3 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.4rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -2468,7 +2479,7 @@
             font-size: .86rem;
             color: var(--tx2);
             line-height: 1.82;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
         }
 
@@ -2541,7 +2552,7 @@
         }
 
         .av h4 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.1rem;
             letter-spacing: .04em;
             color: var(--dk);
@@ -2552,7 +2563,7 @@
             font-size: .8rem;
             color: var(--tx2);
             line-height: 1.78;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
         }
 
@@ -2629,7 +2640,7 @@
             font-size: .86rem;
             color: var(--tx2);
             line-height: 1.88;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
             border-top: 1px solid rgba(15, 76, 219, .07);
             padding-top: 1.1rem;
@@ -2686,7 +2697,7 @@
         }
 
         .gc h3 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.3rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -2697,7 +2708,7 @@
             font-size: .83rem;
             color: var(--tx2);
             line-height: 1.85;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
         }
 
@@ -2736,7 +2747,7 @@
             padding: .85rem 1.1rem;
             text-align: left;
             font-size: .64rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             letter-spacing: .16em;
             text-transform: uppercase;
         }
@@ -2812,7 +2823,7 @@
         }
 
         .modal h3 {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 2rem;
             letter-spacing: .05em;
             color: var(--dk);
@@ -2845,7 +2856,7 @@
         .cookie p {
             font-size: .78rem;
             color: var(--tx2);
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 300;
             flex: 1;
             min-width: 180px;
@@ -2853,7 +2864,7 @@
 
         .ck-btn {
             padding: .5rem 1.4rem;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: .7rem;
             font-weight: 700;
             letter-spacing: .14em;
@@ -2954,7 +2965,7 @@
         }
 
         .chat-help-label span {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: .73rem;
             font-weight: 600;
             color: var(--tx);
@@ -3130,7 +3141,7 @@
         }
 
         .ch-name {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: 1.05rem;
             letter-spacing: .06em;
             color: #fff;
@@ -3222,7 +3233,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: .9rem;
             color: #fff;
             flex-shrink: 0;
@@ -3320,7 +3331,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: .75rem;
             color: #fff;
             flex-shrink: 0;
@@ -3383,7 +3394,7 @@
             background: #fff;
             border: 1.5px solid rgba(15, 76, 219, .18);
             color: var(--bl);
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-size: .68rem;
             font-weight: 600;
             cursor: none;
@@ -3411,7 +3422,202 @@
             background: #f6f8ff;
             border: 1.5px solid rgba(15, 76, 219, .1);
             color: var(--tx);
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Oswald', sans-serif;
+            font-size: .81rem;
+            padding: .55rem .85rem;
+            outline: none;
+            transition: border-color .3s;
+        }
+
+        .ch-inp::placeholder {
+            color: var(--tx3);
+        }
+
+        .ch-inp:focus {
+            border-color: var(--bl);
+        }
+
+        .ch-send {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--or), var(--or2));
+            border: none;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .25s;
+            flex-shrink: 0;
+        }
+
+        .ch-send:hover {
+            background: linear-gradient(135deg, var(--bl), var(--bl2));
+        }
+
+        .ch-send svg {
+            width: 14px;
+            height: 14px;
+            fill: #fff;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:1100px) {
+            nav {
+                padding: .7rem 2.5rem;
+            }
+
+            .sw,
+            .pg-hero-in,
+            .stats-in,
+            .sub-in,
+            .ft-in {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+
+            .hero-in {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                padding: 0 2.5rem;
+            }
+
+            .hero-right {
+                display: none;
+            }
+
+            .how-grid,
+            .cls-grid,
+            .loc-grid,
+            .vid-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .r-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        .bub {
+            max-width: 85%;
+            padding: .7rem .95rem;
+            font-size: .81rem;
+            line-height: 1.6;
+        }
+
+        .cmsg.b .bub {
+            background: #eef3ff;
+            border: 1.5px solid rgba(15, 76, 219, .1);
+            border-radius: 0 13px 13px 13px;
+            color: var(--tx);
+        }
+
+        .cmsg.u .bub {
+            background: linear-gradient(135deg, var(--or), var(--or2));
+            color: #fff;
+            border-radius: 13px 0 13px 13px;
+        }
+
+        .cav {
+            width: 26px;
+            height: 26px;
+            background: var(--or);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: .75rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .typ-ind {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: .65rem .9rem;
+            background: #eef3ff;
+            border: 1.5px solid rgba(15, 76, 219, .1);
+            width: fit-content;
+            border-radius: 0 13px 13px 13px;
+        }
+
+        .typ-ind span {
+            width: 5px;
+            height: 5px;
+            background: rgba(15, 76, 219, .4);
+            border-radius: 50%;
+            animation: typBounce 1.2s ease-in-out infinite;
+        }
+
+        .typ-ind span:nth-child(2) {
+            animation-delay: .22s;
+        }
+
+        .typ-ind span:nth-child(3) {
+            animation-delay: .44s;
+        }
+
+        @keyframes typBounce {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+                opacity: .35
+            }
+
+            30% {
+                transform: translateY(-6px);
+                opacity: 1
+            }
+        }
+
+        .qr-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .38rem;
+            padding: .7rem .9rem;
+            background: #f8faff;
+            border-top: 1px solid rgba(15, 76, 219, .07);
+            flex-shrink: 0;
+        }
+
+        .qb {
+            padding: .36rem .8rem;
+            background: #fff;
+            border: 1.5px solid rgba(15, 76, 219, .18);
+            color: var(--bl);
+            font-family: 'Oswald', sans-serif;
+            font-size: .68rem;
+            font-weight: 600;
+            cursor: none;
+            transition: all .25s;
+        }
+
+        .qb:hover {
+            border-color: var(--or);
+            color: var(--or);
+            background: var(--or-lt);
+        }
+
+        .ch-inp-row {
+            border-top: 1.5px solid rgba(15, 76, 219, .08);
+            padding: .75rem .9rem;
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+            flex-shrink: 0;
+            background: #fff;
+        }
+
+        .ch-inp {
+            flex: 1;
+            background: #f6f8ff;
+            border: 1.5px solid rgba(15, 76, 219, .1);
+            color: var(--tx);
+            font-family: 'Oswald', sans-serif;
             font-size: .81rem;
             padding: .55rem .85rem;
             outline: none;
@@ -3634,8 +3840,8 @@
             }
 
             .hero {
-                padding-top: 6rem;
-                padding-bottom: 2rem;
+                padding-top: 4.5rem !important;
+                padding-bottom: 2rem !important;
             }
 
             .section {
@@ -3651,253 +3857,231 @@
             }
         }
 
-            height: 100%;
-            object-fit: contain;
-            /* Add a slight tilt to signify movement */
-            transform: rotate(15deg);
+        /* Term Styles */
+        .term-sec h3 {
+            font-size: 1.4rem;
+            color: var(--tx);
+            margin: 2rem 0 1rem;
+            border-bottom: 2px solid rgba(15, 76, 219, 0.1);
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        @media(max-width:700px) {
-            #scroll-skater {
-                width: 45px;
-                height: 45px;
-                left: 2%;
-                /* Keep it visible but out of the way on small screens */
+        .term-sec h4 {
+            font-size: 1.1rem;
+            color: var(--bl);
+            margin: 1.5rem 0 0.5rem;
+            font-weight: 700;
+        }
+
+        .term-sec p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: var(--tx2);
+            line-height: 1.7;
+        }
+
+        .term-sec ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--tx2);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .term-sec li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE DESIGN (TABLETS & MOBILE)
+        ══════════════════════════════════════ */
+        @media (max-width: 1024px) {
+            nav { padding: 0.7rem 2rem !important; }
+            .hero-in { padding: 0 2rem !important; }
+            .how-grid, .cls-grid, .loc-grid, .r-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            .about-grid, .cnt-grid { grid-template-columns: 1fr !important; }
+            .hero h1 { font-size: 4.5rem; }
+            .h1-em { font-size: 3.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            nav .hmb { display: flex !important; }
+            nav #nav-ul { 
+                display: none; 
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 76, 219, 0.98);
+                padding: 1.8rem 2rem;
+                gap: 1.5rem;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            }
+            nav.mob-open #nav-ul { display: flex !important; }
+            nav.mob-open { background: var(--bl3) !important; }
+            
+            nav { padding: 0.7rem 1.5rem !important; background: transparent !important; box-shadow: none !important; border: none !important;}
+            nav.scrolled { background: var(--bl3) !important; box-shadow: 0 4px 40px rgba(0, 0, 0, .3) !important; }
+            
+            .hero { padding-top: 4.2rem !important; padding-bottom: 1rem !important; }
+            .hero h1 { font-size: 2.5rem !important; line-height: 1 !important; }
+            .h1-em { font-size: 1.8rem !important; margin-top: 0 !important; }
+            .hero-in { padding: 0 1rem !important; }
+            .hero-desc { font-size: 0.88rem !important; margin: 0.6rem auto !important; padding: 0.4rem 1.2rem !important; }
+            .hero-steps { margin-bottom: 0.8rem !important; gap: 0.35rem !important; }
+            .hs-n { width: 20px !important; height: 20px !important; font-size: 0.55rem !important; }
+            .hs span { font-size: 0.78rem !important; }
+            
+            .how-grid, .cls-grid, .loc-grid, .r-grid { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
+            .sec-title { font-size: 2.2rem !important; }
+            .sw { padding: 0 1.2rem !important; }
+            .section { padding: 3rem 0 !important; }
+            
+            .hero-trust { flex-direction: column; gap: 0.6rem; align-items: center; border-top: none !important; padding-top: 0.5rem !important; }
+            .hero-ctas { flex-direction: column; width: 100%; align-items: stretch; gap: 0.5rem !important; }
+            .hero-ctas a { text-align: center; justify-content: center; padding: 0.75rem 1.2rem !important; font-size: 0.68rem !important; }
+            
+            .chat-launcher {
+                transform: scale(0.65) !important;
+                transform-origin: bottom right !important;
+                bottom: 10px !important;
+                right: 10px !important;
+            }
+            
+            .chat-win {
+                width: 95% !important;
+                height: 80vh !important;
+                bottom: 10px !important;
+                right: 2.5% !important;
+            }
+            
+            .ft-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.2rem !important; }
+            .h1-em { font-size: 1.7rem !important; }
+            .stats-in { grid-template-columns: 1fr 1fr !important; gap: 1.5rem !important; }
+        }
+
+        /* ══════════════════════════════════════
+           ADMIN PAGES RESPONSIVE DESIGN
+        ══════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .admin-wrap {
+                margin: 100px 15px 40px !important;
+                padding: 1.5rem !important;
+            }
+            .admin-title {
+                font-size: 2.5rem !important;
+            }
+            .chat-container {
+                height: 70vh !important;
+            }
+            .chat-header {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            .chat-input-area {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem !important;
+            }
+            .chat-input-area button {
+                padding: 0.8rem !important;
+                width: 100%;
             }
         }
-    
 
-                .term-sec h3 {
-                    font-size: 1.4rem;
-                    color: var(--tx);
-                    margin: 2rem 0 1rem;
-                    border-bottom: 2px solid rgba(15, 76, 219, 0.1);
-                    padding-bottom: 0.5rem;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                }
-
-                .term-sec h4 {
-                    font-size: 1.1rem;
-                    color: var(--bl);
-                    margin: 1.5rem 0 0.5rem;
-                    font-weight: 700;
-                }
-
-                .term-sec p {
-                    margin-bottom: 1rem;
-                    font-size: 0.95rem;
-                    color: var(--tx2);
-                    line-height: 1.7;
-                }
-
-                .term-sec ul {
-                    list-style: disc;
-                    padding-left: 1.5rem;
-                    margin-bottom: 1.5rem;
-                    color: var(--tx2);
-                    font-size: 0.95rem;
-                    line-height: 1.6;
-                }
-
-                .term-sec li {
-                    margin-bottom: 0.5rem;
-                }
-            
-
-/* ══ CHATBOT VISUALS ══ */
-
-
-
-
-
-/* ══════════════════════════════════════
-   RESPONSIVE DESIGN (TABLETS & MOBILE)
-══════════════════════════════════════ */
-@media (max-width: 1024px) {
-    nav { padding: 0.7rem 2rem !important; }
-    .hero-in { padding: 0 2rem !important; }
-    .how-grid, .cls-grid, .loc-grid, .r-grid { grid-template-columns: repeat(2, 1fr) !important; }
-    .about-grid, .cnt-grid { grid-template-columns: 1fr !important; }
-    .hero h1 { font-size: 5rem; }
-    .h1-em { font-size: 4rem; }
-}
-
-@media (max-width: 768px) {
-    nav .hmb { display: flex !important; }
-    nav #nav-ul { 
-        display: none; 
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(15, 76, 219, 0.95); /* Deep blue with glass */
-        backdrop-
-        padding: 1.8rem 2rem;
-        gap: 1.5rem;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    }
-    nav.mob-open #nav-ul { display: flex !important; }
-    nav.mob-open { background: var(--bl3) !important; }
-    
-    /* Make navbar clear initially on mobile */
-    nav { padding: 0.7rem 1.5rem !important; background: transparent !important; box-shadow: none !important; border: none !important;}
-    nav.scrolled { background: var(--bl3) !important; box-shadow: 0 4px 40px rgba(0, 0, 0, .3) !important; }
-    
-    .hero h1 { font-size: 3.5rem !important; }
-    .h1-em { font-size: 2.8rem !important; }
-    .hero-in { padding: 0 1.5rem !important; }
-    .hero-desc { font-size: 0.95rem !important; }
-    
-    .how-grid, .cls-grid, .loc-grid, .r-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
-    
-    .sec-title { font-size: 2.5rem !important; }
-    .sw { padding: 0 1.5rem !important; }
-    .section { padding: 4rem 0 !important; }
-    
-    .hero-trust { flex-direction: column; gap: 1rem; align-items: center; }
-    .hero-ctas { flex-direction: column; width: 100%; align-items: stretch; }
-    .hero-ctas a { text-align: center; justify-content: center; }
-    
-    /* Scale chatbot launcher on mobile */
-    .chat-launcher {
-        transform: scale(0.7) !important;
-        transform-origin: bottom right !important;
-        bottom: 10px !important;
-        right: 10px !important;
-    }
-    
-    .chat-win {
-        width: 95% !important;
-        height: 80vh !important;
-        bottom: 10px !important;
-        right: 2.5% !important;
-    }
-    
-    /* Adjust footer grid */
-    .ft-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
-}
-
-@media (max-width: 480px) {
-    .hero h1 { font-size: 2.8rem !important; }
-    .h1-em { font-size: 2.2rem !important; }
-    .stats-in { grid-template-columns: 1fr 1fr !important; gap: 2rem !important; }
-}
-
-/* ══════════════════════════════════════
-   ADMIN PAGES RESPONSIVE DESIGN
-══════════════════════════════════════ */
-@media (max-width: 768px) {
-    .admin-wrap {
-        margin: 100px 15px 40px !important;
-        padding: 1.5rem !important;
-    }
-    .admin-title {
-        font-size: 2.5rem !important;
-    }
-    .chat-container {
-        height: 70vh !important;
-    }
-    .chat-header {
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
-    }
-    .chat-input-area {
-        flex-direction: column;
-        gap: 0.5rem;
-        padding: 1rem !important;
-    }
-    .chat-input-area button {
-        padding: 0.8rem !important;
-        width: 100%;
-    }
-}
         @media (max-width: 767px) {
             #cur, #cur-ring { display: none !important; }
             body { cursor: auto !important; }
-            .hero- مركز-box { max-width: 100% !important; }
+            .hero-center-box { max-width: 100% !important; }
         }
 
 
-/* ══════════════════════════════════════════════
-   FLOATING WHATSAPP
-══════════════════════════════════════════════ */
-.float-wa {
-    position: fixed;
-    bottom: 2rem;
-    left: 2rem;
-    width: 60px;
-    height: 60px;
-    background: #25d366;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-    z-index: 1000;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-}
+        /* ══════════════════════════════════════════════
+           FLOATING WHATSAPP
+        ══════════════════════════════════════════════ */
+        .float-wa {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        }
 
-.float-wa:hover {
-    transform: scale(1.1) translateY(-5px);
-    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
-}
+        .float-wa:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        }
 
-@media (max-width: 768px) {
-    .float-wa {
-        bottom: 1.5rem;
-        left: 1.5rem;
-        width: 50px;
-        height: 50px;
-    }
-    .float-wa svg {
-        width: 24px !important;
-        height: 24px !important;
-    }
-}
+        @media (max-width: 768px) {
+            .float-wa {
+                bottom: 1.5rem;
+                left: 1.5rem;
+                width: 50px;
+                height: 50px;
+            }
+            .float-wa svg {
+                width: 24px !important;
+                height: 24px !important;
+            }
+        }
 
-/* Chat Tooltip */
-.chat-tooltip {
-    position: absolute;
-    bottom: 80px;
-    right: 0;
-    background: #fff;
-    color: var(--dk);
-    padding: 10px 18px;
-    border-radius: 20px 20px 0 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    white-space: nowrap;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    pointer-events: none;
-    animation: floatTooltip 3s infinite ease-in-out;
-    opacity: 1;
-    transition: opacity 0.3s;
-    border: 1px solid rgba(15,76,219,0.1);
-}
-.chat-tooltip::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    right: 15px;
-    width: 12px;
-    height: 12px;
-    background: #fff;
-    transform: rotate(45deg);
-    border-bottom: 1px solid rgba(15,76,219,0.1);
-    border-right: 1px solid rgba(15,76,219,0.1);
-}
-@keyframes floatTooltip {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-    100% { transform: translateY(0); }
-}
-.chat-btn.open .chat-tooltip {
-    opacity: 0;
-    display: none;
-}
+        /* Chat Tooltip */
+        .chat-tooltip {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            background: #fff;
+            color: var(--dk);
+            padding: 10px 18px;
+            border-radius: 20px 20px 0 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            pointer-events: none;
+            animation: floatTooltip 3s infinite ease-in-out;
+            opacity: 1;
+            transition: opacity 0.3s;
+            border: 1px solid rgba(15,76,219,0.1);
+        }
+        .chat-tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            right: 15px;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            transform: rotate(45deg);
+            border-bottom: 1px solid rgba(15,76,219,0.1);
+            border-right: 1px solid rgba(15,76,219,0.1);
+        }
+        @keyframes floatTooltip {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0); }
+        }
+        .chat-btn.open .chat-tooltip {
+            opacity: 0;
+            display: none;
+        }
 
 
         /* -- LOCATION BADGE -- */

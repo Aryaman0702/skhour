@@ -14,47 +14,7 @@
             }, 3600);
         })();
 
-        /* ══════════════════════════════════════════════
-           CANVAS NETWORK BACKGROUND
-        ══════════════════════════════════════════════ */
-        (function () {
-            const c = document.getElementById('bgc'), ctx = c.getContext('2d');
-            let W, H, pts = [], fr = 0;
-            const resize = () => { W = c.width = window.innerWidth; H = c.height = window.innerHeight; };
-            window.addEventListener('resize', resize); resize();
-            for (let i = 0; i < 55; i++)pts.push({
-                x: Math.random() * W, y: Math.random() * H,
-                vx: (Math.random() - .5) * .42, vy: (Math.random() - .5) * .42,
-                r: Math.random() * 2.2 + .8,
-                col: Math.random() > .5 ? [15, 76, 219] : [244, 98, 10],
-                op: Math.random() * .4 + .1
-            });
-            const draw = () => {
-                ctx.clearRect(0, 0, W, H); fr++;
-                for (let i = 0; i < pts.length; i++) {
-                    for (let j = i + 1; j < pts.length; j++) {
-                        const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = Math.sqrt(dx * dx + dy * dy);
-                        if (d < 155) {
-                            const al = (1 - d / 155) * .09, t = Math.sin(fr * .007 + i * .3) * .5 + .5;
-                            ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y);
-                            ctx.strokeStyle = `rgba(${Math.round(15 + (244 - 15) * t)},${Math.round(76 + (98 - 76) * t)},${Math.round(219 + (10 - 219) * t)},${al})`;
-                            ctx.lineWidth = .65; ctx.stroke();
-                        }
-                    }
-                }
-                pts.forEach((p, i) => {
-                    const pulse = Math.sin(fr * .022 + i) * .5 + .5;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r + pulse * .65, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(${p.col[0]},${p.col[1]},${p.col[2]},${p.op * (0.5 + pulse * .5)})`;
-                    ctx.fill();
-                    p.x += p.vx; p.y += p.vy;
-                    if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20;
-                    if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20;
-                });
-                requestAnimationFrame(draw);
-            };
-            draw();
-        })();
+
 
         /* ══════════════════════════════════════════════
            CUSTOM CURSOR

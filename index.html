@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Skating Hour — Unlock Your Potential</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -23,7 +21,7 @@
     <!-- CURSOR -->
     <div id="cur"></div>
     <div id="cur-ring"></div>
-    <canvas id="bgc"></canvas>
+
 
     <!-- ANNOUNCEMENT BAR -->
     <div class="ann">
@@ -65,40 +63,25 @@
         <!-- HERO -->
         <section class="hero" id="hero">
             <div class="hero-bg">
-                <video class="bg-single-video" style="width: 100%; height: 100%; object-fit: cover;" autoplay muted loop playsinline><source src="videos/WhatsApp Video 2026-04-17 at 22.01.15.mp4" type="video/mp4"></video>
+                <video class="bg-single-video" style="width: 100%; height: 100%; object-fit: cover;" autoplay muted loop playsinline preload="auto"><source src="videos/VID_20260418_032651_1.mp4" type="video/mp4"></video>
                 <div class="bg-overlay"></div>
             </div>
-            <div class="orb orb1"></div>
-            <div class="orb orb2"></div>
-            <div class="orb orb3"></div>
-            <div class="ring ring1">
-                <div class="ring-dot"></div>
-            </div>
-            <div class="ring ring2">
-                <div class="ring-dot"></div>
-            </div>
-            <div class="ring ring3">
-                <div class="ring-dot"></div>
-            </div>
+
             <div class="hero-in">
                 <!-- Center Block -->
                 <div class="hero-center-box" style="text-align: center; max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
-                    <div class="hero-pill">
-                        <div class="pill-dot"></div>June – August 2026 · 3 Locations Open
-                    </div>
-                    <h1>YOU BOOK<br>THE TIME.<span class="h1-em">We Handle<br>the Skating.</span></h1>
-                    <p class="hero-desc" style="text-align: center; margin: 1.8rem auto;">No guessing levels. No confusion. Choose your location &amp; schedule — we
-                        place every skater in exactly the right group. <strong>Skates &amp; gear free for your first
-                            class!</strong></p>
+
+                    <h1><span style="color: var(--or);">YOU BOOK<br>THE TIME.</span><span class="h1-em">We Handle<br>the Skating.</span></h1>
+                    <p class="hero-desc" style="text-align: center; color: #000; background: rgba(244, 98, 10, 0.12); padding: 0.6rem 2rem; border-radius: 50px; display: inline-block; letter-spacing: 0.02em;">A process with three clear steps</p>
                     <div class="hero-steps" style="align-items: center;">
                         <div class="hs" style="justify-content: center;">
-                            <div class="hs-n">1</div><span>Choose Your Location &amp; Time</span>
+                            <div class="hs-n">1</div><span>Choose your location and time</span>
                         </div>
                         <div class="hs" style="justify-content: center;">
-                            <div class="hs-n">2</div><span>Bring Your Skates &amp; Helmet</span>
+                            <div class="hs-n">2</div><span>Book a drop in class, SKATES provided by us for your first lesson</span>
                         </div>
                         <div class="hs" style="justify-content: center;">
-                            <div class="hs-n">3</div><span>We Do the Rest — Coaches Assess &amp; Place You</span>
+                            <div class="hs-n">3</div><span>Love it? Enrol!</span>
                         </div>
                     </div>
                     <div class="hero-ctas" style="justify-content: center;">
@@ -124,12 +107,7 @@
                     </div>
                 </div>
             </div>
-            <div class="scroll-hint">
-                <p>Scroll Down</p>
-                <div class="scroll-mouse">
-                    <div class="scroll-wh"></div>
-                </div>
-            </div>
+
         </section>
 
         <!-- PHOTO STRIP -->
@@ -217,8 +195,7 @@
                 <div class="rv up">
                     <div class="sec-eyebrow bl">Simple Process</div>
                     <h2 class="sec-title">HOW IT WORKS</h2>
-                    <p class="sec-sub">Three steps and you're on the ice. No confusion, no guessing — we handle
-                        everything.</p>
+                    <p class="sec-sub">A process with three clear steps</p>
                 </div>
                 <div class="how-grid">
                     <div class="hc rv up">
@@ -230,7 +207,7 @@
                         <div class="hc-n">2</div>
                         <h3>Bring Skates &amp; Helmet</h3>
                         <p>Personal gear = best fit, safety, and hygiene. First class? <strong>We provide skates and
-                                gear FREE!</strong> We also have a full buying guide ready.</p>
+                                gear FREE!</strong> We also have a full buying guide ready. Try a drop in class first and if you enjoy it enroll in the full program.</p>
                     </div>
                     <div class="hc rv up" style="transition-delay:.24s">
                         <div class="hc-n">3</div>
@@ -249,7 +226,7 @@
                         <div class="pill bl"> Small, level-based groups</div>
                         <div class="pill or"> Coaches who truly care</div>
                         <div class="pill bl"> Family &amp; adult options</div>
-                        <div class="pill or"> Results from class 1</div>
+                        <div class="pill or"> Results from first day</div>
                         <div class="pill bl"> Multiple locations across GTA</div>
                         <div class="pill or"> Gear free for first class</div>
                         <div class="pill bl"> Canada's Premier School</div>
@@ -429,40 +406,29 @@
                     <div class="sec-eyebrow bl">In Motion</div>
                     <h2 class="sec-title">WATCH US SKATE</h2>
                 </div>
-                <div class="vid-grid rv up">
-                    <div class="vc">
+                <div class="vid-grid rv up" style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 1000px; margin: 2.8rem auto 0;">
+                    <!-- Main Video -->
+                    <div class="vc" style="width: 100%;">
                         <div class="vw"><iframe
                                 src="https://www.youtube.com/embed/xrwhq1Kjo-4?si=oJ27cNHYdHToeQkU&rel=0&modestbranding=1"
                                 allowfullscreen></iframe></div>
                         <div class="v-lbl"> Skating Highlights</div>
                     </div>
-                    <div class="vs-col">
+                    
+                    <!-- Shorts Row -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.2rem;">
                         <div class="vc">
-                            <div class="vw"><iframe
-                                    src="https://www.youtube.com/embed/JDzXhPuMSFE?rel=0&modestbranding=1"
+                            <div class="vw-shorts"><iframe
+                                    src="https://www.youtube.com/embed/arTD79IA0x4"
                                     allowfullscreen></iframe></div>
-                            <div class="v-lbl"> Figure Skating</div>
+                            <div class="v-lbl"> Training Short</div>
                         </div>
                         <div class="vc">
-                            <div class="vw"><iframe
-                                    src="https://www.youtube.com/embed/h3Q5rT5eBsU?rel=0&modestbranding=1"
+                            <div class="vw-shorts"><iframe
+                                    src="https://www.youtube.com/embed/wTZuf9JFTiY"
                                     allowfullscreen></iframe></div>
-                            <div class="v-lbl"> Hockey Action</div>
+                            <div class="v-lbl"> Skill Showcase</div>
                         </div>
-                    </div>
-                </div>
-                <div class="vid-grid rv up" style="margin-top:1.2rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-                    <div class="vc">
-                        <div class="vw-shorts"><iframe
-                                src="https://www.youtube.com/embed/arTD79IA0x4"
-                                allowfullscreen></iframe></div>
-                        <div class="v-lbl"> Training Short</div>
-                    </div>
-                    <div class="vc">
-                        <div class="vw-shorts"><iframe
-                                src="https://www.youtube.com/embed/wTZuf9JFTiY"
-                                allowfullscreen></iframe></div>
-                        <div class="v-lbl"> Skill Showcase</div>
                     </div>
                 </div>
             </div>
@@ -1032,7 +998,7 @@
                             <li>Floor exercises first — basic movements before the ice</li>
                             <li>Learn to fall safely (very important skill!)</li>
                             <li>Coaches assess and place you in the perfect group</li>
-                            <li>Most beginners glide by the end of class 1</li>
+                            <li>Most beginners glide by the end of their first day</li>
                             <li><strong>Skates &amp; gear provided FREE for your first class </strong></li>
                         </ul>
                     </div>
@@ -1397,7 +1363,7 @@
     
     <div class="chat-launcher" id="chatLauncher">
         <button class="chat-btn" id="chatBtn" onclick="toggleChat()">
-            <div class="chat-tooltip">We are here to help you</div>
+            <div class="chat-tooltip">Five Experts are online right now</div>
             <div class="chat-badge" id="chatBadge">5</div>
             <img src="images/chat_bot_icon.png" class="ico-chat" alt="Chat Coach">
             <svg class="ico-x" viewBox="0 0 24 24" style="display:none;">
