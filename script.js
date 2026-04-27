@@ -68,8 +68,10 @@
             const nav = document.getElementById('nav');
             if (mobOpen) {
                 nav.classList.add('mob-open');
+                document.body.style.overflow = 'hidden';
             } else {
                 nav.classList.remove('mob-open');
+                document.body.style.overflow = '';
             }
         }
         
@@ -78,6 +80,7 @@
             link.addEventListener('click', () => {
                 mobOpen = false;
                 document.getElementById('nav').classList.remove('mob-open');
+                document.body.style.overflow = '';
             });
         });
 

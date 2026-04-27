@@ -400,11 +400,25 @@
         }
 
         .hmb span {
-            width: 22px;
+            width: 26px;
             height: 2px;
             background: #fff;
             display: block;
-            transition: all .3s;
+            transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+        }
+
+        nav.mob-open .hmb span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        nav.mob-open .hmb span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        nav.mob-open .hmb span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
 
         /* ══ PAGE SYSTEM ══ */
@@ -462,23 +476,14 @@
             z-index: 1;
         }
 
-        /* noise texture to hide pixelation */
-        .bg-overlay::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.04;
-            pointer-events: none;
-            z-index: 2;
-        }
+        /* noise texture removed */
 
         /* ice texture */
         .bg-overlay::after {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%230f4cdb' fill-opacity='.06'/%3E%3C/svg%3E");
+            /* background removed */
             z-index: 2;
         }
 
@@ -518,15 +523,8 @@
         }
 
         @keyframes orbFloat {
-
-            0%,
-            100% {
-                transform: scale(1) rotate(0deg)
-            }
-
-            50% {
-                transform: scale(1.15) rotate(12deg)
-            }
+            0%, 100% { transform: scale(1) rotate(0deg) }
+            50% { transform: scale(1.15) rotate(12deg) }
         }
 
         /* ring decorations */
@@ -567,13 +565,8 @@
         }
 
         @keyframes spin {
-            from {
-                transform: rotate(0deg)
-            }
-
-            to {
-                transform: rotate(360deg)
-            }
+            from { transform: rotate(0deg) }
+            to { transform: rotate(360deg) }
         }
 
         .ring-dot {
@@ -612,7 +605,15 @@
             width: 100%;
         }
 
-        /* Left */
+        .hero-center-box {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .hero-pill {
             display: inline-flex;
             align-items: center;
@@ -639,17 +640,8 @@
         }
 
         @keyframes pulseDot {
-
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 1
-            }
-
-            50% {
-                transform: scale(1.7);
-                opacity: .3
-            }
+            0%, 100% { transform: scale(1); opacity: 1 }
+            50% { transform: scale(1.7); opacity: .3 }
         }
 
         .hero h1 {
@@ -660,8 +652,7 @@
             color: var(--dk);
             opacity: 0;
             animation: fadeUp .8s .25s forwards;
-            -webkit-text-stroke: 1.5px #000;
-            text-shadow: 2px 2px 0px #000;
+            /* outline removed */
         }
 
         .h1-em {
@@ -3656,259 +3647,44 @@
             fill: #fff;
         }
 
-        /* ── RESPONSIVE ── */
-        @media(max-width:1100px) {
+        /* ── RESPONSIVE DESIGN (CONSOLIDATED) ── */
+
+        /* 1. Large Tablets / Small Laptops (1200px) */
+        @media (max-width: 1200px) {
             nav {
                 padding: .7rem 2.5rem;
             }
-
-            .sw,
-            .pg-hero-in,
-            .stats-in,
-            .sub-in,
-            .ft-in {
+            .sw, .pg-hero-in, .stats-in, .sub-in, .ft-in {
                 padding-left: 2.5rem;
                 padding-right: 2.5rem;
             }
-
             .hero-in {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
                 padding: 0 2.5rem;
             }
-
-            .hero-right {
-                display: none;
-            }
-
-            .how-grid,
-            .cls-grid,
-            .loc-grid,
-            .vid-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .r-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .rc.feat {
-                grid-column: 1;
-            }
-
-            .masonry {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .mi.tall {
-                grid-row: 1;
-                min-height: 225px;
-            }
-
-            .mi.wide {
-                grid-column: span 2;
-            }
-
-            .cnt-grid,
-            .about-grid,
-            .guide-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .ft-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .stats-in {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
-        @media(max-width:700px) {
-            nav {
-                padding: .7rem 1.5rem;
-            }
-
-            .sw,
-            .pg-hero-in,
-            .stats-in,
-            .sub-in,
-            .ft-in {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
-
-            .hero-in {
-                padding: 0 1.5rem;
-            }
-
-            nav ul {
-                display: none;
-            }
-
-            .hmb {
-                display: flex;
-            }
-
-            .how-grid,
-            .cls-grid,
-            .loc-grid,
-            .guide-grid,
-            .avals {
-                grid-template-columns: 1fr;
-            }
-
-            .masonry {
-                grid-template-columns: 1fr;
-            }
-
-            .mi.wide {
-                grid-column: 1;
-            }
-
-            .f2 {
-                grid-template-columns: 1fr;
-            }
-
-            .ft-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-band {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .sub-in {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .sub-form {
-                width: 100%;
-            }
-
-            .sub-form input {
-                flex: 1;
-            }
-
-            .chat-win {
-                width: calc(100vw - 2rem);
-                right: 1rem;
-            }
-
-            .chat-btn {
-                bottom: 1.2rem;
-                right: 1.2rem;
-            }
-
-            /* Extra Mobile Enhancements */
-            #cur,
-            #cur-ring {
-                display: none !important;
-            }
-
-            body {
-                cursor: auto !important;
-            }
-
-            a,
-            button,
-            .hc,
-            .cc,
-            .lc,
-            .mi,
-            .btn-fire,
-            .btn-out,
-            .faq-q {
-                cursor: pointer !important;
-            }
-
-            .modal {
-                padding: 2rem 1.4rem;
-            }
-
-            .fbox {
-                padding: 1.8rem 1.2rem;
-            }
-
-            .cc-body {
-                padding: 1.5rem;
-            }
-
-            .rc {
-                padding: 1.8rem;
-            }
-
-            .hero {
-                padding-top: 4.5rem !important;
-                padding-bottom: 2rem !important;
-            }
-
-            .section {
-                padding: 4rem 0;
-            }
-
-            .pg-hero h1 {
-                font-size: 3rem;
-            }
-
-            .stat-n {
-                font-size: 2.6rem;
-            }
-        }
-
-        /* Term Styles */
-        .term-sec h3 {
-            font-size: 1.4rem;
-            color: var(--tx);
-            margin: 2rem 0 1rem;
-            border-bottom: 2px solid rgba(15, 76, 219, 0.1);
-            padding-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .term-sec h4 {
-            font-size: 1.1rem;
-            color: var(--bl);
-            margin: 1.5rem 0 0.5rem;
-            font-weight: 700;
-        }
-
-        .term-sec p {
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-            color: var(--tx2);
-            line-height: 1.7;
-        }
-
-        .term-sec ul {
-            list-style: disc;
-            padding-left: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--tx2);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .term-sec li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* ══════════════════════════════════════
-           RESPONSIVE DESIGN (TABLETS & MOBILE)
-        ══════════════════════════════════════ */
+        /* 2. Standard Tablets - Landscape (1024px) */
         @media (max-width: 1024px) {
-            nav { padding: 0.7rem 2rem !important; }
-            .hero-in { padding: 0 2rem !important; }
-            .how-grid, .cls-grid, .loc-grid, .r-grid { grid-template-columns: repeat(2, 1fr) !important; }
-            .about-grid, .cnt-grid { grid-template-columns: 1fr !important; }
             .hero h1 { font-size: 4.5rem; }
             .h1-em { font-size: 3.5rem; }
+
+            .how-grid, .cls-grid, .loc-grid, .vid-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .ft-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-grid, .cnt-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
         }
 
+        /* 3. Tablets - Portrait & Small Screens (768px) */
         @media (max-width: 768px) {
+            /* Nav Mobile Toggle */
             nav .hmb { display: flex !important; }
             nav #nav-ul { 
                 display: none; 
@@ -3917,195 +3693,123 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(15, 76, 219, 0.98);
-                padding: 1.8rem 2rem;
+                background: var(--bl3);
+                padding: 2rem;
                 gap: 1.5rem;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+                border-top: 1px solid rgba(255,255,255,0.1);
             }
-            nav.mob-open #nav-ul { display: flex !important; }
+            nav.mob-open #nav-ul { 
+                display: flex !important; 
+                opacity: 1;
+                transform: translateY(0);
+            }
             nav.mob-open { background: var(--bl3) !important; }
-            
-            nav { padding: 0.7rem 1.5rem !important; background: transparent !important; box-shadow: none !important; border: none !important;}
-            nav.scrolled { background: var(--bl3) !important; box-shadow: 0 4px 40px rgba(0, 0, 0, .3) !important; }
-            
-            .hero { padding-top: 4.2rem !important; padding-bottom: 1rem !important; }
-            .hero h1 { font-size: 2.5rem !important; line-height: 1 !important; }
-            .h1-em { font-size: 1.8rem !important; margin-top: 0 !important; }
-            .hero-in { padding: 0 1rem !important; }
-            .hero-desc { font-size: 0.88rem !important; margin: 0.6rem auto !important; padding: 0.4rem 1.2rem !important; }
-            .hero-steps { margin-bottom: 0.8rem !important; gap: 0.35rem !important; }
-            .hs-n { width: 20px !important; height: 20px !important; font-size: 0.55rem !important; }
-            .hs span { font-size: 0.78rem !important; }
-            
-            .how-grid, .cls-grid, .loc-grid, .r-grid { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
-            .sec-title { font-size: 2.2rem !important; }
-            .sw { padding: 0 1.2rem !important; }
-            .section { padding: 3rem 0 !important; }
-            
-            .hero-trust { flex-direction: column; gap: 0.6rem; align-items: center; border-top: none !important; padding-top: 0.5rem !important; }
-            .hero-ctas { flex-direction: column; width: 100%; align-items: stretch; gap: 0.5rem !important; }
-            .hero-ctas a { text-align: center; justify-content: center; padding: 0.75rem 1.2rem !important; font-size: 0.68rem !important; }
-            
-            .chat-launcher {
-                transform: scale(0.65) !important;
-                transform-origin: bottom right !important;
-                bottom: 10px !important;
-                right: 10px !important;
-            }
-            
-            .chat-win {
-                width: 95% !important;
-                height: 80vh !important;
-                bottom: 10px !important;
-                right: 2.5% !important;
-            }
-            
-            .ft-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
-        }
 
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 2.2rem !important; }
-            .h1-em { font-size: 1.7rem !important; }
-            .stats-in { grid-template-columns: 1fr 1fr !important; gap: 1.5rem !important; }
-        }
+            .hide-m { display: none; } /* Hide desktop-only nav items */
+            nav.mob-open .hide-m { display: block !important; }
 
-        /* ══════════════════════════════════════
-           ADMIN PAGES RESPONSIVE DESIGN
-        ══════════════════════════════════════ */
-        @media (max-width: 768px) {
-            .admin-wrap {
-                margin: 100px 15px 40px !important;
-                padding: 1.5rem !important;
+            /* Hero adjustments */
+            .hero {
+                padding-top: 6rem;
+                padding-bottom: 3rem;
             }
-            .admin-title {
-                font-size: 2.5rem !important;
+            .hero h1 { font-size: 3.2rem !important; line-height: 1.1 !important; }
+            .h1-em { font-size: 2.4rem !important; margin-top: 0 !important; }
+            .hero-desc { font-size: 0.95rem !important; margin: 1rem auto !important; }
+            .hero-steps { margin-bottom: 1.5rem !important; gap: 0.6rem !important; }
+            .hs span { font-size: 0.9rem !important; }
+            
+            .hero-ctas { 
+                flex-direction: column; 
+                width: 100%; 
+                align-items: center; 
+                gap: 0.8rem !important; 
             }
-            .chat-container {
-                height: 70vh !important;
+            .hero-ctas a { width: 100%; max-width: 320px; justify-content: center; text-align: center; }
+
+            .hero-trust { 
+                flex-direction: column; 
+                gap: 0.8rem; 
+                align-items: center; 
+                border-top: none !important; 
+                padding-top: 1rem !important; 
             }
-            .chat-header {
+
+            /* Section & Grid adjustments */
+            .section { padding: 3.5rem 0 !important; }
+            .sw { padding: 0 1.5rem !important; }
+            .sec-title { font-size: 2.4rem !important; }
+
+            .how-grid, .cls-grid, .loc-grid, .r-grid { 
+                grid-template-columns: 1fr !important; 
+                gap: 1.5rem !important; 
+            }
+
+            .stats-in {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 2rem !important;
+            }
+
+            .cta-band {
                 flex-direction: column;
-                gap: 0.5rem;
                 text-align: center;
+                gap: 1.5rem;
             }
-            .chat-input-area {
+
+            .sub-in {
                 flex-direction: column;
-                gap: 0.5rem;
-                padding: 1rem !important;
+                text-align: center;
+                gap: 1.5rem;
             }
-            .chat-input-area button {
-                padding: 0.8rem !important;
-                width: 100%;
-            }
+            .sub-form { width: 100%; }
+
+            /* Footer */
+            .ft-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; text-align: center; }
+            .ft-grid > div { display: flex; flex-direction: column; align-items: center; }
+            .ft-bot { flex-direction: column; gap: 1rem; text-align: center; }
+
+            /* Gallery/Masonry */
+            .masonry { grid-template-columns: 1fr !important; }
+            .mi.wide { grid-column: 1 !important; }
+
+            /* Floating UI */
+            .float-wa { bottom: 1.5rem; left: 1.5rem; width: 52px; height: 52px; }
+            .chat-btn { bottom: 1.5rem; right: 1.5rem; }
+            .chat-win { width: 92% !important; height: 75vh !important; bottom: 1rem !important; right: 4% !important; }
         }
 
-        @media (max-width: 767px) {
+        /* 4. Small Mobile Phones (480px) */
+        @media (max-width: 480px) {
+            nav { padding: .7rem 1.2rem; }
+            .sw, .pg-hero-in, .stats-in, .sub-in, .ft-in, .hero-in {
+                padding-left: 1.2rem !important;
+                padding-right: 1.2rem !important;
+            }
+            .hero h1 { font-size: 2.5rem !important; }
+            .h1-em { font-size: 1.8rem !important; }
+            .stats-in { grid-template-columns: 1fr !important; }
+            .pg-hero h1 { font-size: 2.8rem !important; }
+            .stat-n { font-size: 2.8rem !important; }
+            .sec-title { font-size: 2.1rem !important; }
+        }
+
+        /* 5. Touch Device Optimization (Disable Custom Cursor) */
+        @media (pointer: coarse), (max-width: 1024px) {
             #cur, #cur-ring { display: none !important; }
             body { cursor: auto !important; }
-            .hero-center-box { max-width: 100% !important; }
+            a, button, .hc, .cc, .lc, .mi, .btn-fire, .btn-out, .faq-q, .qb {
+                cursor: pointer !important;
+            }
         }
 
-
-        /* ══════════════════════════════════════════════
-           FLOATING WHATSAPP
-        ══════════════════════════════════════════════ */
-        .float-wa {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            width: 60px;
-            height: 60px;
-            background: #25d366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-            z-index: 1000;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-        }
-
-        .float-wa:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
-        }
-
+        /* Admin/LiveChat Responsive Fixes */
         @media (max-width: 768px) {
-            .float-wa {
-                bottom: 1.5rem;
-                left: 1.5rem;
-                width: 50px;
-                height: 50px;
-            }
-            .float-wa svg {
-                width: 24px !important;
-                height: 24px !important;
-            }
+            .admin-wrap { margin: 80px 15px 30px !important; padding: 1.2rem !important; }
+            .admin-title { font-size: 2.2rem !important; }
+            .chat-container { height: 65vh !important; }
+            .chat-header { flex-direction: column; gap: 0.5rem; text-align: center; }
+            .chat-input-area { flex-direction: column; padding: 1rem !important; }
+            .chat-input-area button { width: 100%; }
         }
 
-        /* Chat Tooltip */
-        .chat-tooltip {
-            position: absolute;
-            bottom: 80px;
-            right: 0;
-            background: #fff;
-            color: var(--dk);
-            padding: 10px 18px;
-            border-radius: 20px 20px 0 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            white-space: nowrap;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            pointer-events: none;
-            animation: floatTooltip 3s infinite ease-in-out;
-            opacity: 1;
-            transition: opacity 0.3s;
-            border: 1px solid rgba(15,76,219,0.1);
-        }
-        .chat-tooltip::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            right: 15px;
-            width: 12px;
-            height: 12px;
-            background: #fff;
-            transform: rotate(45deg);
-            border-bottom: 1px solid rgba(15,76,219,0.1);
-            border-right: 1px solid rgba(15,76,219,0.1);
-        }
-        @keyframes floatTooltip {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-            100% { transform: translateY(0); }
-        }
-        .chat-btn.open .chat-tooltip {
-            opacity: 0;
-            display: none;
-        }
-
-
-        /* -- LOCATION BADGE -- */
-        .lc { position: relative; overflow: hidden; }
-        .lc-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #ff4d00;
-            color: #fff;
-            padding: 0.5rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            z-index: 10;
-            box-shadow: 0 4px 15px rgba(255, 77, 0, 0.4);
-            pointer-events: none;
-            animation: badgePulse 2s infinite;
-        }
-        @keyframes badgePulse {
-            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 77, 0, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 4px 25px rgba(255, 77, 0, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 77, 0, 0.4); }
-        }
