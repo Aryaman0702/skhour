@@ -1,66 +1,41 @@
 // images.js
 // This file contains all the HTML and image links for the major image sections of the website.
-// You can edit the "src" urls below to your own local images (e.g. "my-photo.jpg") or custom links.
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    const imagesList = [
+        "life-1.jpg",
+        "life-4.jpg",
+        "gallery-1.jpg",
+        "gallery-3.jpg",
+        "gallery-5.jpg",
+        "WhatsApp Image 2026-04-17 at 21.16.30.jpeg",
+        "WhatsApp Image 2026-04-17 at 21.16.31.jpeg"
+    ];
+
     const photoStripContainer = document.getElementById("photo-strip-container");
     if (photoStripContainer) {
-        photoStripContainer.innerHTML = `
-            <div class="strip-track" id="stripTrack">
-                <div class="sc"><img src="" alt="Wheels">
-                    <div class="sc-cap">Roller Rinks</div>
-                </div>
-                <div class="sc"><img src="122.jpg" alt="Outdoors">
-                    <div class="sc-cap">Summer Spins</div>
-                </div>
-                <div class="sc"><img src="images/images (2).jpg" alt="Vintage">
-                    <div class="sc-cap">Disco Derby</div>
-                </div>
-                <div class="sc"><img src="images/a-shot-of-a-roller-derby-player-coming-out-of-a-turn-her-body-leaned-low-and-her-skate-wheels-gripping-the-track-photo.jpg" alt="Disco">
-                    <div class="sc-cap">Night Sessions</div>
-                </div>
-                <div class="sc"><img src="images/wisthalercom_19_02_tv-bruneck_ha2_1355_b.webp" alt="Derby">
-                    <div class="sc-cap">Derby Team</div>
-                </div>
-                <div class="sc"><img src="images/rs97281-smi-2372lpr.webp" alt="Inline">
-                    <div class="sc-cap">Inline Action</div>
-                </div>
-                <div class="sc"><img src="images/images.jpg" alt="Action">
-                    <div class="sc-cap">Tricks & Fun</div>
-                </div>
-                <div class="sc"><img src="images/360_F_231422052_cqK6XHTUcvAGck4kqdhQ0rqyHywR3WfV.jpg" alt="Skates">
-                    <div class="sc-cap">Gear Rentals</div>
-                </div>
-                <!-- duplicates for infinite scrolling effect -->
-                <div class="sc"><img src="images/istockphoto-2182155064-612x612.webp" alt="Wheels">
-                    <div class="sc-cap">Roller Rinks</div>
-                </div>
-                <div class="sc"><img src="images/images (2).jpg" alt="Outdoors">
-                    <div class="sc-cap">Summer Spins</div>
-                </div>
-                <div class="sc"><img src="images/images (2).jpg" alt="Vintage">
-                    <div class="sc-cap">Disco Derby</div>
-                </div>
-                <div class="sc"><img src="images/a-shot-of-a-roller-derby-player-coming-out-of-a-turn-her-body-leaned-low-and-her-skate-wheels-gripping-the-track-photo.jpg" alt="Disco">
-                    <div class="sc-cap">Night Sessions</div>
-                </div>
-                <div class="sc"><img src="images/wisthalercom_19_02_tv-bruneck_ha2_1355_b.webp" alt="Derby">
-                    <div class="sc-cap">Derby Team</div>
-                </div>
-                <div class="sc"><img src="images/rs97281-smi-2372lpr.webp" alt="Inline">
-                    <div class="sc-cap">Inline Action</div>
-                </div>
-                <div class="sc"><img src="images/images.jpg" alt="Action">
-                    <div class="sc-cap">Tricks & Fun</div>
-                </div>
-                <div class="sc"><img src="images/360_F_231422052_cqK6XHTUcvAGck4kqdhQ0rqyHywR3WfV.jpg" alt="Skates">
-                    <div class="sc-cap">Gear Rentals</div>
-                </div>
-            </div>
-        `;
+        let stripContent = `<div class="strip-track" id="stripTrack">`;
+        
+        // Add all images
+        imagesList.forEach((img, idx) => {
+            stripContent += `
+                <div class="sc"><img src="life on skates/${img}" alt="Skating ${idx+1}">
+                    <div class="sc-cap">SkatingHour Life</div>
+                </div>`;
+        });
+        
+        // Duplicate for infinite scroll
+        imagesList.forEach((img, idx) => {
+            stripContent += `
+                <div class="sc"><img src="life on skates/${img}" alt="Skating ${idx+1}">
+                    <div class="sc-cap">SkatingHour Life</div>
+                </div>`;
+        });
+        
+        stripContent += `</div>`;
+        photoStripContainer.innerHTML = stripContent;
 
-        // Ensure animations fire for newly injected HTML
         if (window.gsap && window.ScrollTrigger) {
             ScrollTrigger.refresh();
         }
@@ -68,36 +43,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const galleryContainer = document.getElementById("gallery-container");
     if (galleryContainer) {
-        galleryContainer.innerHTML = `
-                <div class="masonry rv up">
-                    <div class="mi tall"><img src="images/media__1776444632159.jpg" alt="">
-                        <div class="mi-cap"><span>Our Coaches</span></div>
-                    </div>
-                    <div class="mi"><img src="images/media__1776444632263.jpg" alt="">
-                        <div class="mi-cap"><span>Community</span></div>
-                    </div>
-                    <div class="mi"><img src="images/media__1776444632295.jpg" alt="">
-                        <div class="mi-cap"><span>Expert Team</span></div>
-                    </div>
-                    <div class="mi wide"><img src="images/media__1776444641427.jpg" alt="">
-                        <div class="mi-cap"><span>Champions</span></div>
-                    </div>
-                    <div class="mi"><img src="images/a-shot-of-a-roller-derby-player-coming-out-of-a-turn-her-body-leaned-low-and-her-skate-wheels-gripping-the-track-photo.jpg" alt="">
-                        <div class="mi-cap"><span>Gear Rentals</span></div>
-                    </div>
-                    <div class="mi"><img src="images/two-children-learn-to-skate-roller-skating-hand-sisters-happy-play-sports-summer-431465581.webp" alt="">
-                        <div class="mi-cap"><span>Inline Action</span></div>
-                    </div>
-                    <div class="mi"><img src="images/istockphoto-1602997636-612x612.jpg" alt="">
-                        <div class="mi-cap"><span>Tricks & Fun</span></div>
-                    </div>
-                    <div class="mi wide"><img src="images/group-of-friends-skating-on-rollerblades-in-bright-afternoon-light-at-a-city-park-photo.jpg" alt="">
-                        <div class="mi-cap"><span>Summer Spins</span></div>
-                    </div>
-                </div>
-        `;
+        let galleryContent = `<div class="masonry rv up">`;
+        
+        // Use first 14 images for gallery (previous 12 + new 2)
+        const galleryImages = imagesList.slice(0, 14);
+        
+        galleryImages.forEach((img, idx) => {
+            let extraClass = "";
+            // Make the first two (new) photos tall as requested
+            if (img === "life-1.jpg" || img === "life-4.jpg") extraClass = "tall";
+            else if (idx === 3) extraClass = "wide";
+            
+            galleryContent += `
+                <div class="mi ${extraClass}"><img src="life on skates/${img}" alt="Gallery ${idx+1}">
+                    <div class="mi-cap"><span>Skating Experience</span></div>
+                </div>`;
+        });
+        
+        galleryContent += `</div>`;
+        galleryContainer.innerHTML = galleryContent;
 
-        // Ensure animations fire for newly injected HTML
         if (window.gsap && window.ScrollTrigger) {
             ScrollTrigger.refresh();
         }

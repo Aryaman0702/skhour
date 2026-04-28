@@ -47,7 +47,7 @@
             position: fixed;
             inset: 0;
             z-index: 10000;
-            background: #001a4d;
+            background: #ffffff; /* White */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -61,11 +61,23 @@
             z-index: 2;
             width: 95%;
             max-width: 850px;
-            
+            text-align: center;
             opacity: 0;
             transform: scale(0.9);
             animation: introLogoReveal 4s forwards ease-out 0.1s;
         }
+
+        .it-1, .it-2 {
+            display: block;
+            color: var(--dk);
+            font-family: 'Oswald', sans-serif;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .it-1 { font-size: clamp(3rem, 10vw, 6rem); }
+        .it-2 { font-size: clamp(2.5rem, 8vw, 5rem); color: var(--or); }
 
         .intro-logo img {
             width: 100%;
@@ -1081,10 +1093,10 @@
         }
 
         .bg-single-video {
-            filter: contrast(1.1) brightness(1.1) saturate(1.05) sepia(0.02) blur(1.8px);
+            filter: contrast(1.05) brightness(1.05) saturate(1.02) blur(0.4px);
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
-            transform: scale(1.05) translateZ(0); /* Hardware accelerated scale to hide blur edges */
+            transform: scale(1.02) translateZ(0); /* Hardware accelerated scale to hide edges */
         }
 
         /* Clarity Enhancement Overlay for Large Screens */
@@ -3909,6 +3921,7 @@
             .about-grid, .cnt-grid { grid-template-columns: 1fr !important; }
             .hero h1 { font-size: 4.5rem; }
             .h1-em { font-size: 3.5rem; }
+            .masonry { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
@@ -3948,9 +3961,14 @@
             .hs span { font-size: 0.78rem !important; }
             
             .how-grid, .cls-grid, .loc-grid, .r-grid { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
+            .masonry { grid-template-columns: 1fr !important; }
+            .mi.tall { min-height: 350px !important; }
+            .mi.wide { grid-column: span 1 !important; }
             .sec-title { font-size: 2.2rem !important; }
             .sw { padding: 0 1.2rem !important; }
             .section { padding: 3rem 0 !important; }
+            
+            .intro-logo { width: 85% !important; }
             
             .hero-trust { 
                 display: none !important;
@@ -4245,5 +4263,83 @@
             .contact-item {
                 padding: 8px 16px;
                 font-size: 0.8rem;
+            }
+        }
+
+        /* ── PROGRAM OVERVIEW TABLE ── */
+        .prog-table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: var(--sh);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .prog-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .prog-table th {
+            text-align: left;
+            padding: 1.2rem;
+            background: var(--bl-lt);
+            color: var(--bl);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 2px solid var(--bl-lt);
+        }
+
+        .prog-table td {
+            padding: 1.5rem 1.2rem;
+            border-bottom: 1px solid var(--bl-lt);
+            vertical-align: middle;
+            font-size: 0.95rem;
+            color: var(--tx2);
+            line-height: 1.6;
+            font-family: 'Inter', sans-serif; /* Cleaner for table data */
+        }
+
+        .prog-table tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        .grp-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .grp-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 900;
+        }
+        
+        .grp-cell div {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .prog-table-container {
+                padding: 0.8rem;
+                border-radius: 12px;
+            }
+            .prog-table td, .prog-table th {
+                padding: 1rem 0.8rem;
+                font-size: 0.85rem;
             }
         }

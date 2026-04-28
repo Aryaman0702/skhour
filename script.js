@@ -11,7 +11,7 @@
                 overlay.style.transition = 'opacity 0.6s ease, visibility 0.6s';
                 overlay.classList.add('hidden');
                 document.body.style.overflow = '';
-            }, 3600);
+            }, 1000);
         })();
 
 
@@ -103,9 +103,11 @@
                 const oc = a.getAttribute('onclick') || '';
                 if (oc.includes("'" + id + "'")) a.classList.add('active');
             });
+
             // close mobile nav
             mobOpen = false;
-            document.getElementById('nav-ul').style.cssText = '';
+            const navUl = document.getElementById('nav-ul');
+            if (navUl) navUl.style.cssText = '';
             
             // Reset GSAP and refresh
             if (window.ScrollTrigger) {
@@ -346,7 +348,7 @@
                     botSay(`I'm **Anurag**, your Skating Consultant.
 
 What city are you looking to enroll in today for our **Summer Roller Skating** sessions?`);
-                    showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Hamilton', 'Markham', 'St. Catharines', 'North York', 'Pricing']);
+                    showQR(['Brampton', 'Burlington', 'Hamilton', 'Kitchener', 'Markham', 'Milton', 'Mississauga', 'North York', 'Oakville', 'Scarborough', 'St. Catharines', 'Pricing']);
                 }, 1000);
             }, 3000);
         }
@@ -400,7 +402,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
 
             if (lo.match(/go back to main menu|main menu/)) {
-                return typeThen(300, `Main menu:`, () => showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Scarborough', 'Hamilton', 'Markham', 'St. Catharines', 'North York', 'Pricing']));
+                return typeThen(300, `Main menu:`, () => showQR(['Brampton', 'Burlington', 'Hamilton', 'Kitchener', 'Markham', 'Milton', 'Mississauga', 'North York', 'Oakville', 'Scarborough', 'St. Catharines', 'Pricing']));
             }
             
             if (lo.match(/mississauga/)) {
@@ -494,10 +496,11 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             if (lo.match(/north york|york/)) {
                 return typeThen(400, `**North York — Mitchell Field Community Centre**
 
-**Time:** Fridays
-**Status:** Coming Soon (Dates to be Announced)
+**Session 1:** Friday 5:30 PM – 6:30 PM
+**Session 2:** Friday 6:30 PM – 7:30 PM
+**Dates:** Spring (Jun 5 – Jul 3) · Summer (Jul 10 – Aug 14)
 
-Check back soon for registration!`, () => showQR(['Locations', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/courses)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/price|pricing|cost/)) {
                 return typeThen(400, `**Pricing Overview**
