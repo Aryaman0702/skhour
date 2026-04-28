@@ -3951,19 +3951,15 @@
             .section { padding: 3rem 0 !important; }
             
             .hero-trust { 
-                flex-direction: column; 
-                gap: 0.8rem; 
-                align-items: center; 
-                border-top: none !important; 
-                padding-top: 1.5rem !important; 
-                margin-bottom: 2rem !important;
+                display: none !important;
             }
             .hero-ctas { 
                 flex-direction: column; 
                 width: 100%; 
                 align-items: stretch; 
                 gap: 0.8rem !important; 
-                padding-bottom: 3rem !important;
+                margin-top: 1.5rem !important;
+                padding-bottom: 2rem !important;
             }
             .hero-ctas a { text-align: center; justify-content: center; padding: 0.9rem 1.2rem !important; font-size: 0.75rem !important; }
             
