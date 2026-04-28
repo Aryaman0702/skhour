@@ -709,21 +709,21 @@
             height: 38px;
             flex-shrink: 0;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--bl), var(--bl2));
+            background: linear-gradient(135deg, var(--or), var(--or2));
             color: #fff;
             font-size: 1.1rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 14px rgba(15, 76, 219, .3);
+            box-shadow: 0 4px 14px rgba(244, 98, 10, 0.3);
         }
 
         .hs span {
             font-size: 1.25rem;
-            color: #000;
+            color: var(--bl);
             font-family: 'Oswald', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .hero-ctas {
@@ -3950,9 +3950,22 @@
             .sw { padding: 0 1.2rem !important; }
             .section { padding: 3rem 0 !important; }
             
-            .hero-trust { flex-direction: column; gap: 0.6rem; align-items: center; border-top: none !important; padding-top: 0.5rem !important; }
-            .hero-ctas { flex-direction: column; width: 100%; align-items: stretch; gap: 0.5rem !important; }
-            .hero-ctas a { text-align: center; justify-content: center; padding: 0.75rem 1.2rem !important; font-size: 0.68rem !important; }
+            .hero-trust { 
+                flex-direction: column; 
+                gap: 0.8rem; 
+                align-items: center; 
+                border-top: none !important; 
+                padding-top: 1.5rem !important; 
+                margin-bottom: 2rem !important;
+            }
+            .hero-ctas { 
+                flex-direction: column; 
+                width: 100%; 
+                align-items: stretch; 
+                gap: 0.8rem !important; 
+                padding-bottom: 3rem !important;
+            }
+            .hero-ctas a { text-align: center; justify-content: center; padding: 0.9rem 1.2rem !important; font-size: 0.75rem !important; }
             
             .chat-launcher {
                 transform: scale(0.65) !important;

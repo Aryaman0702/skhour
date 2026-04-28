@@ -600,15 +600,16 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
                 delay: 0.5
             });
 
-            // 2. Background Parallax
+            // 2. Background Parallax (Smoothed)
             gsap.to(".hero-bg video, .hero-bg img, .pg-hero", {
-                yPercent: isMobile ? 5 : 12,
-                ease: "none",
+                yPercent: isMobile ? 3 : 8,
+                ease: "power1.inOut",
                 scrollTrigger: {
                     trigger: ".hero, .pg-hero",
                     start: "top top",
                     end: "bottom top",
-                    scrub: true
+                    scrub: 1.2, // Smoother scrub
+                    force3D: true
                 }
             });
 
@@ -702,6 +703,34 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
         }
         document.addEventListener('DOMContentLoaded', renderSchedules);
 
+
         /* ══════════════════════════════════════════════
-           BACKGROUND SLIDER JS - Removed for continuous video
+           VIDEO STABILITY ENGINE
         ══════════════════════════════════════════════ */
+        (function() {
+            const v = document.getElementById('bgVideo');
+            if (!v) return;
+
+            const forcePlay = () => {
+                if (v.paused) {
+                    v.play().catch(() => {
+                        // If autoplay is blocked, we wait for a user interaction
+                        document.addEventListener('click', () => v.play(), { once: true });
+                    });
+                }
+            };
+
+            // Force play on load and visibility change
+            window.addEventListener('load', forcePlay);
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') forcePlay();
+            });
+
+            // Prevent pause on low power mode or other triggers
+            v.addEventListener('pause', () => {
+                setTimeout(forcePlay, 100);
+            });
+
+            // Ensure video starts playing as soon as possible
+            v.play().catch(e => console.log("Video autoplay blocked, waiting for interaction."));
+        })();
