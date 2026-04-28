@@ -275,7 +275,16 @@
             const ok = document.getElementById(prefix + '_ok');
             btn.disabled = true; btn.textContent = 'Submitting…';
 
-            sendEmail({ _subject: "New Enquiry: " + n, name: n, email: em, phone: ph, location: l, level: lv, message: m }, () => {
+            sendEmail({ 
+                _subject: "New Enquiry: " + n, 
+                type: prefix === 'm' ? 'Trial' : 'Enquiry', // Identify trials vs general enquiries
+                name: n, 
+                email: em, 
+                phone: ph, 
+                location: l, 
+                level: lv, 
+                message: m 
+            }, () => {
                 btn.style.display = 'none';
                 ok.style.display = 'block';
                 if (prefix === 'm') setTimeout(closeModal, 2200);

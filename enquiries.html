@@ -61,17 +61,22 @@
         <h1 class="admin-title">Enquiries & Subscribers</h1>
         <p style="margin-bottom: 2rem;">Overview of all forms securely logged through the website.</p>
         
+        <!-- Tabs -->
+        <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+            <button id="tab-trials" class="btn-out" style="background: #0f4cdb; color: #fff; border-color: #0f4cdb;" onclick="switchTab('Trial')">Trial Bookings</button>
+            <button id="tab-enquiries" class="btn-out" style="background: transparent; color: #0f4cdb; border-color: #0f4cdb;" onclick="switchTab('Enquiry')">General Enquiries</button>
+        </div>
+        
         <div class="loc-form">
             <div style="overflow-x: auto;">
                 <table id="enquiries-table" style="width: 100%; border-collapse: collapse; text-align: left; margin-bottom: 1rem; background: #fff;">
                     <thead>
                         <tr style="border-bottom: 2px solid #0f4cdb; color: #050d1e;">
                             <th style="padding: 0.8rem 0.5rem; font-size: 0.85rem;">Date</th>
-                            <th style="padding: 0.8rem 0.5rem; font-size: 0.85rem;">Type/Name</th>
+                            <th style="padding: 0.8rem 0.5rem; font-size: 0.85rem;">Name</th>
                             <th style="padding: 0.8rem 0.5rem; font-size: 0.85rem;">Phone</th>
                             <th style="padding: 0.8rem 0.5rem; font-size: 0.85rem;">Email</th>
                             <th style="padding: 0.8rem 0.5rem; font-size: 0.85rem;">Location</th>
-                            <th style="padding: 0.8rem 0.5rem; font-size: 0.85rem;">Participants</th>
                             <th style="padding: 0.8rem 0.5rem; font-size: 0.85rem;">Message</th>
                         </tr>
                     </thead>

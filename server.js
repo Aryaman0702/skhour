@@ -80,6 +80,7 @@ app.post('/api/enquiries', (req, res) => {
     
     db.enquiries.push({
         id: Date.now(),
+        type: data.type || 'Enquiry', // New field
         subject: data._subject || '',
         name: data.name || '',
         phone: data.phone || '',
