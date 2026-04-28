@@ -346,7 +346,7 @@
                     botSay(`I'm **Anurag**, your Skating Consultant.
 
 What city are you looking to enroll in today for our **Summer Roller Skating** sessions?`);
-                    showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Pricing']);
+                    showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Hamilton', 'Markham', 'St. Catharines', 'Pricing']);
                 }, 1000);
             }, 3000);
         }
@@ -400,7 +400,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
 
             if (lo.match(/go back to main menu|main menu/)) {
-                return typeThen(300, `Main menu:`, () => showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Scarborough', 'More Cities', 'Pricing']));
+                return typeThen(300, `Main menu:`, () => showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Scarborough', 'Hamilton', 'Markham', 'St. Catharines', 'Pricing']));
             }
             
             if (lo.match(/mississauga/)) {
@@ -464,6 +464,30 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 
 **Time:** Friday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 12-Jul 3) · Summer (Jul 10-Aug 28)
+
+**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/hamilton/)) {
+                return typeThen(400, `**Hamilton — Rosedale Community Centre**
+
+**Time:** Tuesday 5-6 PM, 6-7 PM, 7-8 PM
+**Dates:** Spring (Jun 9-30) · Summer (Jul 7-Aug 25)
+
+**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/markham/)) {
+                return typeThen(400, `**Markham — Clathworthy Arena**
+
+**Time:** Monday 6:00 PM – 7:00 PM
+**Dates:** Spring (Jun 1-29) · Summer (Jul 6-Aug 31)
+
+**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/st\. catharines|catharines/)) {
+                return typeThen(400, `**St. Catharines — Ballhockey.com Niagara**
+
+**Time:** Monday 6:00 PM – 7:00 PM
+**Dates:** Spring (Jun 8-29) · Summer (Jul 6-Aug 31)
 
 **[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
@@ -658,15 +682,18 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
            DYNAMIC SCHEDULE RENDERING
         ══════════════════════════════════════════════ */
                 const defaultSchedules = {
+            hamilton: `<div class="ls"><strong>Tue 5-6 PM</strong></div><div class="ls"><strong>Tue 6-7 PM</strong></div><div class="ls"><strong>Tue 7-8 PM</strong></div><div class="ls">Spring: Jun 9-30 · Summer: Jul 7-Aug 25</div>`,
             milton: `<div class="ls"><strong>Tue 6-7 PM</strong>Spring: Jun 2-30 · Summer: Jul 7-Aug 25</div>`,
-            mississauga: `<div class="ls"><strong>Tue 6-7 PM (Burnhamthorpe)</strong>Jun 2-Aug 25</div>
-<div class="ls"><strong>Thu 6-7 PM (Valley CC)</strong>Jun 4-Aug 27</div>`,
-            oakville: `<div class="ls"><strong>Wed 6-7 PM</strong>Jun 10-Aug 26</div>
-<div class="ls"><strong>Fri 6-7 PM</strong>Jun 5-Aug 21</div>`,
-            brampton: `<div class="ls"><strong>Wed 5:30 & 6:30 PM</strong>Jun 10-Aug 26</div>`,
-            scarborough: `<div class="ls"><strong>Wed 5:30 & 6:30 PM</strong>Jun 3-Aug 26</div>`,
-            kitchener: `<div class="ls"><strong>Thu 6-7 PM</strong>Jun 11-Aug 20</div>`,
-            burlington: `<div class="ls"><strong>Fri 6-7 PM</strong>Jun 12-Aug 28</div>`
+            mississauga: `<div class="ls"><strong>Tue 6-7 PM (Burnhamthorpe)</strong>Spring: Jun 2-30 · Summer: Jul 7-Aug 25</div>
+<div class="ls"><strong>Thu 6-7 PM (Valley CC)</strong>Spring: Jun 4-Jul 2 · Summer: Jul 9-Aug 27</div>`,
+            oakville: `<div class="ls"><strong>Wed 6-7 PM</strong>Spring: Jun 10-Jul 8 · Summer: Jul 15-Aug 26</div>
+<div class="ls"><strong>Fri 6-7 PM</strong>Spring: Jun 5-Jul 3 · Summer: Jul 10-Aug 21</div>`,
+            brampton: `<div class="ls"><strong>Wed 5:30 & 6:30 PM</strong>Spring: Jun 17-Jul 15 · Summer: Jul 22-Aug 26</div>`,
+            scarborough: `<div class="ls"><strong>Wed 5:30 & 6:30 PM</strong>Spring: Jun 3-24 · Summer: Jul 8-Aug 26</div>`,
+            kitchener: `<div class="ls"><strong>Thu 6-7 PM</strong>Spring: Jun 11-Jul 2 · Summer: Jul 9-Aug 20</div>`,
+            burlington: `<div class="ls"><strong>Fri 6-7 PM</strong>Spring: Jun 12-Jul 3 · Summer: Jul 10-Aug 28</div>`,
+            markham: `<div class="ls"><strong>Mon 6-7 PM</strong>Spring: Jun 1-29 · Summer: Jul 6-Aug 31</div>`,
+            st_catharines: `<div class="ls"><strong>Mon 6-7 PM</strong>Spring: Jun 8-29 · Summer: Jul 6-Aug 31</div>`
         };
 
         async function renderSchedules() {

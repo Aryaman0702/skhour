@@ -1081,9 +1081,10 @@
         }
 
         .bg-single-video {
-            filter: contrast(1.15) brightness(1.1) saturate(1.05) sepia(0.05) blur(4.5px);
+            filter: contrast(1.1) brightness(1.1) saturate(1.05) sepia(0.02) blur(1.8px);
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
+            transform: scale(1.05) translateZ(0); /* Hardware accelerated scale to hide blur edges */
         }
 
         /* Clarity Enhancement Overlay for Large Screens */
@@ -3979,6 +3980,10 @@
             }
             
             .ft-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+            
+            .bg-single-video {
+                filter: contrast(1.05) brightness(1.1) blur(1px) !important;
+            }
         }
 
         @media (max-width: 480px) {
