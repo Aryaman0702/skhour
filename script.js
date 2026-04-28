@@ -735,6 +735,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
                 if (document.visibilityState === 'visible') forcePlay();
             });
 
+
             // Prevent pause on low power mode or other triggers
             v.addEventListener('pause', () => {
                 setTimeout(forcePlay, 100);
@@ -743,3 +744,17 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             // Ensure video starts playing as soon as possible
             v.play().catch(e => console.log("Video autoplay blocked, waiting for interaction."));
         })();
+
+function toggleContactMenu() {
+    const menu = document.getElementById('contactMenu');
+    if (menu) menu.classList.toggle('open');
+}
+
+// Close contact menu when clicking outside
+document.addEventListener('click', (e) => {
+    const widget = document.querySelector('.contact-widget');
+    const menu = document.getElementById('contactMenu');
+    if (widget && !widget.contains(e.target) && menu && menu.classList.contains('open')) {
+        menu.classList.remove('open');
+    }
+});
