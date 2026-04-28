@@ -304,7 +304,7 @@
             if (btn) { ogText = btn.textContent; btn.disabled = true; btn.textContent = '...'; }
 
             sendEmail({ _subject: "New Subscriber", email: em }, () => {
-                alert('✦ Subscribed! Welcome to Skating Hour.');
+                alert('✦ Subscribed! Welcome to SkatingHour.');
                 document.getElementById(id).value = '';
                 if (btn) { btn.disabled = false; btn.textContent = ogText; }
             }, () => {
@@ -333,7 +333,7 @@
         function initChat() {
             CB.started = true;
             const bar = document.getElementById('connBar'), txt = document.getElementById('connTxt');
-            botSay("Welcome to **Skating Hour Experts**!");
+            botSay("Welcome to **SkatingHour Experts**!");
             botSay(" **5 coaches are online** — please wait while we connect you...");
             let d = 0;
             const iv = setInterval(() => { d = (d + 1) % 4; txt.textContent = 'Connecting' + '.'.repeat(d + 1); }, 500);
@@ -346,7 +346,7 @@
                     botSay(`I'm **Anurag**, your Skating Consultant.
 
 What city are you looking to enroll in today for our **Summer Roller Skating** sessions?`);
-                    showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Hamilton', 'Markham', 'St. Catharines', 'Pricing']);
+                    showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Hamilton', 'Markham', 'St. Catharines', 'North York', 'Pricing']);
                 }, 1000);
             }, 3000);
         }
@@ -400,7 +400,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
 
             if (lo.match(/go back to main menu|main menu/)) {
-                return typeThen(300, `Main menu:`, () => showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Scarborough', 'Hamilton', 'Markham', 'St. Catharines', 'Pricing']));
+                return typeThen(300, `Main menu:`, () => showQR(['Brampton', 'Milton', 'Mississauga', 'Oakville', 'Scarborough', 'Hamilton', 'Markham', 'St. Catharines', 'North York', 'Pricing']));
             }
             
             if (lo.match(/mississauga/)) {
@@ -490,6 +490,14 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Dates:** Spring (Jun 8-29) · Summer (Jul 6-Aug 31)
 
 **[Register Now](https://skatinghour.classcard.app/en/course/46161)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+            }
+            if (lo.match(/north york|york/)) {
+                return typeThen(400, `**North York — Mitchell Field Community Centre**
+
+**Time:** Fridays
+**Status:** Coming Soon (Dates to be Announced)
+
+Check back soon for registration!`, () => showQR(['Locations', 'Main Menu']));
             }
             if (lo.match(/price|pricing|cost/)) {
                 return typeThen(400, `**Pricing Overview**
