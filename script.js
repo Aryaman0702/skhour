@@ -318,7 +318,7 @@
            Greets → asks location once → shows all details
            Answers questions like ChatGPT / Gemini
         ══════════════════════════════════════════════ */
-        const REG_URL = 'https://skatinghour.classcard.app/en/course/42792';
+        const REG_URL = 'https://skatinghour.classcard.app/en/courses';
         const WA_URL = 'https://wa.me/15483312200';
         const CB = { open: false, started: false };
 
@@ -414,7 +414,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Time:** Thu 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 4-Jul 2) · Summer (Jul 9-Aug 27)
 
-**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/course/45875)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/milton/)) {
                 return typeThen(400, `**Milton — Milton Sports Centre**
@@ -422,7 +422,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Time:** Tuesday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 2-30) · Summer (Jul 7-Aug 25)
 
-**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/course/45876)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/oakville/)) {
                 return typeThen(400, `**Oakville — Glen Abbey Community Centre**
@@ -433,7 +433,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Session 2:** Fri 6:00 PM – 7:00 PM
 **Dates:** Jun 5 - Aug 21
 
-**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/course/45874)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/brampton/)) {
                 return typeThen(400, `**Brampton — TallPine School**
@@ -441,7 +441,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Time:** Wednesday 5:30 PM & 6:30 PM slots
 **Dates:** Spring (Jun 10-24) · Summer (Jul 8-Aug 26)
 
-**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/course/45878)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/scarborough/)) {
                 return typeThen(400, `**Scarborough — Agincourt Recreation Centre**
@@ -449,7 +449,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Time:** Wednesday 5:30 PM & 6:30 PM slots
 **Dates:** Spring (Jun 3-24) · Summer (Jul 8-Aug 26)
 
-**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/course/45882)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/kitchener/)) {
                 return typeThen(400, `**Kitchener — Don McLaurin Arena**
@@ -457,7 +457,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Time:** Thursday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 11-Jul 2) · Summer (Jul 9-Aug 20)
 
-**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/course/45877)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/burlington/)) {
                 return typeThen(400, `**Burlington — Appleby/Mountainside**
@@ -465,7 +465,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Time:** Friday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 12-Jul 3) · Summer (Jul 10-Aug 28)
 
-**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/course/45883)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/hamilton/)) {
                 return typeThen(400, `**Hamilton — Rosedale Community Centre**
@@ -481,7 +481,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Time:** Monday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 1-29) · Summer (Jul 6-Aug 31)
 
-**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/course/45880)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/st\. catharines|catharines/)) {
                 return typeThen(400, `**St. Catharines — Ballhockey.com Niagara**
