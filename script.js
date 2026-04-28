@@ -473,7 +473,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Time:** Tuesday 5-6 PM, 6-7 PM, 7-8 PM
 **Dates:** Spring (Jun 9-30) · Summer (Jul 7-Aug 25)
 
-**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/course/45879)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/markham/)) {
                 return typeThen(400, `**Markham — Clathworthy Arena**
@@ -489,7 +489,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Time:** Monday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 8-29) · Summer (Jul 6-Aug 31)
 
-**[Register Now](${REG_URL})**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/course/46161)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/price|pricing|cost/)) {
                 return typeThen(400, `**Pricing Overview**
@@ -728,7 +728,8 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
                 }
             } catch(e) { console.error(e); }
 
-            // Fallback to defaults
+            // Fallback to defaults is handled by static HTML now
+            /*
             let schedules = defaultSchedules;
             const ham = document.getElementById('sess-hamilton');
             if (ham) ham.innerHTML = schedules.hamilton;
@@ -736,6 +737,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             if (mil) mil.innerHTML = schedules.milton;
             const oak = document.getElementById('sess-oakville');
             if (oak) oak.innerHTML = schedules.oakville;
+            */
         }
         document.addEventListener('DOMContentLoaded', renderSchedules);
 
