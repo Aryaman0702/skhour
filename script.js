@@ -493,8 +493,8 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **[Register Now](https://skatinghour.classcard.app/en/course/45877)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/burlington/)) {
-                return typeThen(400, `**Burlington — Appleby/Mountainside**
-**Address:** 2359 New St, Burlington, ON L7R 1J6
+                return typeThen(400, `**Burlington — Appleby Ice Centre / Mountainside RC**
+**Address:** 1201 Appleby Line / 2205 Mt Forest Dr
 
 **Time:** Friday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 12-Jul 3) · Summer (Jul 10-Aug 28)
@@ -502,8 +502,8 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **[Register Now](https://skatinghour.classcard.app/en/course/45883)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/hamilton/)) {
-                return typeThen(400, `**Hamilton — Rosedale Community Centre**
-**Address:** 1170 King St E, Hamilton, ON L8M 1G1
+                return typeThen(400, `**Hamilton — Rosedale Arena**
+**Address:** 100 Greenhill Ave, Hamilton, ON L8K 6M4
 
 **Time:** Tuesday 5-6 PM, 6-7 PM, 7-8 PM
 **Dates:** Spring (Jun 9-30) · Summer (Jul 7-Aug 25)
