@@ -419,7 +419,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
                 } catch (e) { removeTyping(); }
             }
 
-            if (lo.match(/go back to main menu|main menu/)) {
+            if (lo.includes('main menu') || lo.includes('go back')) {
                 chatMenuStack = [];
                 return typeThen(300, `Main menu:`, () => pushMenu(['Brampton', 'Burlington', 'Hamilton', 'Kitchener', 'Markham', 'Milton', 'Mississauga', 'North York', 'Oakville', 'Scarborough', 'St. Catharines', 'Pricing']));
             }
@@ -515,7 +515,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 
 **[Register Now](https://skatinghour.classcard.app/en/course/45880)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
-            if (lo.match(/st\. catharines|catharines/)) {
+            if (lo.includes('st. catharines') || lo.includes('catharines')) {
                 return typeThen(400, `**St. Catharines — Ballhockey.com Niagara**
 
 **Time:** Monday 6:00 PM – 7:00 PM
