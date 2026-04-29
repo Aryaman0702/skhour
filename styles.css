@@ -3547,32 +3547,34 @@
         .qr-row {
             display: flex;
             flex-wrap: wrap;
-            gap: .38rem;
-            padding: .7rem .9rem;
+            gap: .5rem;
+            padding: .8rem 1rem;
             background: #f8faff;
             border-top: 1px solid rgba(15, 76, 219, .07);
             flex-shrink: 0;
             position: relative;
-            z-index: 5;
+            z-index: 100;
+            touch-action: pan-y;
         }
 
         .qb {
-            padding: .6rem 1rem;
+            padding: .5rem .8rem;
             background: #fff;
             border: 1.5px solid rgba(15, 76, 219, .18);
             color: var(--bl);
             font-family: 'Oswald', sans-serif;
-            font-size: .75rem;
+            font-size: .8rem;
             font-weight: 600;
             cursor: pointer !important;
-            transition: all .25s;
+            transition: all .2s;
             pointer-events: auto !important;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            line-height: 1.2;
+            min-height: 40px;
+            border-radius: 6px;
         }
 
         .qb:hover {

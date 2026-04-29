@@ -1,4 +1,14 @@
-
+        // START VIDEO IMMEDIATELY
+        (function() {
+            const v = document.getElementById('bgVideo');
+            if (v) {
+                v.muted = true;
+                v.play().catch(() => {
+                    document.addEventListener('click', () => v.play(), { once: true });
+                    document.addEventListener('touchstart', () => v.play(), { once: true });
+                });
+            }
+        })();
 
         /* ══════════════════════════════════════════════
            INTRO COOL ANIMATION (FAST SKATE)
@@ -8,14 +18,10 @@
             if (!overlay) return;
             document.body.style.overflow = 'hidden';
             setTimeout(() => {
-                // Start video play immediately to reduce delay
-                const v = document.getElementById('bgVideo');
-                if (v) v.play().catch(() => {});
-
-                overlay.style.transition = 'opacity 0.4s ease, visibility 0.4s';
+                overlay.style.transition = 'opacity 0.3s ease, visibility 0.3s';
                 overlay.classList.add('hidden');
                 document.body.style.overflow = '';
-            }, 800);
+            }, 400); // Super fast intro
         })();
  
          /* Ensure Background Video Plays Smoothly */
