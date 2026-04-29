@@ -603,11 +603,18 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
                 b.onclick = () => { addUser(label); clearQR(); handleMsg(label); };
                 row.appendChild(b);
             });
-            if (!items.includes('Back') && chatMenuStack.length > 1) {
-                const b = document.createElement('button');
-                b.className = 'qb back-btn'; b.textContent = '← Back';
-                b.onclick = () => { addUser('Previous Menu'); popMenu(); };
-                row.appendChild(b);
+            
+            // Ensure Back and Main Menu buttons are always present if stack depth > 1
+            if (!items.includes('Back') && !items.includes('Main Menu') && chatMenuStack.length > 1) {
+                const bMain = document.createElement('button');
+                bMain.className = 'qb main-btn'; bMain.textContent = 'Main Menu';
+                bMain.onclick = () => { addUser('Main Menu'); handleMsg('Main Menu'); };
+                row.appendChild(bMain);
+
+                const bBack = document.createElement('button');
+                bBack.className = 'qb back-btn'; bBack.textContent = '← Back';
+                bBack.onclick = () => { addUser('Previous Menu'); popMenu(); };
+                row.appendChild(bBack);
             }
         }
 

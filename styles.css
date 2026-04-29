@@ -160,7 +160,6 @@
             transform: translate(-50%, -50%);
             transition: all .08s linear;
         }
-
         body:has(a:hover) #cur,
         body:has(button:hover) #cur {
             width: 18px;
@@ -1819,7 +1818,14 @@
 
         @media (max-width: 600px) {
             .r-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr); /* Forced 2 columns on phone */
+                gap: 0.8rem;
+            }
+            .rc {
+                padding: 1.5rem; /* Less padding on mobile for narrow cards */
+            }
+            .rc::before {
+                font-size: 6rem; /* Smaller quote icon on mobile */
             }
         }
 
