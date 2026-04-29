@@ -831,14 +831,17 @@
             justify-content: center;
             font-size: .9rem;
             flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(15, 76, 219, .15);
         }
 
         .ht-or {
-            background: linear-gradient(135deg, var(--or-lt), #ffdcb8);
+            background: linear-gradient(135deg, #ff8c38, #ffb470);
+            box-shadow: 0 4px 12px rgba(244, 98, 10, .25);
         }
 
         .ht-bl {
-            background: linear-gradient(135deg, var(--bl-lt), #c0d8ff);
+            background: linear-gradient(135deg, #2d6ef5, #7a90c0);
+            box-shadow: 0 4px 12px rgba(15, 76, 219, .25);
         }
 
         @keyframes fadeUp {
