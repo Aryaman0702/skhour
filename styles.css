@@ -1821,14 +1821,30 @@
 
         @media (max-width: 600px) {
             .r-grid {
-                grid-template-columns: repeat(2, 1fr); /* Forced 2 columns on phone */
-                gap: 0.8rem;
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory !important;
+                gap: 1.2rem !important;
+                padding-bottom: 2rem !important;
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+                margin-left: -1.5rem !important;
+                margin-right: -1.5rem !important;
+                scrollbar-width: none;
+            }
+            .r-grid::-webkit-scrollbar {
+                display: none;
             }
             .rc {
-                padding: 1.5rem; /* Less padding on mobile for narrow cards */
+                flex: 0 0 88% !important;
+                scroll-snap-align: center !important;
+                padding: 1.8rem !important;
+                margin-bottom: 0 !important;
             }
             .rc::before {
-                font-size: 6rem; /* Smaller quote icon on mobile */
+                font-size: 6rem !important;
+                top: -0.5rem !important;
             }
         }
 
