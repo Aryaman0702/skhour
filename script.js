@@ -11,6 +11,10 @@
                 overlay.style.transition = 'opacity 0.6s ease, visibility 0.6s';
                 overlay.classList.add('hidden');
                 document.body.style.overflow = '';
+                
+                // Play video immediately when intro starts fading
+                const v = document.getElementById('bgVideo');
+                if (v) v.play().catch(() => {});
             }, 1000);
         })();
  
@@ -81,6 +85,18 @@
             
             // Scroll to top instantly
             window.scrollTo(0, 0);
+            
+            // Add back button to non-home pages if it doesn't exist
+            if (id !== 'home' && pg) {
+                if (!pg.querySelector('.pg-back-btn')) {
+                    const backBtn = document.createElement('button');
+                    backBtn.className = 'pg-back-btn';
+                    backBtn.innerHTML = '← Back to Home';
+                    backBtn.onclick = () => goPg('home');
+                    pg.insertBefore(backBtn, pg.firstChild);
+                }
+            }
+            
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
 

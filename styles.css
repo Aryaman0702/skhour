@@ -3787,6 +3787,30 @@
             .pg-hero h1 { font-size: 2.4rem !important; }
         }
 
+        .pg-back-btn {
+            position: absolute;
+            top: 2rem;
+            left: 5rem;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .pg-back-btn:hover {
+            background: var(--or);
+            border-color: var(--or);
+        }
+
         /* ══════════════════════════════════════
            ADMIN & LOGIN RESPONSIVE
         ══════════════════════════════════════ */
@@ -3797,6 +3821,23 @@
             .admin-title { font-size: 2.5rem !important; }
             .class-card { flex-direction: column !important; align-items: flex-start !important; gap: 1.2rem !important; }
             .card-actions { width: 100% !important; justify-content: flex-end !important; }
+            
+            .pg-back-btn {
+                top: 6rem;
+                left: 1.5rem;
+                font-size: 0.7rem;
+                padding: 0.5rem 1rem;
+            }
+            .chat-win {
+                width: 90% !important;
+                right: 5% !important;
+                bottom: 5rem !important;
+                max-height: 70vh !important;
+            }
+            .qr-row {
+                max-height: 120px !important;
+                overflow-y: auto !important;
+            }
             
             .login-wrap { padding: 2.5rem 1.5rem !important; width: 95% !important; }
             .login-wrap h1 { font-size: 2.5rem !important; }
