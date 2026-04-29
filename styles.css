@@ -3543,8 +3543,11 @@
             font-family: 'Oswald', sans-serif;
             font-size: .68rem;
             font-weight: 600;
-            cursor: none;
+            cursor: pointer !important;
             transition: all .25s;
+            pointer-events: auto !important;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .qb:hover {

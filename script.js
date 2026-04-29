@@ -424,7 +424,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
                 return typeThen(300, `Main menu:`, () => pushMenu(['Brampton', 'Burlington', 'Hamilton', 'Kitchener', 'Markham', 'Milton', 'Mississauga', 'North York', 'Oakville', 'Scarborough', 'St. Catharines', 'Pricing']));
             }
 
-            if (lo === 'back' || lo === 'previous menu') {
+            if (lo === 'back' || lo === 'previous menu' || lo.includes('previous menu')) {
                 return popMenu();
             }
 
@@ -596,11 +596,19 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 
         function showQR(items, isFromPop = false) {
             const row = document.getElementById('qrRow');
+            if (!row) return;
             row.innerHTML = ''; row.style.display = 'flex';
+            
             items.forEach(label => {
                 const b = document.createElement('button');
                 b.className = 'qb'; b.textContent = label;
-                b.onclick = () => { addUser(label); clearQR(); handleMsg(label); };
+                b.onclick = (e) => { 
+                    e.preventDefault();
+                    e.stopPropagation();
+                    addUser(label); 
+                    clearQR(); 
+                    handleMsg(label); 
+                };
                 row.appendChild(b);
             });
             
@@ -608,14 +616,29 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             if (!items.includes('Back') && !items.includes('Main Menu') && chatMenuStack.length > 1) {
                 const bMain = document.createElement('button');
                 bMain.className = 'qb main-btn'; bMain.textContent = 'Main Menu';
-                bMain.onclick = () => { addUser('Main Menu'); handleMsg('Main Menu'); };
+                bMain.onclick = (e) => { 
+                    e.preventDefault();
+                    e.stopPropagation();
+                    addUser('Main Menu'); 
+                    clearQR(); 
+                    handleMsg('Main Menu'); 
+                };
                 row.appendChild(bMain);
 
                 const bBack = document.createElement('button');
                 bBack.className = 'qb back-btn'; bBack.textContent = '← Back';
-                bBack.onclick = () => { addUser('Previous Menu'); popMenu(); };
+                bBack.onclick = (e) => { 
+                    e.preventDefault();
+                    e.stopPropagation();
+                    addUser('Previous Menu'); 
+                    clearQR(); 
+                    popMenu(); 
+                };
                 row.appendChild(bBack);
             }
+            
+            const msgs = document.getElementById('chMsgs');
+            if (msgs) msgs.scrollTop = msgs.scrollHeight;
         }
 
         function clearQR() {
