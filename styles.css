@@ -1105,10 +1105,10 @@
         }
 
         .bg-single-video {
-            filter: contrast(1.05) brightness(1.05) saturate(1.02) blur(0.4px);
+            filter: contrast(1.05) brightness(1.05) saturate(1.02) blur(4px);
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
-            transform: scale(1.02) translateZ(0); /* Hardware accelerated scale to hide edges */
+            transform: scale(1.05) translateZ(0); /* Hardware accelerated scale to hide edges */
         }
 
         /* Clarity Enhancement Overlay for Large Screens */
