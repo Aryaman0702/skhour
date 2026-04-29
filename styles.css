@@ -1802,10 +1802,16 @@
         .r-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.2rem;
+            gap: 1.5rem;
             margin-top: 3.5rem;
             position: relative;
             z-index: 1;
+        }
+
+        @media (max-width: 600px) {
+            .r-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .rc {
@@ -3696,7 +3702,10 @@
                 grid-template-columns: repeat(2, 1fr) !important;
             }
 
-            .r-grid, .cnt-grid, .about-grid, .guide-grid {
+            .r-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            .cnt-grid, .about-grid, .guide-grid {
                 grid-template-columns: 1fr !important;
             }
 

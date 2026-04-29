@@ -549,10 +549,12 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
         }
 
         function typeThen(delay, text, cb) {
-            setTimeout(() => {
-                showTyping();
-                setTimeout(() => { removeTyping(); botSay(text); if (cb) cb(); }, 1000);
-            }, delay);
+            showTyping();
+            setTimeout(() => { 
+                removeTyping(); 
+                botSay(text); 
+                if (cb) cb(); 
+            }, delay + 600);
         }
 
         
