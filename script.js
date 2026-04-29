@@ -13,6 +13,18 @@
                 document.body.style.overflow = '';
             }, 1000);
         })();
+ 
+         /* Ensure Background Video Plays Smoothly */
+         window.addEventListener('load', () => {
+             const v = document.getElementById('bgVideo');
+             if (v) {
+                 v.play().catch(() => {
+                     // If autoplay is blocked, play on first interaction
+                     document.addEventListener('click', () => v.play(), { once: true });
+                     document.addEventListener('touchstart', () => v.play(), { once: true });
+                 });
+             }
+         });
 
 
 
@@ -32,32 +44,7 @@
         /* ══════════════════════════════════════════════
            CLICK BURST
         ══════════════════════════════════════════════ */
-        document.addEventListener('click', e => {
-            if (e.target.closest('.modal') || e.target.closest('.chat-win')) return;
-            const shapes = ['●', '◆', '★', '▲', '✦', '⬟'];
-            const cols = ['#f4620a', '#ff8c38', '#0f4cdb', '#2d6ef5', '#ffb470'];
-            for (let i = 0; i < 8; i++) {
-                const el = document.createElement('span');
-                const ang = (360 / 8) * i + Math.random() * 18 - 9;
-                const dist = 35 + Math.random() * 55;
-                const dur = 380 + Math.random() * 320;
-                el.textContent = shapes[Math.floor(Math.random() * shapes.length)];
-                Object.assign(el.style, {
-                    position: 'fixed', left: e.clientX + 'px', top: e.clientY + 'px',
-                    fontSize: (6 + Math.random() * 12) + 'px', color: cols[Math.floor(Math.random() * cols.length)],
-                    pointerEvents: 'none', zIndex: '99999', userSelect: 'none',
-                    transform: 'translate(-50%,-50%)', opacity: '1',
-                    transition: `transform ${dur}ms cubic-bezier(.15,.85,.35,1),opacity ${dur}ms ease`
-                });
-                document.body.appendChild(el);
-                const rad = ang * Math.PI / 180;
-                requestAnimationFrame(() => requestAnimationFrame(() => {
-                    el.style.transform = `translate(calc(-50% + ${Math.cos(rad) * dist}px),calc(-50% + ${Math.sin(rad) * dist}px)) scale(0) rotate(${ang}deg)`;
-                    el.style.opacity = '0';
-                }));
-                setTimeout(() => el.remove(), dur + 50);
-            }
-        });
+        /* Burst effect removed */
 
 
 
@@ -346,9 +333,9 @@
                 setTimeout(() => botSay("You're now connected!"), 300);
                 setTimeout(() => {
                     botSay(`I'm **Anurag**, your Skating Consultant.
-
-What city are you looking to enroll in today for our **Summer Roller Skating** sessions?`);
-                    showQR(['Brampton', 'Burlington', 'Hamilton', 'Kitchener', 'Markham', 'Milton', 'Mississauga', 'North York', 'Oakville', 'Scarborough', 'St. Catharines', 'Pricing']);
+ 
+ What city are you looking to enroll in today for our **Summer Roller Skating** sessions?`);
+                    pushMenu(['Brampton', 'Burlington', 'Hamilton', 'Kitchener', 'Markham', 'Milton', 'Mississauga', 'North York', 'Oakville', 'Scarborough', 'St. Catharines', 'Pricing']);
                 }, 1000);
             }, 3000);
         }
@@ -366,6 +353,21 @@ What city are you looking to enroll in today for our **Summer Roller Skating** s
 
         const AI_API_KEY = "YOUR_GEMINI_API_KEY";
         let aiHistory = [];
+        let chatMenuStack = [];
+
+        function pushMenu(items) {
+            chatMenuStack.push(items);
+            showQR(items);
+        }
+
+        function popMenu() {
+            if (chatMenuStack.length > 1) {
+                chatMenuStack.pop();
+                showQR(chatMenuStack[chatMenuStack.length - 1], true);
+            } else {
+                handleMsg("Main Menu");
+            }
+        }
 
                 async function handleMsg(text) {
             if (window.__liveChatMode) {
@@ -402,7 +404,19 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
 
             if (lo.match(/go back to main menu|main menu/)) {
-                return typeThen(300, `Main menu:`, () => showQR(['Brampton', 'Burlington', 'Hamilton', 'Kitchener', 'Markham', 'Milton', 'Mississauga', 'North York', 'Oakville', 'Scarborough', 'St. Catharines', 'Pricing']));
+                chatMenuStack = [];
+                return typeThen(300, `Main menu:`, () => pushMenu(['Brampton', 'Burlington', 'Hamilton', 'Kitchener', 'Markham', 'Milton', 'Mississauga', 'North York', 'Oakville', 'Scarborough', 'St. Catharines', 'Pricing']));
+            }
+
+            if (lo === 'back' || lo === 'previous menu') {
+                return popMenu();
+            }
+
+            if (lo.match(/register/)) {
+                return typeThen(300, `You can register for any location directly on our booking portal:`, () => {
+                    botSay(`[**Click here to Register**](${REG_URL})`);
+                    showQR(['Pricing', 'Main Menu']);
+                });
             }
             
             if (lo.match(/mississauga/)) {
@@ -500,7 +514,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **Session 2:** Friday 6:30 PM – 7:30 PM
 **Dates:** Spring (Jun 5 – Jul 3) · Summer (Jul 10 – Aug 14)
 
-**[Register Now](https://skatinghour.classcard.app/en/courses)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
+**[Register Now](https://skatinghour.classcard.app/en/courses)**`, () => showQR(['Register', 'Pricing', 'Main Menu', 'Back']));
             }
             if (lo.match(/price|pricing|cost/)) {
                 return typeThen(400, `**Pricing Overview**
@@ -509,7 +523,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 • **Drop-in**: CAD $40
 • **Full Program**: $180 - $240 (6 classes)
 
-**Gear is FREE** for your very first class!`, () => showQR(['Locations', 'Register', 'Main Menu']));
+**Gear is FREE** for your very first class!`, () => showQR(['Locations', 'Register', 'Main Menu', 'Back']));
             }
 
             if (!window.__liveChatMode) {
@@ -556,7 +570,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             if (el) el.remove();
         }
 
-        function showQR(items) {
+        function showQR(items, isFromPop = false) {
             const row = document.getElementById('qrRow');
             row.innerHTML = ''; row.style.display = 'flex';
             items.forEach(label => {
@@ -565,6 +579,12 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
                 b.onclick = () => { addUser(label); clearQR(); handleMsg(label); };
                 row.appendChild(b);
             });
+            if (!items.includes('Back') && chatMenuStack.length > 1) {
+                const b = document.createElement('button');
+                b.className = 'qb back-btn'; b.textContent = '← Back';
+                b.onclick = () => { addUser('Previous Menu'); popMenu(); };
+                row.appendChild(b);
+            }
         }
 
         function clearQR() {
@@ -636,12 +656,12 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 
             // 1. Hero Content Reveal
             gsap.from(".hero-center-box > *", {
-                y: 30,
+                y: 20,
                 opacity: 0,
-                duration: 1.2,
-                stagger: 0.2,
-                ease: "power3.out",
-                delay: 0.5
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "power2.out",
+                delay: 0.3
             });
 
             // 2. Background Parallax (Smoothed)
@@ -652,7 +672,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
                     trigger: ".hero, .pg-hero",
                     start: "top top",
                     end: "bottom top",
-                    scrub: 1.2, // Smoother scrub
+                    scrub: 0.5, // Much snappier scrub
                     force3D: true
                 }
             });
@@ -663,13 +683,13 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             
             items.forEach((el, i) => {
                 gsap.from(el, {
-                    y: 50,
+                    y: 20,
                     opacity: 0,
-                    duration: 0.8,
+                    duration: 0.3,
                     ease: "power2.out",
                     scrollTrigger: {
                         trigger: el,
-                        start: "top 95%", // More generous trigger point
+                        start: "top 98%", // Trigger almost immediately as it enters viewport
                         toggleActions: "play none none reverse"
                     }
                 });
@@ -791,10 +811,74 @@ function toggleContactMenu() {
 }
 
 // Close contact menu when clicking outside
-document.addEventListener('click', (e) => {
-    const widget = document.querySelector('.contact-widget');
-    const menu = document.getElementById('contactMenu');
-    if (widget && !widget.contains(e.target) && menu && menu.classList.contains('open')) {
-        menu.classList.remove('open');
-    }
-});
+        document.addEventListener('click', (e) => {
+            const widget = document.querySelector('.contact-widget');
+            const menu = document.getElementById('contactMenu');
+            if (widget && !widget.contains(e.target) && menu && menu.classList.contains('open')) {
+                menu.classList.remove('open');
+            }
+        });
+
+        /* ══════════════════════════════════════════════
+           LOCATION SEARCH FILTER
+        ══════════════════════════════════════════════ */
+        function filterLocations(shouldScroll = false) {
+            const input = document.getElementById('locSearch');
+            if (!input) return;
+            const query = input.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('#pg-location .lc');
+            const grid = document.querySelector('#pg-location .loc-grid');
+            
+            let foundCount = 0;
+            let firstFound = null;
+
+            cards.forEach(card => {
+                const city = card.querySelector('h3').textContent.toLowerCase();
+                const venue = card.querySelector('.venue').textContent.toLowerCase();
+                
+                if (query === '' || city.includes(query) || venue.includes(query)) {
+                    card.style.display = 'flex';
+                    card.style.opacity = '1';
+                    card.style.transform = 'none';
+                    if (!firstFound) firstFound = card;
+                    foundCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Handle "No Results" message
+            let noRes = document.getElementById('no-loc-results');
+            if (foundCount === 0) {
+                if (!noRes) {
+                    noRes = document.createElement('div');
+                    noRes.id = 'no-loc-results';
+                    noRes.innerHTML = `<div style="text-align:center;padding:4rem;color:var(--tx3);font-family:'Oswald',sans-serif;width:100%;">
+                        <div style="font-size:3rem;margin-bottom:1rem;">🔍</div>
+                        <h3 style="font-size:1.5rem;margin-bottom:0.5rem;color:var(--dk);">No locations found</h3>
+                        <p>Try searching for another city or venue.</p>
+                    </div>`;
+                    if (grid) grid.parentNode.appendChild(noRes);
+                }
+                noRes.style.display = 'block';
+            } else if (noRes) {
+                noRes.style.display = 'none';
+            }
+
+            // If we need to scroll (on search click or enter)
+            if (shouldScroll && query !== '' && firstFound) {
+                setTimeout(() => {
+                    firstFound.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Highlight effect
+                    firstFound.style.outline = '3px solid var(--or)';
+                    firstFound.style.outlineOffset = '5px';
+                    firstFound.style.boxShadow = '0 0 30px rgba(244, 98, 10, 0.3)';
+                    setTimeout(() => {
+                        firstFound.style.outline = 'none';
+                        firstFound.style.boxShadow = '';
+                    }, 2500);
+                }, 100);
+            }
+            
+            if (window.ScrollTrigger) ScrollTrigger.refresh();
+        }

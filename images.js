@@ -7,18 +7,26 @@ document.addEventListener("DOMContentLoaded", () => {
         "life-1.jpg",
         "life-4.jpg",
         "gallery-1.jpg",
+        "gallery-2.jpg",
         "gallery-3.jpg",
+        "gallery-4.jpg",
         "gallery-5.jpg",
-        "WhatsApp Image 2026-04-17 at 21.16.30.jpeg",
-        "WhatsApp Image 2026-04-17 at 21.16.31.jpeg"
+        "IMG_2037.JPG",
+        "IMG_2047.JPG",
+        "WhatsApp Image 2026-04-29 at 00.24.12.jpeg",
+        "WhatsApp Image 2026-04-29 at 00.24.13 (1).jpeg",
+        "WhatsApp Image 2026-04-29 at 00.24.13.jpeg"
     ];
 
-    const photoStripContainer = document.getElementById("photo-strip-container");
+    const photoStripContainer = document.getElementById("stripTrack");
     if (photoStripContainer) {
-        let stripContent = `<div class="strip-track" id="stripTrack">`;
+        let stripContent = "";
+        
+        // Use first 8 images for strip
+        const stripImages = imagesList.slice(0, 8);
         
         // Add all images
-        imagesList.forEach((img, idx) => {
+        stripImages.forEach((img, idx) => {
             stripContent += `
                 <div class="sc"><img src="life on skates/${img}" alt="Skating ${idx+1}">
                     <div class="sc-cap">SkatingHour Life</div>
@@ -26,14 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         
         // Duplicate for infinite scroll
-        imagesList.forEach((img, idx) => {
+        stripImages.forEach((img, idx) => {
             stripContent += `
                 <div class="sc"><img src="life on skates/${img}" alt="Skating ${idx+1}">
                     <div class="sc-cap">SkatingHour Life</div>
                 </div>`;
         });
         
-        stripContent += `</div>`;
         photoStripContainer.innerHTML = stripContent;
 
         if (window.gsap && window.ScrollTrigger) {
@@ -43,22 +50,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const galleryContainer = document.getElementById("gallery-container");
     if (galleryContainer) {
-        let galleryContent = `<div class="masonry rv up">`;
+        // Define specific sets for the new layout
+        const verticalImages = ["IMG_2037.JPG", "IMG_2047.JPG", "life-1.jpg"];
+        const horizontalImages = ["gallery-1.jpg", "gallery-2.jpg", "gallery-3.jpg", "gallery-4.jpg"];
+
+        let galleryContent = `<div class="gallery-grid rv up">`;
         
-        // Use first 14 images for gallery (previous 12 + new 2)
-        const galleryImages = imagesList.slice(0, 14);
-        
-        galleryImages.forEach((img, idx) => {
-            let extraClass = "";
-            // Make the first two (new) photos tall as requested
-            if (img === "life-1.jpg" || img === "life-4.jpg") extraClass = "tall";
-            else if (idx === 3) extraClass = "wide";
-            
+        // Vertical Row (3 photos)
+        galleryContent += `<div class="gallery-row-v">`;
+        verticalImages.forEach((img, idx) => {
             galleryContent += `
-                <div class="mi ${extraClass}"><img src="life on skates/${img}" alt="Gallery ${idx+1}">
+                <div class="mi v-item"><img src="life on skates/${img}" alt="Vertical ${idx+1}">
                     <div class="mi-cap"><span>Skating Experience</span></div>
                 </div>`;
         });
+        galleryContent += `</div>`;
+
+        // Horizontal Row (4 photos)
+        galleryContent += `<div class="gallery-row-h">`;
+        horizontalImages.forEach((img, idx) => {
+            galleryContent += `
+                <div class="mi h-item"><img src="life on skates/${img}" alt="Horizontal ${idx+1}">
+                    <div class="mi-cap"><span>Skating Experience</span></div>
+                </div>`;
+        });
+        galleryContent += `</div>`;
         
         galleryContent += `</div>`;
         galleryContainer.innerHTML = galleryContent;
