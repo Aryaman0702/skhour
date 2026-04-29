@@ -1,27 +1,33 @@
-        // START VIDEO IMMEDIATELY
+        // SYNC INTRO WITH VIDEO START
         (function() {
-            const v = document.getElementById('bgVideo');
-            if (v) {
-                v.muted = true;
-                v.play().catch(() => {
-                    document.addEventListener('click', () => v.play(), { once: true });
-                    document.addEventListener('touchstart', () => v.play(), { once: true });
-                });
-            }
-        })();
-
-        /* ══════════════════════════════════════════════
-           INTRO COOL ANIMATION (FAST SKATE)
-        ══════════════════════════════════════════════ */
-                (function() {
             const overlay = document.getElementById('intro-overlay');
-            if (!overlay) return;
+            const v = document.getElementById('bgVideo');
+            if (!overlay || !v) return;
+            
             document.body.style.overflow = 'hidden';
-            setTimeout(() => {
-                overlay.style.transition = 'opacity 0.3s ease, visibility 0.3s';
+            
+            let hidden = false;
+            const hideIntro = () => {
+                if (hidden) return;
+                hidden = true;
+                overlay.style.transition = 'opacity 0.4s ease, visibility 0.4s';
                 overlay.classList.add('hidden');
                 document.body.style.overflow = '';
-            }, 400); // Super fast intro
+            };
+
+            // Hide intro ONLY when video is actually playing to avoid black screen
+            v.addEventListener('playing', hideIntro);
+            
+            // Fallback: If video is slow/blocked, hide after 2.5s anyway
+            setTimeout(hideIntro, 2500);
+
+            // Force play as early as possible
+            v.muted = true;
+            v.play().catch(() => {
+                // If autoplay is blocked by browser
+                document.addEventListener('click', () => { v.play(); hideIntro(); }, { once: true });
+                document.addEventListener('touchstart', () => { v.play(); hideIntro(); }, { once: true });
+            });
         })();
  
          /* Ensure Background Video Plays Smoothly */
