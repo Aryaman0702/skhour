@@ -436,20 +436,17 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
             
             if (lo.match(/mississauga/)) {
-                return typeThen(400, `**Mississauga Sessions**
+                return typeThen(400, `**Mississauga — Burnhamthorpe Community Centre**
+**Address:** 1500 Gulleden Dr, Mississauga, ON L4X 2T7
 
-**Venue 1:** Burnhamthorpe CC
 **Time:** Tue 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 2-30) · Summer (Jul 7-Aug 25)
-
-**Venue 2:** Mississauga Valley CC
-**Time:** Thu 6:00 PM – 7:00 PM
-**Dates:** Spring (Jun 4-Jul 2) · Summer (Jul 9-Aug 27)
 
 **[Register Now](https://skatinghour.classcard.app/en/course/45875)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/milton/)) {
                 return typeThen(400, `**Milton — Milton Sports Centre**
+**Address:** 605 Santa Maria Blvd, Milton, ON L9T 6J5
 
 **Time:** Tuesday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 2-30) · Summer (Jul 7-Aug 25)
@@ -458,6 +455,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
             if (lo.match(/oakville/)) {
                 return typeThen(400, `**Oakville — Glen Abbey Community Centre**
+**Address:** 1415 Third Line, Oakville, ON L6M 3G2
 
 **Session 1:** Wed 6:00 PM – 7:00 PM
 **Dates:** Jun 10 - Aug 26
@@ -468,7 +466,8 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **[Register Now](https://skatinghour.classcard.app/en/course/45874)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/brampton/)) {
-                return typeThen(400, `**Brampton — TallPine School**
+                return typeThen(400, `**Brampton — Tall Pines School**
+**Address:** 8525 Torbram Rd, Brampton, ON L6T 5K4
 
 **Time:** Wednesday 5:30 PM & 6:30 PM slots
 **Dates:** Spring (Jun 10-24) · Summer (Jul 8-Aug 26)
@@ -477,6 +476,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
             if (lo.match(/scarborough/)) {
                 return typeThen(400, `**Scarborough — Agincourt Recreation Centre**
+**Address:** 31 Glen Watford Dr, Scarborough, ON M1S 2B7
 
 **Time:** Wednesday 5:30 PM & 6:30 PM slots
 **Dates:** Spring (Jun 3-24) · Summer (Jul 8-Aug 26)
@@ -484,7 +484,8 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **[Register Now](https://skatinghour.classcard.app/en/course/45882)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/kitchener/)) {
-                return typeThen(400, `**Kitchener — Don McLaurin Arena**
+                return typeThen(400, `**Kitchener — Don McLaren Arena**
+**Address:** 61 Green St, Kitchener, ON N2G 4K9
 
 **Time:** Thursday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 11-Jul 2) · Summer (Jul 9-Aug 20)
@@ -493,6 +494,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
             if (lo.match(/burlington/)) {
                 return typeThen(400, `**Burlington — Appleby/Mountainside**
+**Address:** 2359 New St, Burlington, ON L7R 1J6
 
 **Time:** Friday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 12-Jul 3) · Summer (Jul 10-Aug 28)
@@ -501,6 +503,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
             if (lo.match(/hamilton/)) {
                 return typeThen(400, `**Hamilton — Rosedale Community Centre**
+**Address:** 1170 King St E, Hamilton, ON L8M 1G1
 
 **Time:** Tuesday 5-6 PM, 6-7 PM, 7-8 PM
 **Dates:** Spring (Jun 9-30) · Summer (Jul 7-Aug 25)
@@ -508,7 +511,8 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **[Register Now](https://skatinghour.classcard.app/en/course/45879)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.match(/markham/)) {
-                return typeThen(400, `**Markham — Clathworthy Arena**
+                return typeThen(400, `**Markham — R.J. Clatworthy Arena**
+**Address:** 2400 John St., Thornhill, ON L3T 6R8
 
 **Time:** Monday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 1-29) · Summer (Jul 6-Aug 31)
@@ -516,7 +520,8 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
 **[Register Now](https://skatinghour.classcard.app/en/course/45880)**`, () => showQR(['Register', 'Pricing', 'Main Menu']));
             }
             if (lo.includes('st. catharines') || lo.includes('catharines')) {
-                return typeThen(400, `**St. Catharines — Ballhockey.com Niagara**
+                return typeThen(400, `**St. Catharines — Haig Bowl Arena**
+**Address:** 17 Beech St, St. Catharines, ON L2R 2B6
 
 **Time:** Monday 6:00 PM – 7:00 PM
 **Dates:** Spring (Jun 8-29) · Summer (Jul 6-Aug 31)
@@ -525,6 +530,7 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             }
             if (lo.match(/north york|york/)) {
                 return typeThen(400, `**North York — Mitchell Field Community Centre**
+**Address:** 89 Church Ave, North York, ON M2N 6C9
 
 **Session 1:** Friday 5:30 PM – 6:30 PM
 **Session 2:** Friday 6:30 PM – 7:30 PM

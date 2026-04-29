@@ -969,6 +969,15 @@
             letter-spacing: .05em;
         }
 
+        .ls-addr {
+            font-size: 0.75rem;
+            color: var(--tx3);
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
         .hs1 .hstat-num {
             color: var(--or);
         }
