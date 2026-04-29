@@ -8,14 +8,14 @@
             if (!overlay) return;
             document.body.style.overflow = 'hidden';
             setTimeout(() => {
-                overlay.style.transition = 'opacity 0.6s ease, visibility 0.6s';
-                overlay.classList.add('hidden');
-                document.body.style.overflow = '';
-                
-                // Play video immediately when intro starts fading
+                // Start video play immediately to reduce delay
                 const v = document.getElementById('bgVideo');
                 if (v) v.play().catch(() => {});
-            }, 1000);
+
+                overlay.style.transition = 'opacity 0.4s ease, visibility 0.4s';
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 800);
         })();
  
          /* Ensure Background Video Plays Smoothly */

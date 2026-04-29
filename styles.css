@@ -3533,21 +3533,27 @@
             background: #f8faff;
             border-top: 1px solid rgba(15, 76, 219, .07);
             flex-shrink: 0;
+            position: relative;
+            z-index: 5;
         }
 
         .qb {
-            padding: .36rem .8rem;
+            padding: .6rem 1rem;
             background: #fff;
             border: 1.5px solid rgba(15, 76, 219, .18);
             color: var(--bl);
             font-family: 'Oswald', sans-serif;
-            font-size: .68rem;
+            font-size: .75rem;
             font-weight: 600;
             cursor: pointer !important;
             transition: all .25s;
             pointer-events: auto !important;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
         }
 
         .qb:hover {
