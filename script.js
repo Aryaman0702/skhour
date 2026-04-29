@@ -608,38 +608,19 @@ Pricing: Trial $30. [Register](${REG_URL}). FREE gear for 1st class.`;
             items.forEach(label => {
                 const b = document.createElement('button');
                 b.className = 'qb'; b.textContent = label;
-                b.onclick = (e) => { 
-                    e.preventDefault();
-                    e.stopPropagation();
-                    addUser(label); 
-                    clearQR(); 
-                    handleMsg(label); 
-                };
+                b.onclick = () => { addUser(label); clearQR(); handleMsg(label); };
                 row.appendChild(b);
             });
             
-            // Ensure Back and Main Menu buttons are always present if stack depth > 1
             if (!items.includes('Back') && !items.includes('Main Menu') && chatMenuStack.length > 1) {
                 const bMain = document.createElement('button');
                 bMain.className = 'qb main-btn'; bMain.textContent = 'Main Menu';
-                bMain.onclick = (e) => { 
-                    e.preventDefault();
-                    e.stopPropagation();
-                    addUser('Main Menu'); 
-                    clearQR(); 
-                    handleMsg('Main Menu'); 
-                };
+                bMain.onclick = () => { addUser('Main Menu'); clearQR(); handleMsg('Main Menu'); };
                 row.appendChild(bMain);
 
                 const bBack = document.createElement('button');
                 bBack.className = 'qb back-btn'; bBack.textContent = '← Back';
-                bBack.onclick = (e) => { 
-                    e.preventDefault();
-                    e.stopPropagation();
-                    addUser('Previous Menu'); 
-                    clearQR(); 
-                    popMenu(); 
-                };
+                bBack.onclick = () => { addUser('Previous Menu'); clearQR(); popMenu(); };
                 row.appendChild(bBack);
             }
             

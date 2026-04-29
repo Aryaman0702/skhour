@@ -1108,9 +1108,9 @@
         }
 
         .bg-single-video {
-            filter: contrast(1.05) brightness(0.85); /* Reduced filters for smoothness */
-            transform: scale(1.02) translateZ(0);
-            will-change: transform;
+            filter: contrast(1.05) brightness(0.85) blur(2.5px); /* ~8.5% blur feel */
+            transform: scale(1.05) translateZ(0);
+            will-change: transform, filter;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
@@ -3229,7 +3229,7 @@
             border-top: 3px solid var(--bl);
             border: 1px solid rgba(15, 76, 219, .16);
             box-shadow: var(--sh2);
-            z-index: 499;
+            z-index: 10000; /* Extremely high z-index for Android compatibility */
             display: flex;
             flex-direction: column;
             transform: translateY(18px) scale(.94);
@@ -3576,6 +3576,7 @@
             justify-content: center;
             min-height: 40px;
             border-radius: 6px;
+            touch-action: manipulation !important; /* Critical for Android touch speed */
         }
 
         .qb:hover {
